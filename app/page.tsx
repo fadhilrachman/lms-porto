@@ -1,56 +1,38 @@
+"use client";
 import { Link } from "@nextui-org/link";
-import { Snippet } from "@nextui-org/snippet";
-import { Code } from "@nextui-org/code";
-import { button as buttonStyles } from "@nextui-org/theme";
-
-import { siteConfig } from "@/config/site";
-import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
+import { Button } from "@nextui-org/button";
+import ListCourse from "@/components/home/list-course";
+import { Navbar } from "@/components/shared/navbar";
 
 export default function Home() {
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      <div className="inline-block max-w-xl text-center justify-center">
-        <span className={title()}>Make&nbsp;</span>
-        <span className={title({ color: "violet" })}>beautiful&nbsp;</span>
-        <br />
-        <span className={title()}>
-          websites regardless of your design experience.
-        </span>
-        <div className={subtitle({ class: "mt-4" })}>
-          Beautiful, fast and modern React UI library.
+    <div className="relative flex flex-col h-screen">
+      <Navbar />
+      <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
+        <div className="space-y-4">
+          <section className="flex  items-end justify-between gap-4 py-8 ">
+            <div className="">
+              <p className="text-primary-500">Our Recomended</p>
+              <h3 className="text-3xl font-semibold max-w-[400px]">
+                Learn New Skills According to your interests
+              </h3>
+            </div>
+            <Button color="primary">See All Class</Button>
+          </section>
+          <ListCourse />
         </div>
-      </div>
-
-      <div className="flex gap-3">
+      </main>
+      <footer className="w-full flex items-center justify-center py-3">
         <Link
           isExternal
-          className={buttonStyles({
-            color: "primary",
-            radius: "full",
-            variant: "shadow",
-          })}
-          href={siteConfig.links.docs}
+          className="flex items-center gap-1 text-current"
+          href="https://nextui-docs-v2.vercel.app?utm_source=next-app-template"
+          title="nextui.org homepage"
         >
-          Documentation
+          <span className="text-default-600">Powered by</span>
+          <p className="text-primary">NextUI</p>
         </Link>
-        <Link
-          isExternal
-          className={buttonStyles({ variant: "bordered", radius: "full" })}
-          href={siteConfig.links.github}
-        >
-          <GithubIcon size={20} />
-          GitHub
-        </Link>
-      </div>
-
-      <div className="mt-8">
-        <Snippet hideCopyButton hideSymbol variant="bordered">
-          <span>
-            Get started by editing <Code color="primary">app/page.tsx</Code>
-          </span>
-        </Snippet>
-      </div>
-    </section>
+      </footer>
+    </div>
   );
 }
