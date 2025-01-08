@@ -5,11 +5,11 @@ import { Chip } from "@nextui-org/chip";
 import { Star, User } from "lucide-react";
 const ListCourse = () => {
   return (
-    <section>
-      <div className="grid grid-cols-4 gap-6">
+    <section className="px-6">
+      <div className="grid grid-cols-4 gap-6 ">
         {[1, 2, 3, 4].map((val, key) => {
           return (
-            <Card key={key} className="py-4 w-max">
+            <Card key={key} className="py-4 w-full">
               <CardHeader className="pb-0 w pt-2 px-4 flex-col items-start">
                 <div className="flex justify-between w-full items-center">
                   <h4 className="font-bold text-large">Frontend Course</h4>
@@ -21,7 +21,7 @@ const ListCourse = () => {
               <CardBody className="overflow-visible py-2">
                 <img
                   alt="Card background"
-                  className="object-cover rounded-xl"
+                  className="object-cover w-full rounded-xl"
                   src="https://nextui.org/images/hero-card-complete.jpeg"
                   width={270}
                 />

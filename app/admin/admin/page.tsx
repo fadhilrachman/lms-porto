@@ -17,7 +17,6 @@ import ModalCreateCourse from "@/components/admin/course/modal-create-course";
 const Admin = () => {
   const [data, setData] = useState<any[]>([]);
   const [modal, setModal] = useState({ create: false });
-  const [isLoading, setIsLoading] = useState(true);
 
   const columns = [
     { key: "name", label: "Name" },
