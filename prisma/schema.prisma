@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id String @id @default(uuid())
+  user_name String
+  email String 
+  password String
+  is_admin Boolean @default(false)
+  created_at DateTime @default(now())
+  update_at DateTime @updatedAt 
+
+  content_progress ContentProgress[]
+  transaction Transaction[]
+}
+
+model Category{
+  id String @id @default(uuid())
+  name String
+  icon String
+  created_at DateTime @default(now())
+  update_at DateTime @updatedAt 
+
+  course Course[]
+}
+
+model Course {
+  id String @id @default(uuid())
+  title String
+  price Int?
+  is_free Boolean @default(false)
+  is_published Boolean @default(false)
+  description String?
+  introduction_vid String?
+  thumbnail_img String?
+  resource String?
+  is_finish Boolean @default(false)
+  category Category? @relation(fields: [category_id], references: [id])
+  category_id String? 
+  created_at DateTime @default(now())
+  update_at DateTime @updatedAt 
+
+  chapter Chapter[]
+  content_progress ContentProgress[]
+  transaction Transaction[]
+}
+
+model Chapter {
+  id String @id @default(uuid())
+  title String
+  position Int
+
+  course Course @relation(fields: [course_id], references: [id])
+  course_id String 
+
+  created_at DateTime @default(now())
+  update_at DateTime @updatedAt 
+
+  content Content[]
+}
+
+
+model Content{
+  id String @id @default(uuid())
+  title String
+  description String?
+  content_vid String
+  position Int
+  is_finish Boolean @default(false)
+
+  chapter Chapter @relation(fields: [chapter_id], references: [id])
+  chapter_id String 
+
+  created_at DateTime @default(now())
+  update_at DateTime @updatedAt 
+  content_progress ContentProgress[]
+}
+
+model Transaction {
+  id String @id @default(uuid())
+  title String
+
+  course Course @relation(fields: [course_id], references: [id])
+  course_id String 
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id String 
+
+  created_at DateTime @default(now())
+  update_at DateTime @updatedAt 
+}
+
+
+model ContentProgress {
+  id String @id @default(uuid())
+  course Course @relation(fields: [course_id], references: [id])
+  course_id String 
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id String 
+
+  content Content @relation(fields: [content_id], references: [id])
+  content_id String 
+  
+}

@@ -29,6 +29,7 @@
 		"@nextui-org/system": "2.4.5",
 		"@nextui-org/table": "^2.2.8",
 		"@nextui-org/theme": "2.4.4",
+		"@prisma/client": "^6.2.1",
 		"@react-aria/ssr": "3.9.7",
 		"@react-aria/visually-hidden": "3.8.18",
 		"clsx": "2.1.1",
@@ -47,7 +48,7 @@
 	"devDependencies": {
 		"@next/eslint-plugin-next": "15.0.4",
 		"@react-types/shared": "3.25.0",
-		"@types/node": "20.5.7",
+		"@types/node": "^20.5.7",
 		"@types/react": "18.3.3",
 		"@types/react-dom": "18.3.0",
 		"@typescript-eslint/eslint-plugin": "8.11.0",
@@ -65,8 +66,10 @@
 		"eslint-plugin-unused-imports": "4.1.4",
 		"postcss": "8.4.49",
 		"prettier": "3.3.3",
+		"prisma": "^6.2.1",
 		"tailwind-variants": "0.1.20",
 		"tailwindcss": "3.4.16",
-		"typescript": "5.6.3"
+		"tsx": "^4.19.2",
+		"typescript": "^5.6.3"
 	}
 }
