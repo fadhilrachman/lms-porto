@@ -11,7 +11,9 @@ const Title = ({ subTitle, title, className, subTitle2 }: Props) => {
     <div className={` ${className}`}>
       <p className="text-primary-500 font-semibold text-xl">{title}</p>
       <h3 className="text-3xl font-semibold">{subTitle}</h3>
-      <p className="mt-2 text-neutral-300 max-w-[500px]">{subTitle2}</p>
+      <p className="mt-2 text-textGray-light dark:text-textGray-dark ">
+        {subTitle2}
+      </p>
     </div>
   );
 };

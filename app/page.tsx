@@ -9,8 +9,10 @@ import Title from "@/components/home/title";
 import FreeClass from "@/components/home/free-class";
 import Community from "@/components/home/community";
 import Footer from "@/components/home/footer";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <div className="relative flex flex-col w-full h-screen">
       <Navbar />
@@ -21,7 +23,14 @@ export default function Home() {
               title="  Our Recomended"
               subTitle="Learn New Skills According to your interests"
             />
-            <Button color="primary">See All Class</Button>
+            <Button
+              color="primary"
+              onPress={() => {
+                router.push("/course");
+              }}
+            >
+              See All Class
+            </Button>
           </section>
           <ListCourse />
           <Category />

@@ -8,8 +8,10 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import Title from "@/components/home/title";
 import Footer from "@/components/home/footer";
+import { useRouter } from "next/navigation";
 
 const Course = () => {
+  const router = useRouter();
   return (
     <div className="relative space-y-12  ">
       <Navbar />
@@ -42,7 +44,6 @@ const Course = () => {
                     <h4 className="font-bold text-large">Frontend Course</h4>
                     <Chip size="sm">Tech</Chip>
                   </div>
-                  {/* <p className="text-tiny uppercase font-bold">Daily Mix</p> */}
                   <small className="text-default-500">Rp.12.000.00</small>
                 </CardHeader>
                 <CardBody className="overflow-visible py-2">

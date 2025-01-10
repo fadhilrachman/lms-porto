@@ -12,8 +12,12 @@ module.exports = {
       colors: {
         backgroundGrayDark: "#18181B",
         backgroundGrayLight: "#f5f5f5",
-        borderColor: "#262626",
+        borderColor: "#3A3A3A",
         backgroundColor: "#181230",
+        textGray: {
+          light: "#6B7280",
+          dark: "#9CA3AF",
+        },
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
