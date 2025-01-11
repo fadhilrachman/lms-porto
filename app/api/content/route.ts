@@ -1,7 +1,21 @@
 import { prisma } from "@/lib/prisma";
 import { createPagination } from "@/lib/pagination-server";
+import { verifyTokenAdmin } from "@/lib/verify-token-server";
+import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  if (verifyTokenAdmin(req)) {
+    return Response.json(
+      {
+        status: 403,
+        message: "Access Denied",
+      },
+      {
+        status: 403,
+      }
+    );
+  }
   const { chapter_id, content_vid, title, description } = await req.json();
 
   try {

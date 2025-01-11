@@ -1,10 +1,23 @@
 import { prisma } from "@/lib/prisma";
 import { createPagination } from "@/lib/pagination-server";
+import { NextRequest } from "next/server";
+import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function PUT(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { content_id: string } }
 ) {
+  if (verifyTokenAdmin(req)) {
+    return Response.json(
+      {
+        status: 403,
+        message: "Access Denied",
+      },
+      {
+        status: 403,
+      }
+    );
+  }
   const { content_id } = params;
   const { chapter_id, content_vid, title, description } = await req.json();
 
@@ -36,9 +49,20 @@ export async function PUT(
 }
 
 export async function PATCH(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { content_id: string } }
 ) {
+  if (verifyTokenAdmin(req)) {
+    return Response.json(
+      {
+        status: 403,
+        message: "Access Denied",
+      },
+      {
+        status: 403,
+      }
+    );
+  }
   const { content_id } = params;
   const { is_published } = await req.json();
   try {
@@ -65,9 +89,20 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { content_id: string } }
 ) {
+  if (verifyTokenAdmin(req)) {
+    return Response.json(
+      {
+        status: 403,
+        message: "Access Denied",
+      },
+      {
+        status: 403,
+      }
+    );
+  }
   const { content_id } = params;
   try {
     const result = await prisma.content.delete({
@@ -81,12 +116,15 @@ export async function DELETE(
       result,
     });
   } catch (error) {
-    console.log({ error });
-
-    return Response.json({
-      status: 500,
-      message: "Internal server error",
-      result: error,
-    });
+    return Response.json(
+      {
+        statusbar: 500,
+        message: "Internal server error",
+        result: error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }

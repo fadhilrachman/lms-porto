@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { createPagination } from "@/lib/pagination-server";
 import bcrypt from "bcrypt";
+import { verifyTokenAdmin } from "@/lib/verify-token-server";
+import { NextRequest } from "next/server";
 
 // export async function POST(req: Request) {
 //   const { user_name, email, password } = await req.json();
@@ -32,7 +34,18 @@ import bcrypt from "bcrypt";
 //   }
 // }
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
+  if (verifyTokenAdmin(req)) {
+    return Response.json(
+      {
+        status: 403,
+        message: "Access Denied",
+      },
+      {
+        status: 403,
+      }
+    );
+  }
   const { searchParams } = new URL(req.url);
   const course_id = searchParams.get("course_id") || null;
   const page = Number(searchParams.get("page") || 1);

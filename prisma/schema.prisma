@@ -90,7 +90,6 @@ model Content{
 
 model Transaction {
   id String @id @default(uuid())
-  title String
 
   course Course @relation(fields: [course_id], references: [id])
   course_id String 

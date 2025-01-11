@@ -1,7 +1,21 @@
 import { prisma } from "@/lib/prisma";
 import { createPagination } from "@/lib/pagination-server";
+import { NextRequest } from "next/server";
+import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  if (verifyTokenAdmin(req)) {
+    return Response.json(
+      {
+        status: 403,
+        message: "Access Denied. No token provided.",
+      },
+      {
+        status: 403,
+      }
+    );
+  }
+
   const { name, icon } = await req.json();
   try {
     const result = await prisma.category.create({
@@ -16,17 +30,22 @@ export async function POST(req: Request) {
       result,
     });
   } catch (error) {
-    console.log({ error });
-
-    return Response.json({
-      status: 500,
-      message: "Internal server error",
-      result: error,
-    });
+    return Response.json(
+      {
+        statusbar: 500,
+        message: "Internal server error",
+        result: error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
+  const cuy = req.cookies.get("cookie");
+  console.log({ cuy });
   const { searchParams } = new URL(req.url);
   const page = Number(searchParams.get("page") || 1);
   const per_page = Number(searchParams.get("per_page") || 10);
@@ -50,12 +69,15 @@ export async function GET(req: Request) {
       pagination,
     });
   } catch (error) {
-    console.log({ error });
-
-    return Response.json({
-      status: 500,
-      message: "Internal server error",
-      result: error,
-    });
+    return Response.json(
+      {
+        statusbar: 500,
+        message: "Internal server error",
+        result: error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }

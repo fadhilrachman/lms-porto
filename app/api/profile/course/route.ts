@@ -5,53 +5,6 @@ import { NextApiRequest } from "next";
 import { NextRequest } from "next/server";
 import { verifyTokenCustomer } from "@/lib/verify-token-server";
 
-export async function POST(req: NextRequest) {
-  const { course_id } = await req.json();
-  if (verifyTokenCustomer(req)) {
-    return Response.json({
-      status: 403,
-      message: "Access Denied. No token provided.",
-    });
-  }
-  const user = JSON.parse(req.headers.get("user") as string);
-
-  try {
-    const checkDuplicateTransaction = await prisma.transaction.findFirst({
-      where: {
-        course_id,
-        user_id: user.id,
-      },
-    });
-    if (checkDuplicateTransaction)
-      return Response.json({
-        status: 400,
-        message: "This course already purchased",
-      });
-    const result = await prisma.transaction.create({
-      data: {
-        course_id,
-        user_id: user.id,
-      },
-    });
-    return Response.json({
-      status: 200,
-      message: "Success create course",
-      result,
-    });
-  } catch (error) {
-    return Response.json(
-      {
-        statusbar: 500,
-        message: "Internal server error",
-        result: error,
-      },
-      {
-        status: 500,
-      }
-    );
-  }
-}
-
 export async function GET(req: NextRequest) {
   // req.body
   if (verifyTokenCustomer(req)) {
@@ -89,17 +42,21 @@ export async function GET(req: NextRequest) {
       },
       select: {
         id: true,
-        created_at: true,
         course: {
           select: {
             id: true,
             title: true,
-            price: true,
-            _count: {
+            is_free: true,
+            category: {
               select: {
-                chapter: true,
+                id: true,
+                name: true,
+                icon: true,
               },
             },
+            price: true,
+            thumbnail_img: true,
+            created_at: true,
           },
         },
       },

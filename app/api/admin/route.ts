@@ -15,12 +15,15 @@ export async function POST(req: Request) {
       result,
     });
   } catch (error) {
-    console.log({ error });
-
-    return Response.json({
-      status: 500,
-      message: "Internal server error",
-      result: error,
-    });
+    return Response.json(
+      {
+        statusbar: 500,
+        message: "Internal server error",
+        result: error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }

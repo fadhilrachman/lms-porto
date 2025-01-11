@@ -1,10 +1,23 @@
 import { prisma } from "@/lib/prisma";
 import { createPagination } from "@/lib/pagination-server";
+import { verifyTokenAdmin } from "@/lib/verify-token-server";
+import { NextRequest } from "next/server";
 
 export async function PUT(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { chapter_id: string } }
 ) {
+  if (verifyTokenAdmin(req)) {
+    return Response.json(
+      {
+        status: 403,
+        message: "Access Denied",
+      },
+      {
+        status: 403,
+      }
+    );
+  }
   const { chapter_id } = params;
   const { title } = await req.json();
   try {
@@ -22,20 +35,34 @@ export async function PUT(
       result,
     });
   } catch (error) {
-    console.log({ error });
-
-    return Response.json({
-      status: 500,
-      message: "Internal server error",
-      result: error,
-    });
+    return Response.json(
+      {
+        statusbar: 500,
+        message: "Internal server error",
+        result: error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }
 
 export async function DELETE(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { chapter_id: string } }
 ) {
+  if (verifyTokenAdmin(req)) {
+    return Response.json(
+      {
+        status: 403,
+        message: "Access Denied",
+      },
+      {
+        status: 403,
+      }
+    );
+  }
   const { chapter_id } = params;
   try {
     const result = await prisma.chapter.delete({
@@ -49,13 +76,16 @@ export async function DELETE(
       result,
     });
   } catch (error) {
-    console.log({ error });
-
-    return Response.json({
-      status: 500,
-      message: "Internal server error",
-      result: error,
-    });
+    return Response.json(
+      {
+        statusbar: 500,
+        message: "Internal server error",
+        result: error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }
 
@@ -76,12 +106,15 @@ export async function GET(
       result,
     });
   } catch (error) {
-    console.log({ error });
-
-    return Response.json({
-      status: 500,
-      message: "Internal server error",
-      result: error,
-    });
+    return Response.json(
+      {
+        statusbar: 500,
+        message: "Internal server error",
+        result: error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }
