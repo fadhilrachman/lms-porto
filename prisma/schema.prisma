@@ -16,7 +16,7 @@ datasource db {
 model User{
   id String @id @default(uuid())
   user_name String
-  email String 
+  email String @unique
   password String
   is_admin Boolean @default(false)
   created_at DateTime @default(now())
@@ -77,8 +77,8 @@ model Content{
   title String
   description String?
   content_vid String
-  position Int
-  is_finish Boolean @default(false)
+  position Int  
+  is_published Boolean @default(false)
 
   chapter Chapter @relation(fields: [chapter_id], references: [id])
   chapter_id String 

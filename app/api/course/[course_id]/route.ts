@@ -122,7 +122,16 @@ export async function GET(
             position: "asc",
           },
           include: {
-            content: true,
+            content: {
+              select: {
+                id: true,
+                title: true,
+                position: true,
+              },
+              orderBy: {
+                position: "asc",
+              },
+            },
           },
         },
       },
