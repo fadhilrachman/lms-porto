@@ -12,6 +12,8 @@ import { Input } from "@nextui-org/input";
 import FormGenerator, {
   DataFormType,
 } from "@/components/shared/form-generator";
+import { usePostCourse } from "@/hooks/course.hook";
+import { useRouter } from "next/navigation";
 const ModalCreateCourse = ({
   isOpen,
   onOpenChange,
@@ -19,18 +21,13 @@ const ModalCreateCourse = ({
   isOpen: boolean;
   onOpenChange: () => void;
 }) => {
+  const { mutateAsync, status, data } = usePostCourse();
+  const router = useRouter();
   const form = useForm();
   const dataForm: DataFormType[] = [
     {
-      name: "name",
+      name: "title",
       type: "text",
-      label: "Course Name",
-      placeholder: "Enter course name",
-      validation: { required: true },
-    },
-    {
-      name: "password",
-      type: "password",
       label: "Course Name",
       placeholder: "Enter course name",
       validation: { required: true },
@@ -45,8 +42,9 @@ const ModalCreateCourse = ({
             form={form}
             data={dataForm}
             id="courseForm"
-            onSubmit={(val) => {
-              console.log({ val });
+            onSubmit={async (val) => {
+              const result = await mutateAsync(val);
+              router.push(`/admin/course/${result?.result?.id}`);
             }}
           />
         </ModalBody>
@@ -54,7 +52,12 @@ const ModalCreateCourse = ({
           <Button onPress={onOpenChange} type="button">
             Close
           </Button>
-          <Button color="primary" type="submit" form="courseForm">
+          <Button
+            isLoading={status == "pending"}
+            color="primary"
+            type="submit"
+            form="courseForm"
+          >
             Submit
           </Button>
         </ModalFooter>

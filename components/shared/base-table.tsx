@@ -8,14 +8,14 @@ import {
   TableColumn,
 } from "@nextui-org/table";
 
-type Column<T> = {
+export type ColumnTable<T> = {
   key: keyof T | string;
   label: string;
   render?: (value: any, row: T) => React.ReactNode;
 };
 
 type ReusableTableProps<T> = {
-  columns: Column<T>[];
+  columns: ColumnTable<T>[];
   data: T[];
   isLoading?: boolean;
   loadingMessage?: string;
@@ -34,38 +34,19 @@ const BaseTable = <T extends Record<string, any>>({
           <TableColumn key={col.key as string}>{col.label}</TableColumn>
         ))}
       </TableHeader>
+
       <TableBody>
-        {isLoading ? (
-          <TableRow key="loading">
-            <TableCell style={{ textAlign: "center" }}>
-              loading..............
-            </TableCell>
-            <TableCell style={{ textAlign: "center" }}>
-              loading..............
-            </TableCell>
-            <TableCell style={{ textAlign: "center" }}>
-              loading..............
-            </TableCell>
+        {data.map((row, rowIndex) => (
+          <TableRow key={rowIndex}>
+            {columns.map((col) => (
+              <TableCell key={col.key as string}>
+                {col.render
+                  ? col.render(row[col.key as keyof T], row)
+                  : row[col.key as keyof T]}
+              </TableCell>
+            ))}
           </TableRow>
-        ) : data.length > 0 ? (
-          data.map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
-              {columns.map((col) => (
-                <TableCell key={col.key as string}>
-                  {col.render
-                    ? col.render(row[col.key as keyof T], row)
-                    : row[col.key as keyof T]}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))
-        ) : (
-          <TableRow key="no-data">
-            <TableCell colSpan={columns.length} style={{ textAlign: "center" }}>
-              No data available
-            </TableCell>
-          </TableRow>
-        )}
+        ))}
       </TableBody>
     </Table>
   );

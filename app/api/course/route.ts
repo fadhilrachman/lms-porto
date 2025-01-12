@@ -66,6 +66,7 @@ export async function GET(req: NextRequest) {
         id: true,
         title: true,
         is_free: true,
+        is_published: true,
         category: {
           select: {
             id: true,
@@ -73,6 +74,12 @@ export async function GET(req: NextRequest) {
             icon: true,
           },
         },
+        _count: {
+          select: {
+            chapter: true,
+          },
+        },
+        update_at: true,
         price: true,
         thumbnail_img: true,
         created_at: true,

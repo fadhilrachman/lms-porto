@@ -6,7 +6,7 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 
 export interface BaseResponseList<T> {
   message: string;
-  data: T[];
+  result: T[];
   pagination: {
     current: number;
     total_page: number;
