@@ -27,10 +27,10 @@ const CourseDetail = () => {
       title: "Content",
       href: "#contentCourse",
     },
-    {
-      title: "Review",
-      href: "#reviewCourse",
-    },
+    // {
+    //   title: "Review",
+    //   href: "#reviewCourse",
+    // },
   ];
   return (
     <div className="relative space-y-12  ">
