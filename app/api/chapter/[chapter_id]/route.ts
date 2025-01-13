@@ -99,6 +99,9 @@ export async function GET(
       where: {
         id: chapter_id as string,
       },
+      include: {
+        content: true,
+      },
     });
     return Response.json({
       status: 200,

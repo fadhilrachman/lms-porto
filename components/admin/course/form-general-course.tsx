@@ -7,6 +7,8 @@ import FormGenerator, {
   DataFormType,
 } from "@/components/shared/form-generator";
 import { useForm } from "react-hook-form";
+import { usePutCourse } from "@/hooks/course.hook";
+import { useParams } from "next/navigation";
 
 interface DataType {
   title: string;
@@ -20,14 +22,22 @@ const FormGeneralCourse = ({
   title,
   isLoading,
 }: DataType) => {
+  const { course_id } = useParams();
+  const { mutate, status } = usePutCourse(course_id as string);
   const form = useForm();
+  const dataNoUpdate =
+    form.watch("title") == title &&
+    form.watch("introduction_vid") == introduction_vid &&
+    form.watch("description") == description;
 
-  useEffect(() => {
+  const handleFillData = () => {
     form.setValue("title", title);
     form.setValue("introduction_vid", introduction_vid);
     form.setValue("description", description);
+  };
+  useEffect(() => {
+    handleFillData();
   }, [isLoading]);
-  console.log({ value: form.watch() });
 
   return (
     <Card title="asd">
@@ -38,7 +48,9 @@ const FormGeneralCourse = ({
         <FormGenerator
           form={form}
           id="courseForm"
-          onSubmit={(val) => {}}
+          onSubmit={(val) => {
+            mutate(val);
+          }}
           data={[
             {
               name: "title",
@@ -59,15 +71,15 @@ const FormGeneralCourse = ({
                 required: "This field is required",
               },
             },
-            {
-              name: "category_id",
-              type: "text",
-              label: "Category",
-              placeholder: "Enter Category",
-              validation: {
-                required: "This field is required",
-              },
-            },
+            // {
+            //   name: "category_id",
+            //   type: "text",
+            //   label: "Category",
+            //   placeholder: "Enter Category",
+            //   validation: {
+            //     required: "This field is required",
+            //   },
+            // },
             {
               name: "description",
               type: "text",
@@ -82,8 +94,16 @@ const FormGeneralCourse = ({
       </CardBody>
       <CardFooter>
         <div className="flex justify-end space-x-2 w-full">
-          <Button>Cancel</Button>
-          <Button color="primary" type="submit" form="courseForm">
+          <Button onPress={handleFillData} isDisabled={status == "pending"}>
+            Cancel
+          </Button>
+          <Button
+            isLoading={status == "pending"}
+            color="primary"
+            type="submit"
+            isDisabled={dataNoUpdate}
+            form="courseForm"
+          >
             Submit
           </Button>
         </div>

@@ -65,39 +65,26 @@ export const useGetDetailCourse = (id: string) => {
   return query;
 };
 
-export const useUpdateMasterShifting = (id: string) => {
+export const usePutCourse = (id: string) => {
   const queryClient = useQueryClient();
   const mutation = useMutation<any, Error>({
     mutationFn: async (body) => {
-      const result = await fetcher.put(`/operator/master-shifting/${id}`, body);
+      const result = await fetcher.put(`/course/${id}`, body);
       return result.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["LIST_MASTER_SHIFTING"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+      queryClient.invalidateQueries({ queryKey: ["DETAIL_COURSE"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
   useEffect(() => {
     const status = mutation.status;
     if (status == "success") {
-      const { data } = mutation;
-      toast("Succes create course", {});
+      toast.success("Success update course");
     }
 
     if (status == "error") {
       const error = mutation.error as AxiosError<any>;
-      const messageError =
-        (Object.values(error?.response?.data?.errors[0]) as any) ||
-        "Internal Server Error";
-      // toast({
-      //   title: 'Approval Error',
-      //   variant: 'destructive',
-      //   description: messageError
-      // });
-
-      //   enqueueSnackbar({
-      //     message: messageError[0][0] || "Internal Server Error",
-      //     variant: "error",
-      //   });
+      toast.error(error.response?.data.message);
     }
   }, [mutation.status]);
 

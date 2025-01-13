@@ -48,8 +48,6 @@ const FormGenerator = ({ form, data, onSubmit, id, className }: Props) => {
               control={form.control}
               rules={val.validation}
               render={({ field, fieldState }) => {
-                console.log({ error: fieldState.error });
-
                 return (
                   <Input
                     {...field}

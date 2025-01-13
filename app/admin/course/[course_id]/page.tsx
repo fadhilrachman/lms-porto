@@ -19,17 +19,28 @@ const AdminDetailCourse = () => {
         <div>
           <h3 className="text-2xl">Detail Course</h3>
           <p className="text-neutral-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus,
-            quisquam?
+            Manage your course details and chapters with ease
           </p>
         </div>
         <div className="flex space-x-2">
           <Button startContent={<Trash className="w-4 h-4" />} color="danger">
             Delete
           </Button>
-          <Button startContent={<Share className="w-4 h-4" />} color="primary">
-            Publish
-          </Button>
+          {data?.result.is_published ? (
+            <Button
+              startContent={<Share className="w-4 h-4" />}
+              color="primary"
+            >
+              Un Publish
+            </Button>
+          ) : (
+            <Button
+              startContent={<Share className="w-4 h-4" />}
+              color="primary"
+            >
+              Publish
+            </Button>
+          )}
         </div>
       </div>
       <div className="grid grid-cols-2 gap-8">
@@ -39,7 +50,7 @@ const AdminDetailCourse = () => {
           introduction_vid={data?.result.introduction_vid as string}
           isLoading={isFetching}
         />
-        <ListChapter />
+        <ListChapter data={data?.result.chapter || []} />
       </div>
     </div>
   );
