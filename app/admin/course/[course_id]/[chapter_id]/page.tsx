@@ -17,14 +17,6 @@ const AdminDetailChapter = () => {
             quisquam?
           </p>
         </div>
-        {/* <div className="flex space-x-2">
-          <Button startContent={<Trash className="w-4 h-4" />} color="danger">
-            Delete
-          </Button>
-          <Button startContent={<Share className="w-4 h-4" />} color="primary">
-            Publish
-          </Button>
-        </div> */}
       </div>
       <div className="grid grid-cols-2 gap-8">
         <Card title="asd">

@@ -13,3 +13,8 @@ export interface BaseResponseList<T> {
     total_data: number;
   };
 }
+
+export interface BaseResponse<T> {
+  message: string;
+  result: T;
+}

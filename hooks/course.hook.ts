@@ -1,6 +1,6 @@
 import { fetcher } from "@/lib/fetcher";
-import { BaseResponseList } from "@/types";
-import { CourseType } from "@/types/course.type";
+import { BaseResponse, BaseResponseList } from "@/types";
+import { CourseDetailType, CourseType } from "@/types/course.type";
 import { MasterShiftingType } from "@/types/master-shifting.type";
 
 import {
@@ -46,6 +46,18 @@ export const useGetCourse = (params: {
     queryKey: ["LIST_COURSE"],
     queryFn: async () => {
       const result = await fetcher.get("/course", { params });
+      return result.data;
+    },
+  });
+
+  return query;
+};
+
+export const useGetDetailCourse = (id: string) => {
+  const query = useQuery<BaseResponse<CourseDetailType>>({
+    queryKey: ["DETAIL_COURSE"],
+    queryFn: async () => {
+      const result = await fetcher.get(`/course/${id}`);
       return result.data;
     },
   });

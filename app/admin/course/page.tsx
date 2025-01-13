@@ -20,15 +20,21 @@ import { Chip } from "@nextui-org/chip";
 import { formatRupiah } from "@/lib/helper";
 import { CourseType } from "@/types/course.type";
 import ModalImg from "@/components/shared/modal-img";
-const AdminCourse = () => {
-  const [modal, setModal] = useState({ create: false, img: false });
-  const [isLoading, setIsLoading] = useState(true);
+import BaseInputSearch from "@/components/shared/base-input-search";
+import { useRouter } from "next/navigation";
 
-  const { data, isFetching } = useGetCourse({
+const AdminCourse = () => {
+  const router = useRouter();
+  const [modal, setModal] = useState({ create: false, img: false });
+  const [params, setPrams] = useState({ search: "" });
+  const { data, isFetching, refetch } = useGetCourse({
     page: 1,
     per_page: 10,
   });
 
+  useEffect(() => {
+    refetch();
+  }, [params]);
   const columns: ColumnTable<CourseType>[] = [
     {
       key: "title",
@@ -100,11 +106,14 @@ const AdminCourse = () => {
     {
       key: "sasd",
       label: "Action",
-      render: (value) => {
+      render: (_, obj) => {
         return (
           <>
             <Button
               // size={"small"}
+              onPress={() => {
+                router.push(`/admin/course/${obj.id}`);
+              }}
               size="sm"
               startContent={<Eye className="h-4 w-4" />}
               isIconOnly
@@ -129,10 +138,12 @@ const AdminCourse = () => {
           Create Course
         </Button>
       </div>
-      <Input
-        startContent={<Search />}
+
+      <BaseInputSearch
+        onChange={(e) => {
+          setPrams((p) => ({ ...p, search: e }));
+        }}
         placeholder="Search Course"
-        className="w-max"
       />
       <BaseTable
         columns={columns}
