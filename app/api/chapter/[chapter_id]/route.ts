@@ -7,17 +7,17 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: { chapter_id: string } }
 ) {
-  if (verifyTokenAdmin(req)) {
-    return Response.json(
-      {
-        status: 403,
-        message: "Access Denied",
-      },
-      {
-        status: 403,
-      }
-    );
-  }
+  // if (verifyTokenAdmin(req)) {
+  //   return Response.json(
+  //     {
+  //       status: 403,
+  //       message: "Access Denied",
+  //     },
+  //     {
+  //       status: 403,
+  //     }
+  //   );
+  // }
   const { chapter_id } = params;
   const { title } = await req.json();
   try {

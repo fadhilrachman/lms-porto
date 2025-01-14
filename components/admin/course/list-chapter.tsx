@@ -5,7 +5,7 @@ import { Grip, Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { Chip } from "@nextui-org/chip";
 import { ChapterType } from "@/types/chapter.type";
-import ModalCreateChapter from "./modal-create-chapter";
+import ModalCreateChapter from "./chapter/modal-create-chapter";
 
 const ListChapter = ({ data }: { data: ChapterType[] }) => {
   const { course_id } = useParams();
@@ -29,7 +29,7 @@ const ListChapter = ({ data }: { data: ChapterType[] }) => {
               setModal((p) => ({ ...p, chapterCreate: true }));
             }}
           >
-            Create Course
+            Create Chapter
           </Button>
         </div>
       </CardHeader>
@@ -46,7 +46,7 @@ const ListChapter = ({ data }: { data: ChapterType[] }) => {
               <div
                 key={key}
                 onClick={() => {
-                  router.push(`/admin/course/${course_id}/${key}`);
+                  router.push(`/admin/course/${course_id}/${val.id}`);
                 }}
                 className="bg-[#27272A] cursor-pointer py-2.5 px-3 rounded-xl flex items-center justify-between "
               >

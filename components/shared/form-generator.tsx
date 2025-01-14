@@ -52,7 +52,6 @@ const FormGenerator = ({ form, data, onSubmit, id, className }: Props) => {
                   <Input
                     {...field}
                     type="text"
-                    isRequired
                     label={val.label}
                     labelPlacement="outside"
                     placeholder={val.placeholder}

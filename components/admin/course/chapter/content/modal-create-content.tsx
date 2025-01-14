@@ -13,24 +13,26 @@ import FormGenerator, {
   DataFormType,
 } from "@/components/shared/form-generator";
 import { usePostCourse } from "@/hooks/course.hook";
-import { useRouter } from "next/navigation";
-const ModalCreateChapter = ({
+import { useParams, useRouter } from "next/navigation";
+import { usePostChapter } from "@/hooks/chapter.hook";
+const ModalCreateContent = ({
   isOpen,
   onOpenChange,
 }: {
   isOpen: boolean;
   onOpenChange: () => void;
 }) => {
-  const { mutateAsync, status, data } = usePostCourse();
+  const { mutateAsync, status, data } = usePostChapter();
   const router = useRouter();
+  const { course_id } = useParams();
   const form = useForm();
   const dataForm: DataFormType[] = [
     {
       name: "title",
       type: "text",
-      label: "Course Name",
-      placeholder: "Enter course name",
-      validation: { required: true },
+      label: "Chapter Name",
+      placeholder: "Enter chapter name",
+      validation: { required: "This field is required" },
     },
   ];
   return (
@@ -43,10 +45,12 @@ const ModalCreateChapter = ({
           <FormGenerator
             form={form}
             data={dataForm}
-            id="courseForm"
+            id="chapterForm"
             onSubmit={async (val) => {
-              const result = await mutateAsync(val);
-              router.push(`/admin/course/${result?.result?.id}`);
+              await mutateAsync({ ...val, course_id });
+              form.reset();
+              onOpenChange();
+              // router.push(`/admin/course/${result?.result?.id}`);
             }}
           />
         </ModalBody>
@@ -58,7 +62,7 @@ const ModalCreateChapter = ({
             isLoading={status == "pending"}
             color="primary"
             type="submit"
-            form="courseForm"
+            form="chapterForm"
           >
             Submit
           </Button>
@@ -68,4 +72,4 @@ const ModalCreateChapter = ({
   );
 };
 
-export default ModalCreateChapter;
+export default ModalCreateContent;
