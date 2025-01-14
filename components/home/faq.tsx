@@ -3,24 +3,23 @@ import { Accordion, AccordionItem } from "@nextui-org/accordion";
 const Faq = () => {
   const listDataAccordion = [
     {
-      title: "Can a beginner join in?",
+      title: "What is an LMS?",
       description:
-        "BuildWithAngga menyediakan mentor dan kelas online UI/UX Design, Web Development, Freelancer, Data Science yang bisa dipelajari secara gratis, sangat dianjurkan untuk pemula atau Anda yang ingin switch career. Setelah menyelesaikan kelas gratis, BuildWithAngga menyarankan Anda mengikuti kelas Premium dalam membangun portfolio yang digunakan sebagai modal bekerja.",
+        "An LMS is a web-based learning management system that allows users to access training materials, take exams, and track learning progress online.",
     },
     {
-      title: "Can a beginner join in?",
+      title: "What are the main features available in this LMS?",
       description:
-        "BuildWithAngga menyediakan mentor dan kelas online UI/UX Design, Web Development, Freelancer, Data Science yang bisa dipelajari secara gratis, sangat dianjurkan untuk pemula atau Anda yang ingin switch career. Setelah menyelesaikan kelas gratis, BuildWithAngga menyarankan Anda mengikuti kelas Premium dalam membangun portfolio yang digunakan sebagai modal bekerja.",
+        "User management (admin, user), Virtual classes and learning modules, Interactive quizzes and project-based assignments, Reporting and analysis of learning performance, Certification upon course completion.",
     },
     {
-      title: "Can a beginner join in?",
-      description:
-        "BuildWithAngga menyediakan mentor dan kelas online UI/UX Design, Web Development, Freelancer, Data Science yang bisa dipelajari secara gratis, sangat dianjurkan untuk pemula atau Anda yang ingin switch career. Setelah menyelesaikan kelas gratis, BuildWithAngga menyarankan Anda mengikuti kelas Premium dalam membangun portfolio yang digunakan sebagai modal bekerja.",
+      title: "Can I access this LMS via mobile device?",
+      description: "Yes! The LMS is compatible with desktop, tablet, and smartphone devices via browser.",
     },
     {
-      title: "Can a beginner join in?",
+      title: "How to register as a user?",
       description:
-        "BuildWithAngga menyediakan mentor dan kelas online UI/UX Design, Web Development, Freelancer, Data Science yang bisa dipelajari secara gratis, sangat dianjurkan untuk pemula atau Anda yang ingin switch career. Setelah menyelesaikan kelas gratis, BuildWithAngga menyarankan Anda mengikuti kelas Premium dalam membangun portfolio yang digunakan sebagai modal bekerja.",
+        "To register, click the “Register” button on the main page, fill out the registration form, and confirm via the email sent.",
     },
   ];
   return (
