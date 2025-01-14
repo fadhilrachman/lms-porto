@@ -1,5 +1,6 @@
 import { fetcher } from "@/lib/fetcher";
 import { BaseResponse, BaseResponseList } from "@/types";
+import { ChapterType } from "@/types/chapter.type";
 import { CourseDetailType, CourseType } from "@/types/course.type";
 import { MasterShiftingType } from "@/types/master-shifting.type";
 
@@ -14,72 +15,23 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
-export const usePostCourse = () => {
-  const mutation = useMutation<any, Error>({
-    mutationFn: async (body) => {
-      const result = await fetcher.post("/course", body);
-      return result.data;
-    },
-  });
-
-  useEffect(() => {
-    const status = mutation.status;
-    if (status == "success") {
-      toast.success("Success create course");
-    }
-
-    if (status == "error") {
-      const error = mutation.error as AxiosError<any>;
-      toast.error(error.response?.data.message);
-    }
-  }, [mutation.status]);
-
-  return mutation;
-};
-
-export const useGetCourse = (params: {
-  page: number;
-  per_page: number;
-  search?: string;
-}) => {
-  const query = useQuery<BaseResponseList<CourseType>>({
-    queryKey: ["LIST_COURSE"],
-    queryFn: async () => {
-      const result = await fetcher.get("/course", { params });
-      return result.data;
-    },
-  });
-
-  return query;
-};
-
-export const useGetDetailCourse = (id: string) => {
-  const query = useQuery<BaseResponse<CourseDetailType>>({
-    queryKey: ["DETAIL_COURSE"],
-    queryFn: async () => {
-      const result = await fetcher.get(`/course/${id}`);
-      return result.data;
-    },
-  });
-
-  return query;
-};
-
-export const usePutCourse = (id: string) => {
+export const usePostChapter = () => {
   const queryClient = useQueryClient();
+
   const mutation = useMutation<any, Error>({
     mutationFn: async (body) => {
-      const result = await fetcher.put(`/course/${id}`, body);
+      const result = await fetcher.post("/chapter", body);
       return result.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["DETAIL_COURSE"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
+
   useEffect(() => {
     const status = mutation.status;
     if (status == "success") {
-      toast.success("Success update course");
+      toast.success("Success create chapter");
     }
 
     if (status == "error") {
@@ -91,7 +43,45 @@ export const usePutCourse = (id: string) => {
   return mutation;
 };
 
-export const useDeleteMasterShifting = () => {
+export const useGetDetailChapter = (id: string) => {
+  const query = useQuery<BaseResponse<ChapterType>>({
+    queryKey: ["DETAIL_CHAPTER"],
+    queryFn: async () => {
+      const result = await fetcher.get(`/chapter/${id}`);
+      return result.data;
+    },
+  });
+
+  return query;
+};
+
+export const usePutChapter = (id: string) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation<any, Error>({
+    mutationFn: async (body) => {
+      const result = await fetcher.put(`/chapter/${id}`, body);
+      return result.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["DETAIL_CHAPTER"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+    },
+  });
+  useEffect(() => {
+    const status = mutation.status;
+    if (status == "success") {
+      toast.success("Success update chapter");
+    }
+
+    if (status == "error") {
+      const error = mutation.error as AxiosError<any>;
+      toast.error(error.response?.data.message);
+    }
+  }, [mutation.status]);
+
+  return mutation;
+};
+
+export const useDeleteChapter = () => {
   //   const { enqueueSnackbar } = useSnackbar();
   const queryClient = useQueryClient();
   // const { toast } = useToast();

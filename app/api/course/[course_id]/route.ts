@@ -7,17 +7,6 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: { course_id: string } }
 ) {
-  if (verifyTokenAdmin(req)) {
-    return Response.json(
-      {
-        status: 403,
-        message: "Access Denied",
-      },
-      {
-        status: 403,
-      }
-    );
-  }
   const { course_id } = params;
   const {
     title,
@@ -143,6 +132,7 @@ export async function GET(
                 id: true,
                 title: true,
                 position: true,
+                is_published: true,
               },
               orderBy: {
                 position: "asc",
