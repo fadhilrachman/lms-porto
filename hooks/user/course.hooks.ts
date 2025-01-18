@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
-import { CourseType } from "@/types/user/course.type";
+import { CourseType, CourseDetailType } from "@/types/user/course.type";
 import { BaseResponse, BaseResponseList } from "@/types";
 import { fetcher } from "@/lib/fetcher";
 
@@ -19,18 +19,12 @@ export const useGetCourse = (params: {
       return result.data;
     },
   }); 
-  
-//   useEffect(() => {
-    
-//   }, [query.isFetching]);
-
-
 
   return query;
 };
 
 export const useGetDetailCourse = (id: string) => {
-  const query = useQuery({
+  const query = useQuery<BaseResponse<CourseDetailType>>({
     queryKey: ["USER_DETAIL_COURSE"],
     queryFn: async () => {
       const result = await fetcher.get(`/profile/course/${id}`);
