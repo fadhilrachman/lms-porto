@@ -1,5 +1,5 @@
 import { CategoryType } from "./category.type";
-// import { ChapterType } from "./chapter.type";
+import { ChapterType } from "./chapter.type";
 
 export interface CourseType {
   id: string,
@@ -14,17 +14,17 @@ export interface CourseType {
   }
 }
 
-// export interface CourseDetailType {
-//   id: string;
-//   title: string;
-//   is_free: boolean;
-//   price: number;
-//   thumbnail_img: string;
-//   created_at: Date;
-//   introduction_vid: string;
-//   is_published: string;
-//   category: CategoryType;
-//   description: string;
-//   resource: string;
-//   chapter: ChapterType[];
-// }
+export interface CourseDetailType {
+  id: string;
+  title: string;
+  is_free: boolean;
+  price: number;
+  thumbnail_img: string;
+  created_at: Date;
+  introduction_vid: string;
+  is_published: string;
+  category: CategoryType;
+  description: string;
+  resource: string;
+  chapter: ChapterType[];
+}
