@@ -51,7 +51,7 @@ const UserCourse = () => {
           : 
           (data.result).map((obj, key) =>
             (
-              <button key={key} className="w-1/3" onClick={() => router.push(`/course/${obj.course.id}/learn`)}>
+              <button key={key} className="w-1/3" onClick={() => router.push(`/course/${obj.course.id}/learn/${'dummyId'}`)}>
                 <Card
                   className="py-4 w-full cursor-pointer hover:scale-95"
                 >
