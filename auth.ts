@@ -1,6 +1,12 @@
 import NextAuth from "next-auth"
 import "next-auth/jwt"
 import Credentials from "next-auth/providers/credentials";
+import axios from "axios";
+// import Cookies from "js-cookie";
+// const myCookie = Cookies.get(process.env.COOKIE_NAME as string);
+// const myCookie = Cookies.get("authjs.session-token");
+
+import { fetcher } from "@/lib/fetcher";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: !!process.env.AUTH_DEBUG,
@@ -12,29 +18,56 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
+        // DAPATKAN KREDENSIAL DARI FORM LOGIN
         console.log("CREDENTIAL =", credentials);
+        
+        // TIDAK JALAN HASIL IMPORT AXIOS
+        // console.log("BASE URL =", fetcher.defaults.baseURL);
+        // const res = await fetcher.post("/auth/login", {
+          //   email: credentials?.email,
+          //   password: credentials?.password,
+          // });
 
-        const res = await fetch("https://forum-api.dicoding.dev/v1/login", {
-          method: "POST",
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
-          headers: { "Content-Type": "application/json" },
+        // fetcher.interceptors.request.use(
+        //   async (config) => {
+        //     const accessToken = Cookies.get("authjs.session-token");
+        //     console.log('COOKIES TOKEN=', accessToken);
+            
+        //     if (accessToken != null && accessToken.length != 0) {
+        //       config.headers.Authorization = `Bearer ${accessToken}`;
+        
+        //       return config;
+        //     }
+        
+        //     return config;
+        //   },
+        //   (error) => Promise.reject(error)
+        // );
+        
+        // BUAT AXIOS TERPISAH JALAN
+        console.log("BASE URL =", process.env.VERCEL_URL);
+        const res = await axios.post(`${process.env.VERCEL_URL}/api/auth/login`, {
+          email: credentials?.email,
+          password: credentials?.password,
         });
 
-        const user = await res.json();
-        console.log("USER =", user);
+        console.log("RES DATA =", res.data);
+        const { token } = res.data;
+        
+        fetcher.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        // const user = await res.json();
+        // console.log("USER =", user);
                 
         // If no error and we have user data, return it
-        if (res.ok && user) {
+        console.log("RES STATUS=", res.status);
+        if (res.status == 200) {          
           // return user;
           return {
-            id: "1",
+            id: "",
             email: credentials.email,
-            name: "Sung Jin Woo",
-            role: "ADMIN",
-            accessToken: user?.data?.token
+            name: "",
+            role: "",
+            accessToken: token
           };
         }
 
