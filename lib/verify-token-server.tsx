@@ -21,7 +21,6 @@ export function verifyTokenCustomer(req: NextRequest) {
         message: "Access Denied. No token provided.",
       });
     }
-    console.log({ decoded });
 
     req.headers.set("user", JSON.stringify(decoded) as any);
     // next(); // Lanjutkan ke handler berikutnya

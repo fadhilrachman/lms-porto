@@ -1,6 +1,7 @@
 import { fetcher } from "@/lib/fetcher";
 import { BaseResponse, BaseResponseList } from "@/types";
 import { ChapterType } from "@/types/chapter.type";
+import { ContentType } from "@/types/content.type";
 import { CourseDetailType, CourseType } from "@/types/course.type";
 import { MasterShiftingType } from "@/types/master-shifting.type";
 
@@ -15,23 +16,23 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
-export const usePostChapter = () => {
+export const usePostContent = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<any, Error>({
     mutationFn: async (body) => {
-      const result = await fetcher.post("/chapter", body);
+      const result = await fetcher.post("/content", body);
       return result.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["DETAIL_COURSE"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+      queryClient.invalidateQueries({ queryKey: ["DETAIL_CHAPTER"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
 
   useEffect(() => {
     const status = mutation.status;
     if (status == "success") {
-      toast.success("Success create chapter");
+      toast.success("Success create content");
     }
 
     if (status == "error") {
@@ -43,11 +44,11 @@ export const usePostChapter = () => {
   return mutation;
 };
 
-export const useGetDetailChapter = (id: string) => {
-  const query = useQuery<BaseResponse<ChapterType>>({
-    queryKey: ["DETAIL_CHAPTER"],
+export const useGetDetailContent = (id: string) => {
+  const query = useQuery<BaseResponse<ContentType>>({
+    queryKey: ["DETAIL_CONTENT"],
     queryFn: async () => {
-      const result = await fetcher.get(`/chapter/${id}`);
+      const result = await fetcher.get(`/content/${id}`);
       return result.data;
     },
   });
@@ -55,21 +56,21 @@ export const useGetDetailChapter = (id: string) => {
   return query;
 };
 
-export const usePutChapter = (id: string) => {
+export const usePutContent = (id: string) => {
   const queryClient = useQueryClient();
   const mutation = useMutation<any, Error>({
     mutationFn: async (body) => {
-      const result = await fetcher.put(`/chapter/${id}`, body);
+      const result = await fetcher.put(`/content/${id}`, body);
       return result.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["DETAIL_CHAPTER"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+      queryClient.invalidateQueries({ queryKey: ["DETAIL_CONTENT"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
   useEffect(() => {
     const status = mutation.status;
     if (status == "success") {
-      toast.success("Success update chapter");
+      toast.success("Success update content");
     }
 
     if (status == "error") {
@@ -81,45 +82,48 @@ export const usePutChapter = (id: string) => {
   return mutation;
 };
 
-export const useDeleteChapter = () => {
-  //   const { enqueueSnackbar } = useSnackbar();
-  const queryClient = useQueryClient();
-  // const { toast } = useToast();
-  const mutation = useMutation<any, Error, string>({
-    mutationFn: async (id: string) => {
-      const result = await fetcher.delete(`/operator/master-shifting/${id}`);
+export const useDeleteContent = (id: string) => {
+  const mutation = useMutation<any, Error>({
+    mutationFn: async (body) => {
+      const result = await fetcher.delete(`/content/${id}`);
       return result.data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["LIST_MASTER_SHIFTING"] }); // Menggunakan invalidateQueries untuk memicu ulang query
-    },
   });
-
   useEffect(() => {
     const status = mutation.status;
     if (status == "success") {
-      // toast({
-      //   title: 'Sukses',
-      //   description: 'Sukses hapus master shifting'
-      // });
+      toast.success("Success delete content");
     }
 
     if (status == "error") {
       const error = mutation.error as AxiosError<any>;
+      toast.error(error.response?.data.message);
+    }
+  }, [mutation.status]);
 
-      const messageError = Object.values(
-        error.response?.data.errors?.[0] || {}
-      ) as any;
-      // toast({
-      //   title: 'Error hapus master shifting',
-      //   variant: 'destructive',
-      //   description: messageError || 'Internal Server Error'
-      // });
+  return mutation;
+};
 
-      //   enqueueSnackbar({
-      //     message: messageError?.[0]?.[0] || "Internal Server Error",
-      //     variant: "error",
-      //   });
+export const usePatchContent = (id: string) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation<any, Error, any>({
+    mutationFn: async (body) => {
+      const result = await fetcher.patch(`/content/${id}`, body);
+      return result.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["DETAIL_CONTENT"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+    },
+  });
+  useEffect(() => {
+    const status = mutation.status;
+    if (status == "success") {
+      toast.success("Success publish content");
+    }
+
+    if (status == "error") {
+      const error = mutation.error as AxiosError<any>;
+      toast.error(error.response?.data.message);
     }
   }, [mutation.status]);
 

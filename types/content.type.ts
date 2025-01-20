@@ -4,4 +4,5 @@ export interface ContentType {
   position: number;
   is_published: boolean;
   content_vid: string;
+  description: string;
 }

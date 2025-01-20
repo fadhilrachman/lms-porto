@@ -52,17 +52,17 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { content_id: string } }
 ) {
-  if (verifyTokenAdmin(req)) {
-    return Response.json(
-      {
-        status: 403,
-        message: "Access Denied",
-      },
-      {
-        status: 403,
-      }
-    );
-  }
+  // if (verifyTokenAdmin(req)) {
+  //   return Response.json(
+  //     {
+  //       status: 403,
+  //       message: "Access Denied",
+  //     },
+  //     {
+  //       status: 403,
+  //     }
+  //   );
+  // }
   const { content_id } = params;
   const { is_published } = await req.json();
   try {
@@ -113,6 +113,36 @@ export async function DELETE(
     return Response.json({
       status: 200,
       message: "Success delete content",
+      result,
+    });
+  } catch (error) {
+    return Response.json(
+      {
+        statusbar: 500,
+        message: "Internal server error",
+        result: error,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+export async function GET(
+  req: Request,
+  { params }: { params: { content_id: string } }
+) {
+  const { content_id } = params;
+  try {
+    const result = await prisma.content.findUnique({
+      where: {
+        id: content_id as string,
+      },
+    });
+    return Response.json({
+      status: 200,
+      message: "Success get content",
       result,
     });
   } catch (error) {
