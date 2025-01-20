@@ -13,6 +13,7 @@ import {
   NavbarItem,
 } from "@nextui-org/navbar";
 import { Link, SearchCodeIcon } from "lucide-react";
+import { nextAuthSignOut } from "@/lib/server-action/next-auth-actions";
 
 export const AcmeLogo = () => {
   return (
@@ -69,7 +70,7 @@ export default function NavbarUser() {
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem key="logout" color="danger" onPress={nextAuthSignOut}>
               Log Out
             </DropdownItem>
           </DropdownMenu>
