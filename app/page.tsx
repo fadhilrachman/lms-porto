@@ -1,4 +1,6 @@
 "use client";
+
+import { useEffect } from "react";
 import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
 import ListCourse from "@/components/home/list-course";
@@ -11,8 +13,23 @@ import Community from "@/components/home/community";
 import Footer from "@/components/home/footer";
 import { useRouter } from "next/navigation";
 
+import { useGetCookie } from 'cookies-next';
+import Cookies from "js-cookie";
+
 export default function Home() {
   const router = useRouter();
+  const getCookie = useGetCookie();
+  
+  useEffect(() => {
+    // const token = Cookies.get('yourCookieName');
+    const docCookie = document.cookie
+    console.log('DOCUMENT COOKIE=', docCookie); // Nilai cookie tertentu
+    const myCookie = Cookies.get(process.env.COOKIE_NAME as string);
+    console.log('MY COOKIE=', myCookie); // Nilai cookie tertentu
+    const value = getCookie('authjs.session-token');
+    console.log('USECOOKIE COOKIE=', value); // Nilai cookie tertentu
+  }, []);
+
   return (
     <div className="relative flex flex-col w-full h-screen">
       <Navbar />
