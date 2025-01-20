@@ -82,6 +82,20 @@ export const Navbar = () => {
         <ThemeSwitch />
 
         {/* <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem> */}
+        <NextLink
+          className={clsx(
+            linkStyles({ color: "foreground" }),
+            "data-[active=true]:text-primary data-[active=true]:font-medium"
+          )}
+          color="foreground"
+          href={"/login"}
+        >
+          <Button
+            color="primary"
+          >
+            Login
+          </Button>
+        </NextLink>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
