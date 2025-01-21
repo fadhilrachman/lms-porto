@@ -23,16 +23,21 @@ export async function POST(req: Request) {
         password: hashedPassword,
         user_name,
         email,
-        is_admin: false,
+        is_admin: true,
       },
     });
     return Response.json({ status: 201, message: "Success register" });
   } catch (error) {
     console.log({ error });
-    return Response.json({
-      status: 500,
-      message: "Internal server error",
-      result: error,
-    });
+    return Response.json(
+      {
+        status: 500,
+        message: "Internal server error",
+        result: error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }

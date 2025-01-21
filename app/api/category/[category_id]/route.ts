@@ -20,6 +20,8 @@ export async function PUT(
   }
   const { category_id } = params;
   const { name, icon } = await req.json();
+  console.log({ name, icon });
+
   try {
     const result = await prisma.category.update({
       data: {

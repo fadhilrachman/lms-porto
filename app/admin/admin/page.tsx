@@ -14,6 +14,8 @@ import {
 import BaseTable from "@/components/shared/base-table";
 import { Pagination } from "@nextui-org/pagination";
 import ModalCreateCourse from "@/components/admin/course/modal-create-course";
+import ListAdmin from "@/components/admin/admin/list-admin";
+import CreateAdmin from "@/components/admin/admin/create-admin";
 const Admin = () => {
   const [data, setData] = useState<any[]>([]);
   const [modal, setModal] = useState({ create: false });
@@ -42,30 +44,8 @@ const Admin = () => {
           Create Admin
         </Button>
       </div>
-      <Input
-        startContent={<Search />}
-        placeholder="Search Course"
-        className="w-max"
-      />
-      <BaseTable
-        columns={columns}
-        data={[
-          { name: "Tony Reichert", role: "CEO", status: "Active" },
-          { name: "Zoey Lang", role: "Technical Lead", status: "Paused" },
-          { name: "Jane Fisher", role: "Senior Developer", status: "Active" },
-          {
-            name: "William Howard",
-            role: "Community Manager",
-            status: "Vacation",
-          },
-        ]}
-        isLoading={false}
-      />
-      <div className="flex justify-between items-center">
-        <p>Show 5 data from 10</p>
-        <Pagination loop showControls initialPage={1} total={5} />
-      </div>
-      <ModalCreateCourse
+      <ListAdmin />
+      <CreateAdmin
         isOpen={modal.create}
         onOpenChange={() => {
           setModal((p) => ({ ...p, create: false }));

@@ -1,36 +1,49 @@
 "use client";
-
 import React from "react";
-import { useRouter } from "next/navigation";
-
-import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
-import FormGenerator from "@/components/shared/form-generator";
-import { useForm } from "react-hook-form";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
-import { usePostRegister } from "@/hooks/auth.hook";
-import { PostRegisterType } from "@/types/auth.type";
+import { useForm } from "react-hook-form";
+import FormGenerator, {
+  DataFormType,
+} from "@/components/shared/form-generator";
+import * as VscIcons from "react-icons/si";
+import BaseIcon from "@/components/shared/base-icon";
+import { usePostCategory } from "@/hooks/category.hook";
+import { usePostAdmin } from "@/hooks/admin.hook";
 
-export default function Register() {
-  const router = useRouter();
-  const { mutateAsync, status } = usePostRegister();
+const CreateAdmin = ({
+  isOpen,
+  onOpenChange,
+}: {
+  isOpen: boolean;
+  onOpenChange: () => void;
+}) => {
   const form = useForm();
-  const handleRegister = async (val: PostRegisterType) => {
+  const availableIcons = Object.keys(VscIcons);
+
+  const { mutateAsync, status } = usePostAdmin();
+
+  const handleCreateAdmin = async (val: any) => {
     await mutateAsync(val);
-    router.push("/login");
+    form.reset();
+    onOpenChange();
   };
   return (
-    <div className="flex h-screen items-center justify-center">
-      <Card className="w-[500px]">
-        <CardHeader>
-          <h3 className="text-2xl">Register</h3>
-        </CardHeader>
-        <CardBody>
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <ModalContent>
+        <ModalHeader className="flex flex-col gap-1">Create Admin</ModalHeader>
+        <ModalBody>
           <FormGenerator
-            key={1}
+            onSubmit={handleCreateAdmin}
+            id="formCreateAdmin"
             form={form}
-            id="formRegister"
             disabled={status == "pending"}
-            onSubmit={handleRegister}
             data={[
               {
                 name: "user_name",
@@ -81,27 +94,23 @@ export default function Register() {
               },
             ]}
           />
-        </CardBody>
-        <CardFooter className="">
-          <div className="w-full space-y-2">
-            <Button
-              className="w-full"
-              type="submit"
-              form="formRegister"
-              color="primary"
-              isLoading={status == "pending"}
-            >
-              Register
-            </Button>
-            <p className="text-sm">
-              Already have an account?{" "}
-              <a href="/login" className="text-blue-400">
-                Login
-              </a>
-            </p>
-          </div>
-        </CardFooter>
-      </Card>
-    </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button onPress={onOpenChange} type="button">
+            Close
+          </Button>
+          <Button
+            type="submit"
+            form="formCreateAdmin"
+            isLoading={status == "pending"}
+            color="primary"
+          >
+            Submit
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
-}
+};
+
+export default CreateAdmin;

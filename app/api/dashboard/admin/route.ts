@@ -23,7 +23,10 @@ export async function POST(req: NextRequest) {
       where: { email },
     });
     if (checkDuplicateEmail)
-      return Response.json({ status: 401, message: "Email already registerd" });
+      return Response.json(
+        { status: 401, message: "Email already registerd" },
+        { status: 401 }
+      );
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await prisma.user.create({
@@ -37,17 +40,21 @@ export async function POST(req: NextRequest) {
     return Response.json({ status: 201, message: "Success register" });
   } catch (error) {
     console.log({ error });
-    return Response.json({
-      status: 500,
-      message: "Internal server error",
-      result: error,
-    });
+    return Response.json(
+      {
+        status: 500,
+        message: "Internal server error",
+        result: error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const course_id = searchParams.get("course_id") || null;
   const page = Number(searchParams.get("page") || 1);
   const per_page = Number(searchParams.get("per_page") || 10);
   const skip = (page - 1) * per_page;

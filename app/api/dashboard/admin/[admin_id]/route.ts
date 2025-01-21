@@ -19,7 +19,7 @@ export async function PUT(
     );
   }
   const { admin_id } = params;
-  const { user_name, email, password, is_admin = false } = await req.json();
+  const { user_name, email } = await req.json();
 
   try {
     const result = await prisma.user.update({

@@ -7,7 +7,7 @@ export function verifyTokenCustomer(req: NextRequest) {
 
   if (!token)
     return Response.json({
-      status: 401,
+      status: 403,
       message: "Access Denied. No token provided.",
     });
   const tokenWithoutBearer = token.startsWith("Bearer ")
@@ -39,11 +39,11 @@ export function verifyTokenAdmin(req: NextRequest) {
   if (!token)
     return Response.json(
       {
-        status: 401,
+        status: 403,
         message: "Access Denied. No token provided.",
       },
       {
-        status: 401,
+        status: 403,
       }
     );
   const tokenWithoutBearer = token.startsWith("Bearer ")
@@ -58,7 +58,7 @@ export function verifyTokenAdmin(req: NextRequest) {
           message: "Access Denied. No token provided.",
         },
         {
-          status: 401,
+          status: 403,
         }
       );
     }
