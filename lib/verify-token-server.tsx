@@ -16,10 +16,15 @@ export function verifyTokenCustomer(req: NextRequest) {
 
   return jwt.verify(tokenWithoutBearer, "asdasdasd", (err, decoded) => {
     if (err) {
-      return Response.json({
-        status: 403,
-        message: "Access Denied. No token provided.",
-      });
+      return Response.json(
+        {
+          status: 403,
+          message: "Access Denied. No token provided.",
+        },
+        {
+          status: 403,
+        }
+      );
     }
 
     req.headers.set("user", JSON.stringify(decoded) as any);
@@ -32,27 +37,42 @@ export function verifyTokenAdmin(req: NextRequest) {
   const token = req.headers.get("authorization");
 
   if (!token)
-    return Response.json({
-      status: 401,
-      message: "Access Denied. No token provided.",
-    });
+    return Response.json(
+      {
+        status: 401,
+        message: "Access Denied. No token provided.",
+      },
+      {
+        status: 401,
+      }
+    );
   const tokenWithoutBearer = token.startsWith("Bearer ")
     ? token.slice(7)
     : token;
 
   return jwt.verify(tokenWithoutBearer, "asdasdasd", (err, decoded: any) => {
     if (err) {
-      return Response.json({
-        status: 403,
-        message: "Access Denied. No token provided.",
-      });
+      return Response.json(
+        {
+          status: 403,
+          message: "Access Denied. No token provided.",
+        },
+        {
+          status: 401,
+        }
+      );
     }
 
     if (!decoded?.is_admin) {
-      return Response.json({
-        status: 403,
-        message: "Access Denied. Only Admin Can Access",
-      });
+      return Response.json(
+        {
+          status: 403,
+          message: "Access Denied. Only Admin Can Access",
+        },
+        {
+          status: 403,
+        }
+      );
     }
 
     req.headers.set("user", JSON.stringify(decoded) as any);

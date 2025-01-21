@@ -1,3 +1,4 @@
+"use client";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -8,9 +9,7 @@ import {
   NavbarMenuItem,
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
 import { Link } from "@nextui-org/link";
-import { Input } from "@nextui-org/input";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
@@ -25,29 +24,30 @@ import {
   SearchIcon,
   Logo,
 } from "@/components/icons";
+import { Avatar } from "@nextui-org/avatar";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/dropdown";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const Navbar = () => {
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
-      }}
-      endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
-          K
-        </Kbd>
-      }
-      labelPlacement="outside"
-      placeholder="Search Course...."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
-  );
+  const [myCookie, setMyCookie] = useState<string | undefined>(undefined);
+  const router = useRouter();
+  const handleLogout = () => {
+    Cookies.remove(process.env.COOKIE_NAME as string);
+    router.push("/login");
+  };
 
+  useEffect(() => {
+    // Pastikan cookie dibaca hanya di klien
+    const cookie = Cookies.get(process.env.COOKIE_NAME as string);
+    setMyCookie(cookie);
+  }, []);
   return (
     <NextUINavbar maxWidth="full" position="sticky" className="shadow px-16">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -79,23 +79,47 @@ export const Navbar = () => {
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <ThemeSwitch />
+        {myCookie ? (
+          <Dropdown placement="bottom-end">
+            <DropdownTrigger>
+              <Avatar
+                isBordered
+                as="button"
+                className="transition-transform"
+                color="secondary"
+                name="Jason Hughes"
+                size="sm"
+                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+              />
+            </DropdownTrigger>
 
-        {/* <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem> */}
-        <NextLink
-          className={clsx(
-            linkStyles({ color: "foreground" }),
-            "data-[active=true]:text-primary data-[active=true]:font-medium"
-          )}
-          color="foreground"
-          href={"/login"}
-        >
-          <Button
-            color="primary"
+            <DropdownMenu aria-label="Profile Actions" variant="flat">
+              <DropdownItem
+                key="help_and_feedback"
+                onPress={() => {
+                  router.push("/profile/course");
+                }}
+              >
+                Profile
+              </DropdownItem>
+
+              <DropdownItem key="logout" color="danger" onPress={handleLogout}>
+                Log Out
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        ) : (
+          <NextLink
+            className={clsx(
+              linkStyles({ color: "foreground" }),
+              "data-[active=true]:text-primary data-[active=true]:font-medium"
+            )}
+            color="foreground"
+            href={"/login"}
           >
-            Login
-          </Button>
-        </NextLink>
+            <Button color="primary">Login</Button>
+          </NextLink>
+        )}
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
@@ -107,7 +131,6 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        {searchInput}
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>

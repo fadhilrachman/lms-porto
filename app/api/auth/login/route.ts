@@ -13,14 +13,20 @@ export async function POST(req: Request) {
     });
 
     if (!checkCredenttial)
-      return Response.json({ status: 401, message: "Login failed" });
+      return Response.json(
+        { status: 401, message: "Login failed" },
+        { status: 401 }
+      );
     const checkPassword = await bcrypt.compare(
       password,
       checkCredenttial.password
     );
 
     if (!checkPassword)
-      return Response.json({ status: 401, message: "Login failed" });
+      return Response.json(
+        { status: 401, message: "Login failed" },
+        { status: 401 }
+      );
 
     const token = await jwt.sign(checkCredenttial, "asdasdasd", {
       expiresIn: "28d",

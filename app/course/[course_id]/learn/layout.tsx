@@ -9,19 +9,16 @@ import React from "react";
 import LoadingFullpage from "@/components/shared/loading-fullpage";
 import Footer from "@/components/home/footer";
 import { Navbar } from "@/components/shared/navbar";
-import { useGetDetailCourse } from "@/hooks/user/course.hooks";
-
+import { useGetDetailCourse } from "@/hooks/course-user.hooks";
 
 const LayoutLearn = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-	const { course_id, content_id } = useParams();
+  const { course_id, content_id } = useParams();
   const { data, isFetching } = useGetDetailCourse(course_id as string);
 
-	return isFetching
-	?
-	<LoadingFullpage/>
-	:
-  (
+  return isFetching ? (
+    <LoadingFullpage />
+  ) : (
     <div className="relative space-y-12  ">
       {" "}
       <Navbar />
@@ -30,46 +27,46 @@ const LayoutLearn = ({ children }: { children: React.ReactNode }) => {
           {/* <Chapter List> */}
           <div className=" border-r border-neutral-800 w-full col-span-2 space-y-4">
             <div className="sticky top-14 min-h-max px-2 py-0">
-            <h2 className="pl-3 pb-6 text-xl font-semibold">Chapter</h2>
-            <Accordion variant="splitted" className="space-y-2">
-            {data?.result.chapter.map((chapter, key) => {
-							return (
-								<AccordionItem
-								key={key}
-								aria-label="Accordion 1"
-								className="pb-3"
-								title={chapter.title}
-								>
-									{
-										chapter.content.length !== 0
-										?
-										<div className="space-y-4">
-											{chapter.content.map((content, key) =>
-												<Button
-													key={key}
-													color={content.id == content_id ? "primary" : 'default'}
-													className="w-full justify-start py-6"
-													onPress={() => {
-                            router.push(`/course/${course_id}/learn/${content.id}`)
-													}}
-												>
-													<IoPlayCircle size={28} />
-													<p className="text-md">
-															{content.title}
-													</p>
-												</Button>
-											)}
-										</div>
-										:
-										<p>Content is empty</p>
-									}   
-								</AccordionItem>
-							);
-            })}
-            </Accordion>
+              <h2 className="pl-3 pb-6 text-xl font-semibold">Chapter</h2>
+              <Accordion variant="splitted" className="space-y-2">
+                {data?.result.chapter.map((chapter, key) => {
+                  return (
+                    <AccordionItem
+                      key={key}
+                      aria-label="Accordion 1"
+                      className="pb-3"
+                      title={chapter.title}
+                    >
+                      {chapter.content.length !== 0 ? (
+                        <div className="space-y-4">
+                          {chapter.content.map((content, key) => (
+                            <Button
+                              key={key}
+                              color={
+                                content.id == content_id ? "primary" : "default"
+                              }
+                              className="w-full justify-start py-6"
+                              onPress={() => {
+                                router.push(
+                                  `/course/${course_id}/learn/${content.id}`
+                                );
+                              }}
+                            >
+                              <IoPlayCircle size={28} />
+                              <p className="text-md">{content.title}</p>
+                            </Button>
+                          ))}
+                        </div>
+                      ) : (
+                        <p>Content is empty</p>
+                      )}
+                    </AccordionItem>
+                  );
+                })}
+              </Accordion>
             </div>
           </div>
-					{children}
+          {children}
         </div>
       </div>
       <Footer />

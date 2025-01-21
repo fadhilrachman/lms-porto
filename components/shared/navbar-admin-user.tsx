@@ -13,7 +13,8 @@ import {
   NavbarItem,
 } from "@nextui-org/navbar";
 import { Link, SearchCodeIcon } from "lucide-react";
-import { nextAuthSignOut } from "@/lib/server-action/next-auth-actions";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export const AcmeLogo = () => {
   return (
@@ -28,7 +29,12 @@ export const AcmeLogo = () => {
   );
 };
 
-export default function NavbarUser() {
+export default function NavbarAdminUser() {
+  const router = useRouter();
+  const handleLogout = () => {
+    Cookies.remove(process.env.COOKIE_NAME as string);
+    router.push("/login");
+  };
   return (
     <Navbar maxWidth="full" className="border-b border-neutral-800">
       <NavbarContent justify="start">
@@ -36,7 +42,7 @@ export default function NavbarUser() {
           <AcmeLogo />
           <p className="hidden sm:block font-bold text-inherit">ACME</p>
         </NavbarBrand>
-        {/* <NavbarContent className="hidden sm:flex gap-3">
+        <NavbarContent className="hidden sm:flex gap-3">
           <NavbarItem>
             <Link color="foreground" href="#">
               Features
@@ -52,7 +58,7 @@ export default function NavbarUser() {
               Integrations
             </Link>
           </NavbarItem>
-        </NavbarContent> */}
+        </NavbarContent>
       </NavbarContent>
 
       <NavbarContent as="div" className="items-center" justify="end">
@@ -69,8 +75,7 @@ export default function NavbarUser() {
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger" onPress={nextAuthSignOut}>
+            <DropdownItem key="logout" color="danger" onPress={handleLogout}>
               Log Out
             </DropdownItem>
           </DropdownMenu>
