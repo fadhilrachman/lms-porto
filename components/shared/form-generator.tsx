@@ -16,9 +16,7 @@ export interface DataFormType {
   startContent?: React.ReactNode;
   endContent?: ReactNode;
   validation?: RegisterOptions;
-  //   loading?: boolean; /// REQUIRED IF TYPE COMOBOX
-  //   grid?: keyof typeof listColSpan;
-  //   defaultValue?: any;
+  disabled?: boolean;
   options?: { id: string; label: string }[];
 }
 
@@ -26,12 +24,20 @@ interface Props {
   form: UseFormReturn<any>;
   data: DataFormType[];
   onSubmit: (params: any) => void;
+  endContent?: ReactNode;
+  disabled?: boolean;
   id: string;
-  grid?: number;
   className?: string;
 }
 
-const FormGenerator = ({ form, data, onSubmit, id, className }: Props) => {
+const FormGenerator = ({
+  form,
+  data,
+  onSubmit,
+  disabled,
+  id,
+  className,
+}: Props) => {
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
@@ -53,7 +59,9 @@ const FormGenerator = ({ form, data, onSubmit, id, className }: Props) => {
                     {...field}
                     type="text"
                     label={val.label}
+                    isRequired={!!val.validation?.required}
                     labelPlacement="outside"
+                    disabled={val?.disabled || disabled}
                     placeholder={val.placeholder}
                     startContent={val.startContent}
                     endContent={val.endContent}
@@ -80,10 +88,11 @@ const FormGenerator = ({ form, data, onSubmit, id, className }: Props) => {
                 return (
                   <Input
                     {...field}
-                    type="email"
-                    isRequired
+                    type="text"
+                    isRequired={!!val.validation?.required}
                     label={val.label}
                     labelPlacement="outside"
+                    disabled={val?.disabled || disabled}
                     placeholder={val.placeholder}
                     startContent={val.startContent}
                     endContent={val.endContent}
@@ -101,6 +110,7 @@ const FormGenerator = ({ form, data, onSubmit, id, className }: Props) => {
           const [isShow, setIsShow] = useState(false);
           return (
             <Controller
+              key={key}
               name={val.name}
               control={form.control}
               rules={val.validation}
@@ -110,6 +120,8 @@ const FormGenerator = ({ form, data, onSubmit, id, className }: Props) => {
                   type={isShow ? "text" : "password"}
                   label={val.label}
                   labelPlacement="outside"
+                  isRequired={!!val.validation?.required}
+                  disabled={val?.disabled || disabled}
                   placeholder={val.placeholder}
                   endContent={
                     isShow ? (

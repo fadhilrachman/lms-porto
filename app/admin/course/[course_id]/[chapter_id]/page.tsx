@@ -1,4 +1,5 @@
 "use client";
+import ModalCreateContent from "@/components/admin/course/chapter/content/modal-create-content";
 import FormChapter from "@/components/admin/course/chapter/form-chapter";
 import ListContent from "@/components/admin/course/chapter/list-content";
 import ButtonBack from "@/components/shared/button-back";
@@ -10,7 +11,7 @@ import { Chip } from "@nextui-org/chip";
 import { Input, Textarea } from "@nextui-org/input";
 import { Grip, Link, Plus, Share, Trash } from "lucide-react";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 const AdminDetailChapter = () => {
   const { course_id, chapter_id } = useParams();

@@ -7,7 +7,7 @@ import { CourseType, CourseDetailType } from "@/types/user/course.type";
 import { BaseResponse, BaseResponseList } from "@/types";
 import { fetcher } from "@/lib/fetcher";
 
-export const useGetCourse = (params: {
+export const useGetUserCourse = (params: {
   page: number;
   per_page: number;
   search?: string;
@@ -18,12 +18,12 @@ export const useGetCourse = (params: {
       const result = await fetcher.get("/profile/course", { params });
       return result.data;
     },
-  }); 
+  });
 
   return query;
 };
 
-export const useGetDetailCourse = (id: string) => {
+export const useGetDetailUserCourse = (id: string) => {
   const query = useQuery<BaseResponse<CourseDetailType>>({
     queryKey: ["USER_DETAIL_COURSE"],
     queryFn: async () => {
@@ -35,13 +35,13 @@ export const useGetDetailCourse = (id: string) => {
   return query;
 };
 
-export const usePatchCourse = (id: string) => {
+export const usePatchUserCourse = (id: string) => {
   const queryClient = useQueryClient();
   const mutation = useMutation<any, Error>({
     mutationFn: async (body) => {
       const result = await fetcher.patch(
         `/profile/course/${id}/completed`,
-        body,
+        body
       );
       return result.data;
     },

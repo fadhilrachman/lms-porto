@@ -1,13 +1,13 @@
 "use client";
 
-import NavbarUser from "@/components/shared/navbar-user";
+import NavbarAdminUser from "@/components/shared/navbar-admin-user";
 import SidebarUser from "@/components/shared/sidebar-user";
 import React from "react";
 
 const LayoutProfile = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="px-12 pt-4 space-y-6 ">
-      <NavbarUser />
+      <NavbarAdminUser />
 
       <div className="flex space-x-4 min-h-[100vh]  ">
         <SidebarUser />

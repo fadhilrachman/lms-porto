@@ -5,17 +5,17 @@ import { NextApiRequest } from "next";
 import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
-  if (verifyTokenAdmin(req)) {
-    return Response.json(
-      {
-        status: 403,
-        message: "Access Denied",
-      },
-      {
-        status: 403,
-      }
-    );
-  }
+  // if (verifyTokenAdmin(req)) {
+  //   return Response.json(
+  //     {
+  //       status: 403,
+  //       message: "Access Denied",
+  //     },
+  //     {
+  //       status: 403,
+  //     }
+  //   );
+  // }
   const { chapter_id, content_vid, title, description } = await req.json();
 
   try {

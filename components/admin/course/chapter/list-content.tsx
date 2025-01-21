@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import { Grip, Plus } from "lucide-react";
 import { Chip } from "@nextui-org/chip";
 import { ContentType } from "@/types/content.type";
 import { useParams, useRouter } from "next/navigation";
+import ModalCreateContent from "./content/modal-create-content";
 
 const ListContent = ({ data }: { data: ContentType[] }) => {
+  const [modal, setModal] = useState({
+    createContent: false,
+  });
   const { course_id, chapter_id } = useParams();
   const router = useRouter();
   return (
@@ -18,6 +22,9 @@ const ListContent = ({ data }: { data: ContentType[] }) => {
             color="primary"
             startContent={<Plus className="w-4 h-4" />}
             size="sm"
+            onPress={() => {
+              setModal((p) => ({ ...p, createContent: true }));
+            }}
           >
             Create Content
           </Button>
@@ -52,6 +59,12 @@ const ListContent = ({ data }: { data: ContentType[] }) => {
           })}
         </div>
       </CardBody>
+      <ModalCreateContent
+        isOpen={modal.createContent}
+        onOpenChange={() => {
+          setModal((p) => ({ ...p, createContent: false }));
+        }}
+      />
     </Card>
   );
 };

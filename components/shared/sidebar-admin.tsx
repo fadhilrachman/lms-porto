@@ -8,18 +8,13 @@ const SidebarAdmin = () => {
   const pathName = usePathname();
   const listSidebar = [
     {
-      title: "Dashboard",
-      url: "/admin/dashboard",
-      icon: Home,
-    },
-    {
       title: "Course",
       url: "/admin/course",
       icon: Home,
     },
     {
-      title: "Transaction",
-      url: "/admin/dashboard",
+      title: "Category",
+      url: "/admin/category",
       icon: Home,
     },
     {

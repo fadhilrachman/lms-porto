@@ -8,13 +8,12 @@ import {
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 import { useForm } from "react-hook-form";
-import { Input } from "@nextui-org/input";
 import FormGenerator, {
   DataFormType,
 } from "@/components/shared/form-generator";
-import { usePostCourse } from "@/hooks/course.hook";
 import { useParams, useRouter } from "next/navigation";
-import { usePostChapter } from "@/hooks/chapter.hook";
+import { Link } from "lucide-react";
+import { usePostContent } from "@/hooks/content.hook";
 const ModalCreateContent = ({
   isOpen,
   onOpenChange,
@@ -22,35 +21,56 @@ const ModalCreateContent = ({
   isOpen: boolean;
   onOpenChange: () => void;
 }) => {
-  const { mutateAsync, status, data } = usePostChapter();
-  const router = useRouter();
-  const { course_id } = useParams();
+  const { mutateAsync, status, data } = usePostContent();
+  const { chapter_id } = useParams();
   const form = useForm();
   const dataForm: DataFormType[] = [
     {
       name: "title",
       type: "text",
-      label: "Chapter Name",
+      label: "Content Title",
       placeholder: "Enter chapter name",
       validation: { required: "This field is required" },
+    },
+    {
+      name: "content_vid",
+      startContent: <Link />,
+      type: "text",
+      placeholder: "Enter video link",
+      label: "Content Video",
+      validation: {
+        required: "This field is required",
+        pattern: {
+          value: /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/,
+          message: "Invalid URL format",
+        },
+      },
+    },
+    {
+      name: "description",
+      type: "text",
+      label: "Description",
+      placeholder: "Enter Description",
+      validation: {
+        required: "This field is required",
+      },
     },
   ];
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">
-          Create Chapter
+          Create Content
         </ModalHeader>
         <ModalBody>
           <FormGenerator
             form={form}
             data={dataForm}
-            id="chapterForm"
+            id="contentForm"
             onSubmit={async (val) => {
-              await mutateAsync({ ...val, course_id });
+              await mutateAsync({ ...val, chapter_id });
               form.reset();
               onOpenChange();
-              // router.push(`/admin/course/${result?.result?.id}`);
             }}
           />
         </ModalBody>
@@ -62,7 +82,7 @@ const ModalCreateContent = ({
             isLoading={status == "pending"}
             color="primary"
             type="submit"
-            form="chapterForm"
+            form="contentForm"
           >
             Submit
           </Button>

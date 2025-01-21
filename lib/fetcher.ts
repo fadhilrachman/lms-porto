@@ -1,36 +1,28 @@
 import axios from "axios";
-// import * as Cookie from "cookies-js";
-// import Cookie from 'js-cookie';
+import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 const myCookie = Cookies.get(process.env.COOKIE_NAME as string);
-// const myCookie = Cookies.get("authjs.session-token");
-
 
 const fetcher = axios.create({
   baseURL: "/api",
 });
 
-// fetcher.interceptors.request.use(
-// 	async (config) => {
-//     const accessToken = Cookies.get("authjs.session-token");
-//     console.log('INTERCEPTOR TOKEN=', accessToken);
-    
-//     // if (accessToken != null && accessToken.length != 0) {
-//       config.headers.Authorization = `Bearer ${accessToken}`;
-
-//       return config;
-//     // }
-
-//     // return config;
-// 	},
-// 	(error) => Promise.reject(error)
-// );
-
-console.log('FETCH COOKEI=', myCookie);
-
-if (myCookie) {  
-  fetcher.defaults.headers.common["Authorization"] = `Bearer ${myCookie}`;
+if (myCookie) {
+  fetcher.defaults.headers.common["Authorization"] = `${myCookie}`;
 }
-// request.po
+
+fetcher.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response.status == 401) {
+      toast.error("Token expired");
+      Cookies.remove(process.env.COOKIE_NAME as string);
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
 
 export { fetcher };

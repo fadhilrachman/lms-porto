@@ -23,7 +23,7 @@ import ModalImg from "@/components/shared/modal-img";
 import BaseInputSearch from "@/components/shared/base-input-search";
 import { useRouter } from "next/navigation";
 
-const AdminCourse = () => {
+const AdminCategory = () => {
   const router = useRouter();
   const [modal, setModal] = useState({ create: false, img: false });
   const [params, setPrams] = useState({ search: "" });
@@ -171,4 +171,4 @@ const AdminCourse = () => {
   );
 };
 
-export default AdminCourse;
+export default AdminCategory;
