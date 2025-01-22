@@ -61,6 +61,9 @@ export async function GET(req: NextRequest) {
     const result = await prisma.category.findMany({
       skip,
       take: Number(per_page),
+      orderBy: {
+        created_at: "desc",
+      },
     });
     return Response.json({
       status: 200,

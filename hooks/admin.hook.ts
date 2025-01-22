@@ -1,8 +1,6 @@
 import { fetcher } from "@/lib/fetcher";
 import { BaseResponse, BaseResponseList } from "@/types";
-import { CategoryType } from "@/types/category.type";
-import { CourseDetailType, CourseType } from "@/types/course.type";
-import { MasterShiftingType } from "@/types/master-shifting.type";
+import { AdminType, PostAdminType } from "@/types/admin.type";
 
 import {
   QueryClient,
@@ -15,23 +13,23 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
-export const usePostCategory = () => {
+export const usePostAdmin = () => {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<any, Error>({
+  const mutation = useMutation<any, Error, PostAdminType>({
     mutationFn: async (body) => {
-      const result = await fetcher.post("/category", body);
+      const result = await fetcher.post("/dashboard/admin", body);
       return result.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["LIST_CATEGORY"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+      queryClient.invalidateQueries({ queryKey: ["LIST_ADMIN"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
 
   useEffect(() => {
     const status = mutation.status;
     if (status == "success") {
-      toast.success("Success create category");
+      toast.success("Success create admin");
     }
 
     if (status == "error") {
@@ -43,15 +41,15 @@ export const usePostCategory = () => {
   return mutation;
 };
 
-export const useGetCategory = (params: {
+export const useGetAdmin = (params: {
   page: number;
   per_page: number;
   search?: string;
 }) => {
-  const query = useQuery<BaseResponseList<CategoryType>>({
-    queryKey: ["LIST_CATEGORY"],
+  const query = useQuery<BaseResponseList<AdminType>>({
+    queryKey: ["LIST_ADMIN"],
     queryFn: async () => {
-      const result = await fetcher.get("/category", { params });
+      const result = await fetcher.get("/dashboard/admin", { params });
       return result.data;
     },
   });
@@ -59,7 +57,7 @@ export const useGetCategory = (params: {
   return query;
 };
 
-export const usePutCategory = (id: string) => {
+export const usePutAdmin = (id: string) => {
   const queryClient = useQueryClient();
   const mutation = useMutation<any, Error>({
     mutationFn: async (body) => {
@@ -85,21 +83,21 @@ export const usePutCategory = (id: string) => {
   return mutation;
 };
 
-export const useDeleteCategory = (id: string) => {
+export const useDeleteAdmin = (id: string) => {
   const queryClient = useQueryClient();
   const mutation = useMutation<any, Error>({
     mutationFn: async () => {
-      const result = await fetcher.delete(`/category/${id}`);
+      const result = await fetcher.delete(`/dashboard/admin/${id}`);
       return result.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["LIST_CATEGORY"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+      queryClient.invalidateQueries({ queryKey: ["LIST_ADMIN"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
   useEffect(() => {
     const status = mutation.status;
     if (status == "success") {
-      toast.success("Success update category");
+      toast.success("Success update admin");
     }
 
     if (status == "error") {

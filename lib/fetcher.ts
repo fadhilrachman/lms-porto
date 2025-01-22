@@ -16,7 +16,7 @@ fetcher.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status == 401) {
+    if (error.response.status == 403) {
       toast.error("Token expired");
       Cookies.remove(process.env.COOKIE_NAME as string);
       window.location.href = "/login";

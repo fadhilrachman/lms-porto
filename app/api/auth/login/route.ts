@@ -34,10 +34,15 @@ export async function POST(req: Request) {
     return Response.json({ status: 201, message: "Success login", token });
   } catch (error) {
     console.log({ error });
-    return Response.json({
-      status: 500,
-      message: "Internal server error",
-      result: error,
-    });
+    return Response.json(
+      {
+        status: 500,
+        message: "Internal server error",
+        result: error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Home } from "lucide-react";
+import { Coins, Home, User, User2 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 const SidebarAdmin = () => {
@@ -20,12 +20,17 @@ const SidebarAdmin = () => {
     {
       title: "Admin",
       url: "/admin/admin",
-      icon: Home,
+      icon: User,
     },
     {
       title: "Customer",
       url: "/admin/customer",
-      icon: Home,
+      icon: User2,
+    },
+    {
+      title: "Transaction",
+      url: "/admin/transaction",
+      icon: Coins,
     },
   ];
   return (

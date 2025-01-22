@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -14,35 +14,43 @@ import FormGenerator, {
 } from "@/components/shared/form-generator";
 import * as VscIcons from "react-icons/si";
 import BaseIcon from "@/components/shared/base-icon";
-import { usePostCategory } from "@/hooks/category.hook";
+import { usePostCategory, usePutCategory } from "@/hooks/category.hook";
+import { CategoryType } from "@/types/category.type";
 
-const CreateCategory = ({
+const UpdateCategory = ({
   isOpen,
   onOpenChange,
+  data,
 }: {
   isOpen: boolean;
   onOpenChange: () => void;
+  data: CategoryType;
 }) => {
   const form = useForm();
   const availableIcons = Object.keys(VscIcons);
 
-  const { mutateAsync, status } = usePostCategory();
+  const { mutateAsync, status } = usePutCategory(data?.id);
 
   const handleCreateCategory = async (val: any) => {
     await mutateAsync(val);
     form.reset();
     onOpenChange();
   };
+
+  useEffect(() => {
+    form.setValue("name", data?.name);
+    form.setValue("icon", data?.icon);
+  }, [data]);
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">
-          Create Category
+          Update Category
         </ModalHeader>
         <ModalBody>
           <FormGenerator
             onSubmit={handleCreateCategory}
-            id="formUpdateCategory"
+            id="formCategory"
             form={form}
             disabled={status == "pending"}
             data={[
@@ -83,7 +91,7 @@ const CreateCategory = ({
           </Button>
           <Button
             type="submit"
-            form="formUpdateCategory"
+            form="formCategory"
             isLoading={status == "pending"}
             color="primary"
           >
@@ -95,4 +103,4 @@ const CreateCategory = ({
   );
 };
 
-export default CreateCategory;
+export default UpdateCategory;

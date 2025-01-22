@@ -1,5 +1,6 @@
 "use client";
 import { Input } from "@nextui-org/input";
+import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Eye, EyeClosed } from "lucide-react";
 import React, { useCallback, useEffect, useState, ReactNode } from "react";
 
@@ -8,7 +9,7 @@ import { Controller, RegisterOptions, UseFormReturn } from "react-hook-form";
 export interface DataFormType {
   // name:''
   label?: string | ReactNode;
-  type: "text" | "email" | "password";
+  type: "text" | "email" | "password" | "select";
 
   name: string;
   placeholder?: string;
@@ -17,7 +18,7 @@ export interface DataFormType {
   endContent?: ReactNode;
   validation?: RegisterOptions;
   disabled?: boolean;
-  options?: { id: string; label: string }[];
+  options?: { key: string; label: React.ReactNode }[];
 }
 
 interface Props {
@@ -30,6 +31,21 @@ interface Props {
   className?: string;
 }
 
+export const animals = [
+  { key: "cat", label: "Cat" },
+  { key: "dog", label: "Dog" },
+  { key: "elephant", label: "Elephant" },
+  { key: "lion", label: "Lion" },
+  { key: "tiger", label: "Tiger" },
+  { key: "giraffe", label: "Giraffe" },
+  { key: "dolphin", label: "Dolphin" },
+  { key: "penguin", label: "Penguin" },
+  { key: "zebra", label: "Zebra" },
+  { key: "shark", label: "Shark" },
+  { key: "whale", label: "Whale" },
+  { key: "otter", label: "Otter" },
+  { key: "crocodile", label: "Crocodile" },
+];
 const FormGenerator = ({
   form,
   data,
@@ -46,6 +62,39 @@ const FormGenerator = ({
       className={`${className} grid   gap-4`}
     >
       {data.map((val, key) => {
+        if (val.type === "select") {
+          return (
+            <Controller
+              key={key}
+              name={val.name}
+              control={form.control}
+              rules={val.validation}
+              render={({ field, fieldState }) => {
+                return (
+                  <Autocomplete
+                    {...field}
+                    onInputChange={(value) => field.onChange(value)}
+                    label={val.label}
+                    labelPlacement="outside"
+                    disabled={val?.disabled || disabled}
+                    placeholder={val.placeholder}
+                    startContent={val.startContent}
+                    inputValue={field.value}
+                    endContent={val.endContent}
+                    isInvalid={!!fieldState.error}
+                    errorMessage={fieldState.error?.message}
+                  >
+                    {(val?.options || []).map((animal) => (
+                      <AutocompleteItem key={animal.key}>
+                        {animal.label}
+                      </AutocompleteItem>
+                    ))}
+                  </Autocomplete>
+                );
+              }}
+            />
+          );
+        }
         if (val.type === "text") {
           return (
             <Controller
@@ -59,7 +108,7 @@ const FormGenerator = ({
                     {...field}
                     type="text"
                     label={val.label}
-                    isRequired={!!val.validation?.required}
+                    // isRequired={!!val.validation?.required}
                     labelPlacement="outside"
                     disabled={val?.disabled || disabled}
                     placeholder={val.placeholder}
@@ -89,7 +138,7 @@ const FormGenerator = ({
                   <Input
                     {...field}
                     type="text"
-                    isRequired={!!val.validation?.required}
+                    // isRequired={!!val.validation?.required}
                     label={val.label}
                     labelPlacement="outside"
                     disabled={val?.disabled || disabled}
@@ -120,7 +169,7 @@ const FormGenerator = ({
                   type={isShow ? "text" : "password"}
                   label={val.label}
                   labelPlacement="outside"
-                  isRequired={!!val.validation?.required}
+                  // isRequired={!!val.validation?.required}
                   disabled={val?.disabled || disabled}
                   placeholder={val.placeholder}
                   endContent={
@@ -149,7 +198,7 @@ const FormGenerator = ({
         //   return (
         //     <Input
         //       key={key}
-        //       isRequired
+        // isRequired;
         //       {...form.register(val.name, val.validation)}
         //       label={val.label}
         //       type="email"
@@ -165,7 +214,7 @@ const FormGenerator = ({
         //   const [isShow, setIsShow] = useState(true);
         //   return (
         //     <Input
-        //       isRequired
+        // isRequired;
         //       key={key}
         //       {...form.register(val.name, val.validation)}
         //       label={val.label}
