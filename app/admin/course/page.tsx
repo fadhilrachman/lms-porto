@@ -1,16 +1,7 @@
 "use client";
 import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
 import { Eye, Plus, Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-} from "@nextui-org/table";
 import BaseTable, { ColumnTable } from "@/components/shared/base-table";
 import { Pagination } from "@nextui-org/pagination";
 import ModalCreateCourse from "@/components/admin/course/modal-create-course";

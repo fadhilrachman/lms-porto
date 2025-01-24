@@ -62,6 +62,33 @@ export async function GET(req: NextRequest) {
     const result = await prisma.transaction.findMany({
       skip,
       take: Number(per_page),
+      select: {
+        id: true,
+        created_at: true,
+        user: {
+          select: {
+            id: true,
+            user_name: true,
+            email: true,
+          },
+        },
+        course: {
+          select: {
+            id: true,
+            title: true,
+            price: true,
+            is_free: true,
+            thumbnail_img: true,
+            category: {
+              select: {
+                id: true,
+                name: true,
+                icon: true,
+              },
+            },
+          },
+        },
+      },
     });
     return Response.json({
       status: 200,

@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Chip } from "@nextui-org/chip";
 import { ChapterType } from "@/types/chapter.type";
 import ModalCreateChapter from "./chapter/modal-create-chapter";
+import Dnd from "@/components/playgrounds/dnd";
 
 const ListChapter = ({ data }: { data: ChapterType[] }) => {
   const { course_id } = useParams();
@@ -33,37 +34,13 @@ const ListChapter = ({ data }: { data: ChapterType[] }) => {
           </Button>
         </div>
       </CardHeader>
+
       <CardBody>
-        <div className="space-y-4">
-          {data.map((val, key) => {
-            const countContentPublished = val.content.filter(
-              (item) => item.is_published == true
-            ).length;
-            const countContentUnPublished = val.content.filter(
-              (item) => item.is_published == false
-            ).length;
-            return (
-              <div
-                key={key}
-                onClick={() => {
-                  router.push(`/admin/course/${course_id}/${val.id}`);
-                }}
-                className="bg-[#27272A] cursor-pointer py-2.5 px-3 rounded-xl flex items-center justify-between "
-              >
-                <div className="flex items-center space-x-2">
-                  <Grip className="h-4 w-4" />
-                  <span>{val.title}</span>
-                </div>
-                <div className="space-x-1">
-                  <Chip size="sm">{countContentUnPublished} Unpublished</Chip>
-                  <Chip size="sm" color="primary">
-                    {countContentPublished} Published
-                  </Chip>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        {data?.length == 0 ? (
+          "tidak ada data"
+        ) : (
+          <Dnd data={data?.map((val) => val.title)} />
+        )}
       </CardBody>
       <ModalCreateChapter
         isOpen={modal.chapterCreate}
