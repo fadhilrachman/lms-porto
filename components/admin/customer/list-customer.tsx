@@ -3,28 +3,29 @@ import BasePagination from "@/components/shared/base-pagination";
 import BaseTable, { ColumnTable } from "@/components/shared/base-table";
 import ModalDelete from "@/components/shared/modal-delete";
 import { useDeleteAdmin, useGetAdmin } from "@/hooks/admin.hook";
-import { AdminType } from "@/types/admin.type";
+import { useDeleteCustomer, useGetCustomer } from "@/hooks/customer.hook";
+import { CustomerType } from "@/types/customer.type";
 import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
 import { Edit, Trash } from "lucide-react";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 
-const ListAdmin = () => {
+const ListCustomer = () => {
   const [params, setParams] = useState({ search: "", page: 1, per_page: 10 });
   const [dialog, setDialog] = useState({
     delete: false,
   });
-  const [selected, setSelected] = useState<AdminType>();
-  const { data, isFetching, refetch } = useGetAdmin(params);
-  const { mutateAsync, status } = useDeleteAdmin(selected?.id as string);
+  const [selected, setSelected] = useState<CustomerType>();
+  const { data, isFetching, refetch } = useGetCustomer(params);
+  const { mutateAsync, status } = useDeleteCustomer(selected?.id as string);
 
   const handleDelete = async () => {
     await mutateAsync();
     setDialog((p) => ({ ...p, delete: false }));
   };
 
-  const columns: ColumnTable<AdminType>[] = [
+  const columns: ColumnTable<CustomerType>[] = [
     {
       key: "user_name",
       label: "Username",
@@ -49,6 +50,11 @@ const ListAdmin = () => {
       render: (value) => <span>{moment(value).format("YYYY/MM/DD")}</span>,
     },
     {
+      key: "count",
+      label: "Course Have",
+      render: (_, obj) => <span>{obj._count.transaction}</span>,
+    },
+    {
       key: "sasd",
       label: "Action",
       render: (_, obj) => {
@@ -71,16 +77,16 @@ const ListAdmin = () => {
     },
   ];
 
-  useEffect(() => {
-    refetch();
-  }, [params]);
+  // useEffect(() => {
+  //   refetch();
+  // }, []);
   return (
     <div className="space-y-4">
       <BaseInputSearch
         onChange={(e) => {
           setParams((p) => ({ ...p, search: e }));
         }}
-        placeholder="Search Admin"
+        placeholder="Search Customer"
       />
       <div className="space-y-2">
         <BaseTable
@@ -109,4 +115,4 @@ const ListAdmin = () => {
   );
 };
 
-export default ListAdmin;
+export default ListCustomer;

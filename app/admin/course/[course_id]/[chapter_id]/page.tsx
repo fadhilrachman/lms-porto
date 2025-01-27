@@ -36,7 +36,10 @@ const AdminDetailChapter = () => {
           title={data?.result?.title as string}
           isLoading={isFetching}
         />
-        <ListContent data={data?.result?.content || []} />
+        <ListContent
+          isLoading={isFetching}
+          data={data?.result?.content || []}
+        />
       </div>
     </div>
   );

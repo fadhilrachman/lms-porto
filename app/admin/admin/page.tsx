@@ -3,21 +3,10 @@ import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Plus, Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-} from "@nextui-org/table";
-import BaseTable from "@/components/shared/base-table";
-import { Pagination } from "@nextui-org/pagination";
-import ModalCreateCourse from "@/components/admin/course/modal-create-course";
 import ListAdmin from "@/components/admin/admin/list-admin";
 import CreateAdmin from "@/components/admin/admin/create-admin";
+
 const Admin = () => {
-  const [data, setData] = useState<any[]>([]);
   const [modal, setModal] = useState({ create: false });
 
   const columns = [

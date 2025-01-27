@@ -6,8 +6,16 @@ import { useParams, useRouter } from "next/navigation";
 import { Chip } from "@nextui-org/chip";
 import { ChapterType } from "@/types/chapter.type";
 import ModalCreateChapter from "./chapter/modal-create-chapter";
+import Dnd from "@/components/admin/course/chapter/dnd";
+import { Spinner } from "@nextui-org/spinner";
 
-const ListChapter = ({ data }: { data: ChapterType[] }) => {
+const ListChapter = ({
+  data,
+  isLoading,
+}: {
+  data: ChapterType[];
+  isLoading: boolean;
+}) => {
   const { course_id } = useParams();
   const [modal, setModal] = useState({
     chapterCreate: false,
@@ -16,7 +24,7 @@ const ListChapter = ({ data }: { data: ChapterType[] }) => {
   console.log({ data });
 
   return (
-    <Card>
+    <Card className="">
       <CardHeader>
         <div className="flex justify-between w-full">
           <h3 className="text-xl">Chapter</h3>
@@ -25,6 +33,7 @@ const ListChapter = ({ data }: { data: ChapterType[] }) => {
             startContent={<Plus className="w-4 h-4" />}
             size="sm"
             type="button"
+            disabled={isLoading}
             onPress={() => {
               setModal((p) => ({ ...p, chapterCreate: true }));
             }}
@@ -33,36 +42,19 @@ const ListChapter = ({ data }: { data: ChapterType[] }) => {
           </Button>
         </div>
       </CardHeader>
+
       <CardBody>
-        <div className="space-y-4">
-          {data.map((val, key) => {
-            const countContentPublished = val.content.filter(
-              (item) => item.is_published == true
-            ).length;
-            const countContentUnPublished = val.content.filter(
-              (item) => item.is_published == false
-            ).length;
-            return (
-              <div
-                key={key}
-                onClick={() => {
-                  router.push(`/admin/course/${course_id}/${val.id}`);
-                }}
-                className="bg-[#27272A] cursor-pointer py-2.5 px-3 rounded-xl flex items-center justify-between "
-              >
-                <div className="flex items-center space-x-2">
-                  <Grip className="h-4 w-4" />
-                  <span>{val.title}</span>
-                </div>
-                <div className="space-x-1">
-                  <Chip size="sm">{countContentUnPublished} Unpublished</Chip>
-                  <Chip size="sm" color="primary">
-                    {countContentPublished} Published
-                  </Chip>
-                </div>
-              </div>
-            );
-          })}
+        <div className="relative">
+          {isLoading && (
+            <div className="absolute z-40 w-full flex items-center justify-center h-full bg-opacity-5 bg-slate-50">
+              <Spinner />
+            </div>
+          )}
+          {data?.length == 0 ? (
+            "tidak ada data"
+          ) : (
+            <Dnd data={data?.map((val) => val.title)} currentData={data} />
+          )}
         </div>
       </CardBody>
       <ModalCreateChapter

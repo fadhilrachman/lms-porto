@@ -20,7 +20,9 @@ const ModalImg = ({
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
-        <ModalHeader className="flex flex-col gap-1">Image</ModalHeader>
+        <ModalHeader className="flex flex-col gap-1">
+          Thumbnail Course
+        </ModalHeader>
         <ModalBody>
           <img src={img} alt="" />
         </ModalBody>

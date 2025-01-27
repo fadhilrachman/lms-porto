@@ -44,6 +44,32 @@ export const usePostContent = () => {
   return mutation;
 };
 
+export const usePatchChangePositionContent = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation<any, Error, { data: string[] }>({
+    mutationFn: async (body) => {
+      const result = await fetcher.patch(`/content/change-position`, body);
+      return result.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["DETAIL_CHAPTER"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+    },
+  });
+  useEffect(() => {
+    const status = mutation.status;
+    if (status == "success") {
+      toast.success("Success change position");
+    }
+
+    if (status == "error") {
+      const error = mutation.error as AxiosError<any>;
+      toast.error(error.response?.data.message);
+    }
+  }, [mutation.status]);
+
+  return mutation;
+};
+
 export const useGetDetailContent = (id: string) => {
   const query = useQuery<BaseResponse<ContentType>>({
     queryKey: ["DETAIL_CONTENT"],

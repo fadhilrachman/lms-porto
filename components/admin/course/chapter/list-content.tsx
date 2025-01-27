@@ -6,8 +6,17 @@ import { Chip } from "@nextui-org/chip";
 import { ContentType } from "@/types/content.type";
 import { useParams, useRouter } from "next/navigation";
 import ModalCreateContent from "./content/modal-create-content";
+import DndContent from "./content/dnd-content";
+import { Spinner } from "@nextui-org/spinner";
 
-const ListContent = ({ data }: { data: ContentType[] }) => {
+const ListContent = ({
+  data,
+  isLoading,
+}: {
+  data: ContentType[];
+
+  isLoading: boolean;
+}) => {
   const [modal, setModal] = useState({
     createContent: false,
   });
@@ -31,32 +40,20 @@ const ListContent = ({ data }: { data: ContentType[] }) => {
         </div>
       </CardHeader>
       <CardBody>
-        <div className="space-y-4">
-          {data.map((val, key) => {
-            return (
-              <div
-                key={key}
-                onClick={() => {
-                  router.push(
-                    `/admin/course/${course_id}/${chapter_id}/${val.id}`
-                  );
-                }}
-                className="bg-[#27272A] cursor-pointer py-2.5 px-3 rounded-xl flex items-center justify-between "
-              >
-                <div className="flex items-center space-x-2">
-                  <Grip className="h-4 w-4" />
-                  <span>{val.title}</span>
-                </div>
-                {val?.is_published ? (
-                  <Chip size="sm" color="primary">
-                    Published
-                  </Chip>
-                ) : (
-                  <Chip size="sm">Draft</Chip>
-                )}
-              </div>
-            );
-          })}
+        <div className="relative">
+          {isLoading && (
+            <div className="absolute z-40 w-full flex items-center justify-center h-full bg-opacity-5 bg-slate-50">
+              <Spinner />
+            </div>
+          )}
+          {data?.length == 0 ? (
+            "tidak ada data"
+          ) : (
+            <DndContent
+              data={data?.map((val) => val.title)}
+              currentData={data}
+            />
+          )}
         </div>
       </CardBody>
       <ModalCreateContent

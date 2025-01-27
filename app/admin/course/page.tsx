@@ -1,16 +1,7 @@
 "use client";
 import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
 import { Eye, Plus, Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-} from "@nextui-org/table";
 import BaseTable, { ColumnTable } from "@/components/shared/base-table";
 import { Pagination } from "@nextui-org/pagination";
 import ModalCreateCourse from "@/components/admin/course/modal-create-course";
@@ -22,15 +13,13 @@ import { CourseType } from "@/types/course.type";
 import ModalImg from "@/components/shared/modal-img";
 import BaseInputSearch from "@/components/shared/base-input-search";
 import { useRouter } from "next/navigation";
+import BasePagination from "@/components/shared/base-pagination";
 
 const AdminCategory = () => {
+  const [params, setParams] = useState({ search: "", page: 1, per_page: 10 });
   const router = useRouter();
   const [modal, setModal] = useState({ create: false, img: false });
-  const [params, setPrams] = useState({ search: "" });
-  const { data, isFetching, refetch } = useGetCourse({
-    page: 1,
-    per_page: 10,
-  });
+  const { data, isFetching, refetch } = useGetCourse(params);
 
   useEffect(() => {
     refetch();
@@ -141,7 +130,7 @@ const AdminCategory = () => {
 
       <BaseInputSearch
         onChange={(e) => {
-          setPrams((p) => ({ ...p, search: e }));
+          setParams((p) => ({ ...p, search: e }));
         }}
         placeholder="Search Course"
       />
@@ -150,10 +139,14 @@ const AdminCategory = () => {
         data={data?.result || []}
         isLoading={isFetching}
       />
-      <div className="flex justify-between items-center">
-        <p>Show 5 data from 10</p>
-        <Pagination loop showControls initialPage={1} total={5} />
-      </div>
+      <BasePagination
+        page={1}
+        totalData={data?.pagination?.total_data || 0}
+        totalPage={data?.pagination?.total_page || 0}
+        onChangePage={(e) => {
+          setParams((p) => ({ ...p, page: e }));
+        }}
+      />
       <ModalCreateCourse
         isOpen={modal.create}
         onOpenChange={() => {
