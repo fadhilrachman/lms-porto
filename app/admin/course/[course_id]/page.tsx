@@ -3,19 +3,43 @@ import FormGeneralCourse from "@/components/admin/course/form-general-course";
 import ListChapter from "@/components/admin/course/list-chapter";
 import ButtonBack from "@/components/shared/button-back";
 import LoadingFullpage from "@/components/shared/loading-fullpage";
-import { useGetDetailCourse } from "@/hooks/course.hook";
+import ModalDelete from "@/components/shared/modal-delete";
+import ModalPublish from "@/components/shared/modal-publish";
+import {
+  useDeleteCourse,
+  useGetDetailCourse,
+  usePatchCourse,
+} from "@/hooks/course.hook";
 import { Button } from "@nextui-org/button";
 import { ChevronLeft, Share, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 const AdminDetailCourse = () => {
+  const [modal, setModal] = useState({
+    deleteContent: false,
+    publishContent: false,
+  });
   const { course_id } = useParams();
-  const { data, isFetching } = useGetDetailCourse(course_id as string);
+  const { data, isFetching, status } = useGetDetailCourse(course_id as string);
   const router = useRouter();
+  const { mutateAsync: mutateAsyncDelete, status: statusDelete } =
+    useDeleteCourse(course_id as string);
+  const { mutateAsync: mutatePatchAsync, status: statusPatch } = usePatchCourse(
+    course_id as string
+  );
+  const handleDelete = async () => {
+    await mutateAsyncDelete();
+    setModal((p) => ({ ...p, deleteContent: false }));
+    router.push(`/admin/course`);
+  };
+  const handlePublishUnpublish = async (isPublished: boolean) => {
+    await mutatePatchAsync({ is_published: isPublished });
+    setModal((p) => ({ ...p, publishContent: false }));
+  };
   return (
     <div className="space-y-4">
-      {isFetching && <LoadingFullpage />}
+      {status == "pending" && <LoadingFullpage />}
       <div className="flex justify-between">
         <div className="flex justify-center items-center space-x-2">
           <ButtonBack href="/admin/course" />
@@ -28,13 +52,22 @@ const AdminDetailCourse = () => {
           </div>
         </div>
         <div className="flex space-x-2">
-          <Button startContent={<Trash className="w-4 h-4" />} color="danger">
+          <Button
+            onPress={() => {
+              setModal((p) => ({ ...p, deleteContent: true }));
+            }}
+            startContent={<Trash className="w-4 h-4" />}
+            color="danger"
+          >
             Delete
           </Button>
           {data?.result.is_published ? (
             <Button
               startContent={<Share className="w-4 h-4" />}
-              color="primary"
+              color="secondary"
+              onPress={() => {
+                setModal((p) => ({ ...p, publishContent: true }));
+              }}
             >
               Un Publish
             </Button>
@@ -42,6 +75,10 @@ const AdminDetailCourse = () => {
             <Button
               startContent={<Share className="w-4 h-4" />}
               color="primary"
+              type="button"
+              onPress={() => {
+                setModal((p) => ({ ...p, publishContent: true }));
+              }}
             >
               Publish
             </Button>
@@ -55,8 +92,27 @@ const AdminDetailCourse = () => {
           introduction_vid={data?.result.introduction_vid as string}
           isLoading={isFetching}
         />
-        <ListChapter data={data?.result.chapter || []} />
+        <ListChapter data={data?.result.chapter || []} isLoading={isFetching} />
       </div>
+      <ModalDelete
+        onDelete={handleDelete}
+        isLoading={statusDelete == "pending"}
+        isOpen={modal.deleteContent}
+        onOpenChange={() => {
+          setModal((p) => ({ ...p, deleteContent: false }));
+        }}
+      />
+      <ModalPublish
+        type="course"
+        onPublish={() => {
+          handlePublishUnpublish(!data?.result?.is_published as boolean);
+        }}
+        isLoading={statusPatch == "pending"}
+        isOpen={modal.publishContent}
+        onOpenChange={() => {
+          setModal((p) => ({ ...p, publishContent: false }));
+        }}
+      />
     </div>
   );
 };

@@ -100,7 +100,11 @@ export async function GET(
         id: chapter_id as string,
       },
       include: {
-        content: true,
+        content: {
+          orderBy: {
+            position: "asc",
+          },
+        },
       },
     });
     return Response.json({

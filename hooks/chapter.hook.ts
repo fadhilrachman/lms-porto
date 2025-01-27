@@ -55,6 +55,31 @@ export const useGetDetailChapter = (id: string) => {
   return query;
 };
 
+export const usePatchChangePosition = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation<any, Error, { data: string[] }>({
+    mutationFn: async (body) => {
+      const result = await fetcher.patch(`/chapter/change-position`, body);
+      return result.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["DETAIL_COURSE"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+    },
+  });
+  useEffect(() => {
+    const status = mutation.status;
+    if (status == "success") {
+      toast.success("Success change position");
+    }
+
+    if (status == "error") {
+      const error = mutation.error as AxiosError<any>;
+      toast.error(error.response?.data.message);
+    }
+  }, [mutation.status]);
+
+  return mutation;
+};
 export const usePutChapter = (id: string) => {
   const queryClient = useQueryClient();
   const mutation = useMutation<any, Error>({

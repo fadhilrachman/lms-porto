@@ -15,7 +15,7 @@ import NextLink from "next/link";
 import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { GithubIcon, Logo } from "@/components/icons";
+import { GithubIcon, Logo } from "@/components/shared/icons";
 import { Avatar } from "@nextui-org/avatar";
 import {
   Dropdown,
