@@ -1,8 +1,9 @@
 "use client";
 
+import React from "react";
+
 import NavbarAdminUser from "@/components/shared/navbar-admin-user";
 import SidebarUser from "@/components/shared/sidebar-user";
-import React from "react";
 
 const LayoutProfile = ({ children }: { children: React.ReactNode }) => {
   return (

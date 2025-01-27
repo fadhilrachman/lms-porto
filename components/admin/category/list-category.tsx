@@ -1,5 +1,8 @@
 "use client";
-import CreateCategory from "@/components/admin/category/create-category";
+import { Button } from "@nextui-org/button";
+import { Edit, Trash } from "lucide-react";
+import React, { useEffect, useState } from "react";
+
 import UpdateCategory from "@/components/admin/category/update-category";
 import BaseIcon from "@/components/shared/base-icon";
 import BaseInputSearch from "@/components/shared/base-input-search";
@@ -8,10 +11,6 @@ import BaseTable, { ColumnTable } from "@/components/shared/base-table";
 import ModalDelete from "@/components/shared/modal-delete";
 import { useDeleteCategory, useGetCategory } from "@/hooks/category.hook";
 import { CategoryType } from "@/types/category.type";
-import { Button } from "@nextui-org/button";
-import { Pagination } from "@nextui-org/pagination";
-import { Delete, Edit, Eye, Plus, Trash } from "lucide-react";
-import React, { useEffect, useState } from "react";
 
 const ListCategory = () => {
   const [dialog, setDialog] = useState({
@@ -50,24 +49,24 @@ const ListCategory = () => {
           <div className="space-x-2">
             <Button
               // size={"small"}
+              isIconOnly
+              size="sm"
+              startContent={<Edit className="h-4 w-4" />}
               onPress={() => {
                 setDialog((p) => ({ ...p, update: true }));
                 setSelected(obj);
               }}
-              size="sm"
-              startContent={<Edit className="h-4 w-4" />}
-              isIconOnly
             />
             <Button
               // size={"small"}
+              isIconOnly
+              color="danger"
+              size="sm"
+              startContent={<Trash className="h-4 w-4" />}
               onPress={() => {
                 setDialog((p) => ({ ...p, delete: true }));
                 setSelected(obj);
               }}
-              size="sm"
-              color="danger"
-              startContent={<Trash className="h-4 w-4" />}
-              isIconOnly
             />
           </div>
         );
@@ -82,10 +81,10 @@ const ListCategory = () => {
   return (
     <div className="space-y-4">
       <BaseInputSearch
+        placeholder="Search Category"
         onChange={(e) => {
           setParams((p) => ({ ...p, search: e }));
         }}
-        placeholder="Search Category"
       />
       <div className="space-y-2">
         <BaseTable
@@ -103,19 +102,19 @@ const ListCategory = () => {
         />
       </div>
       <UpdateCategory
+        data={selected as CategoryType}
         isOpen={dialog.update}
         onOpenChange={() => {
           setDialog((p) => ({ ...p, update: false }));
         }}
-        data={selected as CategoryType}
       />
       <ModalDelete
+        isLoading={status == "pending"}
         isOpen={dialog.delete}
+        onDelete={handleDelete}
         onOpenChange={() => {
           setDialog((p) => ({ ...p, delete: false }));
         }}
-        onDelete={handleDelete}
-        isLoading={status == "pending"}
       />
     </div>
   );

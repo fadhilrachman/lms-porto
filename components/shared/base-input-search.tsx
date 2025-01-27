@@ -18,12 +18,12 @@ const BaseInputSearch = ({ onChange, placeholder }: Props) => {
     <div className="relative">
       <Search className="absolute left-2 top-2 h-5 w-5 text-primary" />
       <Input
+        className="w-max"
+        placeholder={placeholder}
         startContent={<Search />}
         onChange={(e) => {
           setText(e.target.value);
         }}
-        placeholder={placeholder}
-        className="w-max"
       />
     </div>
   );

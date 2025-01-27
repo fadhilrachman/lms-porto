@@ -2,11 +2,11 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
-import FormGenerator from "@/components/shared/form-generator";
 import { useForm } from "react-hook-form";
 import { Button } from "@nextui-org/button";
+
+import FormGenerator from "@/components/shared/form-generator";
 import { usePostRegister } from "@/hooks/auth.hook";
 import { PostRegisterType } from "@/types/auth.type";
 
@@ -18,6 +18,7 @@ export default function Register() {
     await mutateAsync(val);
     router.push("/login");
   };
+
   return (
     <div className="flex h-screen items-center justify-center">
       <Card className="w-[500px]">
@@ -27,10 +28,6 @@ export default function Register() {
         <CardBody>
           <FormGenerator
             key={1}
-            form={form}
-            id="formRegister"
-            disabled={status == "pending"}
-            onSubmit={handleRegister}
             data={[
               {
                 name: "user_name",
@@ -72,30 +69,36 @@ export default function Register() {
                   required: "This field is required",
                   validate: (confirmPassword: string) => {
                     const { password } = form.getValues();
+
                     if (confirmPassword !== password) {
                       return "Confirm password does not match";
                     }
+
                     return true;
                   },
                 },
               },
             ]}
+            disabled={status == "pending"}
+            form={form}
+            id="formRegister"
+            onSubmit={handleRegister}
           />
         </CardBody>
         <CardFooter className="">
           <div className="w-full space-y-2">
             <Button
               className="w-full"
-              type="submit"
-              form="formRegister"
               color="primary"
+              form="formRegister"
               isLoading={status == "pending"}
+              type="submit"
             >
               Register
             </Button>
             <p className="text-sm">
               Already have an account?{" "}
-              <a href="/login" className="text-blue-400">
+              <a className="text-blue-400" href="/login">
                 Login
               </a>
             </p>

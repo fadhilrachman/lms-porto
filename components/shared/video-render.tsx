@@ -3,6 +3,7 @@ import YouTube from "react-youtube";
 
 const getVideoId = (url: string) => {
   const urlObj = new URL(url);
+
   return urlObj.searchParams.get("v"); // Ambil parameter `v` dari URL
 };
 
@@ -19,9 +20,9 @@ export default function VideoRender({ url }: { url: string }) {
 
   return videoId ? (
     <YouTube
+      opts={opts}
       style={{ position: "relative", width: "100%" }}
       videoId={videoId}
-      opts={opts}
       onEnd={() => {
         console.log("cuyyyyyyy");
       }}

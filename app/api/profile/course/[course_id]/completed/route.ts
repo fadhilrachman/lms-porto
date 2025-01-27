@@ -1,10 +1,11 @@
+import { NextRequest } from "next/server";
+
 import { prisma } from "@/lib/prisma";
 import { verifyTokenCustomer } from "@/lib/verify-token-server";
-import { NextRequest } from "next/server";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { course_id: string } }
+  { params }: { params: { course_id: string } },
 ) {
   if (verifyTokenCustomer(req)) {
     return Response.json({
@@ -25,6 +26,7 @@ export async function PATCH(
         user_id: user.id,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success completed content",
@@ -41,7 +43,7 @@ export async function PATCH(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

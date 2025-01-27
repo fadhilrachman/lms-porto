@@ -1,16 +1,11 @@
-import { fetcher } from "@/lib/fetcher";
-import { BaseResponseList } from "@/types";
-import { MasterShiftingType } from "@/types/master-shifting.type";
-
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+
+import { MasterShiftingType } from "@/types/master-shifting.type";
+import { BaseResponseList } from "@/types";
+import { fetcher } from "@/lib/fetcher";
 
 // type formDataUpdateMasterShifting= z.infer<typeof CreateEmployeSchema>;
 
@@ -22,6 +17,7 @@ export const useCreateMasterShifting = () => {
   const mutation = useMutation<any, Error>({
     mutationFn: async (body) => {
       const result = await fetcher.post("/operator/master-shifting", body);
+
       return result.data;
     },
     // onSuccess untuk memicu ulang query tertentu setelah mutasi sukses
@@ -32,6 +28,7 @@ export const useCreateMasterShifting = () => {
 
   useEffect(() => {
     const status = mutation.status;
+
     if (status == "success") {
       // toast({
       //   title: 'Sukses',
@@ -43,7 +40,7 @@ export const useCreateMasterShifting = () => {
       const error = mutation.error as AxiosError<any>;
 
       const messageError = Object.values(
-        error.response?.data.errors?.[0] || {}
+        error.response?.data.errors?.[0] || {},
       ) as any;
       // toast({
       //   title: 'Login Error',
@@ -70,6 +67,7 @@ export const useListMasterShifting = (params: {
     queryKey: ["LIST_MASTER_SHIFTING"],
     queryFn: async () => {
       const result = await fetcher.get("/operator/master-shifting", { params });
+
       return result.data;
     },
   });
@@ -84,14 +82,17 @@ export const useUpdateMasterShifting = (id: string) => {
   const mutation = useMutation<any, Error>({
     mutationFn: async (body) => {
       const result = await fetcher.put(`/operator/master-shifting/${id}`, body);
+
       return result.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["LIST_MASTER_SHIFTING"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
+
   useEffect(() => {
     const status = mutation.status;
+
     if (status == "success") {
       const { data } = mutation;
 
@@ -129,6 +130,7 @@ export const useDeleteMasterShifting = () => {
   const mutation = useMutation<any, Error, string>({
     mutationFn: async (id: string) => {
       const result = await fetcher.delete(`/operator/master-shifting/${id}`);
+
       return result.data;
     },
     onSuccess: () => {
@@ -138,6 +140,7 @@ export const useDeleteMasterShifting = () => {
 
   useEffect(() => {
     const status = mutation.status;
+
     if (status == "success") {
       // toast({
       //   title: 'Sukses',
@@ -149,7 +152,7 @@ export const useDeleteMasterShifting = () => {
       const error = mutation.error as AxiosError<any>;
 
       const messageError = Object.values(
-        error.response?.data.errors?.[0] || {}
+        error.response?.data.errors?.[0] || {},
       ) as any;
       // toast({
       //   title: 'Error hapus master shifting',

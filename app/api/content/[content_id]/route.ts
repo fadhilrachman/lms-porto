@@ -1,11 +1,11 @@
-import { prisma } from "@/lib/prisma";
-import { createPagination } from "@/lib/pagination-server";
 import { NextRequest } from "next/server";
+
+import { prisma } from "@/lib/prisma";
 import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { content_id: string } }
+  { params }: { params: { content_id: string } },
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -15,7 +15,7 @@ export async function PUT(
       },
       {
         status: 403,
-      }
+      },
     );
   }
   const { content_id } = params;
@@ -33,6 +33,7 @@ export async function PUT(
         id: content_id,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success update content",
@@ -50,7 +51,7 @@ export async function PUT(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { content_id: string } }
+  { params }: { params: { content_id: string } },
 ) {
   // if (verifyTokenAdmin(req)) {
   //   return Response.json(
@@ -65,6 +66,7 @@ export async function PATCH(
   // }
   const { content_id } = params;
   const { is_published } = await req.json();
+
   try {
     const result = await prisma.content.update({
       data: {
@@ -74,6 +76,7 @@ export async function PATCH(
         id: content_id as string,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success update category",
@@ -88,14 +91,14 @@ export async function PATCH(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { content_id: string } }
+  { params }: { params: { content_id: string } },
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -105,16 +108,18 @@ export async function DELETE(
       },
       {
         status: 403,
-      }
+      },
     );
   }
   const { content_id } = params;
+
   try {
     const result = await prisma.content.delete({
       where: {
         id: content_id as string,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success delete content",
@@ -129,22 +134,24 @@ export async function DELETE(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function GET(
   req: Request,
-  { params }: { params: { content_id: string } }
+  { params }: { params: { content_id: string } },
 ) {
   const { content_id } = params;
+
   try {
     const result = await prisma.content.findUnique({
       where: {
         id: content_id as string,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success get content",
@@ -159,7 +166,7 @@ export async function GET(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

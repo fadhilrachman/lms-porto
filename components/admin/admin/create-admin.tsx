@@ -9,12 +9,9 @@ import {
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 import { useForm } from "react-hook-form";
-import FormGenerator, {
-  DataFormType,
-} from "@/components/shared/form-generator";
 import * as VscIcons from "react-icons/si";
-import BaseIcon from "@/components/shared/base-icon";
-import { usePostCategory } from "@/hooks/category.hook";
+
+import FormGenerator from "@/components/shared/form-generator";
 import { usePostAdmin } from "@/hooks/admin.hook";
 
 const CreateAdmin = ({
@@ -34,16 +31,13 @@ const CreateAdmin = ({
     form.reset();
     onOpenChange();
   };
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">Create Admin</ModalHeader>
         <ModalBody>
           <FormGenerator
-            onSubmit={handleCreateAdmin}
-            id="formCreateAdmin"
-            form={form}
-            disabled={status == "pending"}
             data={[
               {
                 name: "user_name",
@@ -85,25 +79,31 @@ const CreateAdmin = ({
                   required: "This field is required",
                   validate: (confirmPassword: string) => {
                     const { password } = form.getValues();
+
                     if (confirmPassword !== password) {
                       return "Confirm password does not match";
                     }
+
                     return true;
                   },
                 },
               },
             ]}
+            disabled={status == "pending"}
+            form={form}
+            id="formCreateAdmin"
+            onSubmit={handleCreateAdmin}
           />
         </ModalBody>
         <ModalFooter>
-          <Button onPress={onOpenChange} type="button">
+          <Button type="button" onPress={onOpenChange}>
             Close
           </Button>
           <Button
-            type="submit"
+            color="primary"
             form="formCreateAdmin"
             isLoading={status == "pending"}
-            color="primary"
+            type="submit"
           >
             Submit
           </Button>

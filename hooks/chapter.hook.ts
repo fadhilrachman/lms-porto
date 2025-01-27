@@ -1,19 +1,11 @@
-import { fetcher } from "@/lib/fetcher";
-import { BaseResponse, BaseResponseList } from "@/types";
-import { ChapterType } from "@/types/chapter.type";
-import { CourseDetailType, CourseType } from "@/types/course.type";
-import { MasterShiftingType } from "@/types/master-shifting.type";
-
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+
+import { fetcher } from "@/lib/fetcher";
+import { BaseResponse } from "@/types";
+import { ChapterType } from "@/types/chapter.type";
 
 export const usePostChapter = () => {
   const queryClient = useQueryClient();
@@ -21,6 +13,7 @@ export const usePostChapter = () => {
   const mutation = useMutation<any, Error>({
     mutationFn: async (body) => {
       const result = await fetcher.post("/chapter", body);
+
       return result.data;
     },
     onSuccess: () => {
@@ -30,12 +23,14 @@ export const usePostChapter = () => {
 
   useEffect(() => {
     const status = mutation.status;
+
     if (status == "success") {
       toast.success("Success create chapter");
     }
 
     if (status == "error") {
       const error = mutation.error as AxiosError<any>;
+
       toast.error(error.response?.data.message);
     }
   }, [mutation.status]);
@@ -48,6 +43,7 @@ export const useGetDetailChapter = (id: string) => {
     queryKey: ["DETAIL_CHAPTER"],
     queryFn: async () => {
       const result = await fetcher.get(`/chapter/${id}`);
+
       return result.data;
     },
   });
@@ -60,20 +56,24 @@ export const usePatchChangePosition = () => {
   const mutation = useMutation<any, Error, { data: string[] }>({
     mutationFn: async (body) => {
       const result = await fetcher.patch(`/chapter/change-position`, body);
+
       return result.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["DETAIL_COURSE"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
+
   useEffect(() => {
     const status = mutation.status;
+
     if (status == "success") {
       toast.success("Success change position");
     }
 
     if (status == "error") {
       const error = mutation.error as AxiosError<any>;
+
       toast.error(error.response?.data.message);
     }
   }, [mutation.status]);
@@ -85,20 +85,24 @@ export const usePutChapter = (id: string) => {
   const mutation = useMutation<any, Error>({
     mutationFn: async (body) => {
       const result = await fetcher.put(`/chapter/${id}`, body);
+
       return result.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["DETAIL_CHAPTER"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
+
   useEffect(() => {
     const status = mutation.status;
+
     if (status == "success") {
       toast.success("Success update chapter");
     }
 
     if (status == "error") {
       const error = mutation.error as AxiosError<any>;
+
       toast.error(error.response?.data.message);
     }
   }, [mutation.status]);
@@ -113,6 +117,7 @@ export const useDeleteChapter = () => {
   const mutation = useMutation<any, Error, string>({
     mutationFn: async (id: string) => {
       const result = await fetcher.delete(`/operator/master-shifting/${id}`);
+
       return result.data;
     },
     onSuccess: () => {
@@ -122,6 +127,7 @@ export const useDeleteChapter = () => {
 
   useEffect(() => {
     const status = mutation.status;
+
     if (status == "success") {
       // toast({
       //   title: 'Sukses',
@@ -133,7 +139,7 @@ export const useDeleteChapter = () => {
       const error = mutation.error as AxiosError<any>;
 
       const messageError = Object.values(
-        error.response?.data.errors?.[0] || {}
+        error.response?.data.errors?.[0] || {},
       ) as any;
       // toast({
       //   title: 'Error hapus master shifting',

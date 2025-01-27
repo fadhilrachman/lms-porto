@@ -1,8 +1,9 @@
+import bcrypt from "bcrypt";
+import { NextRequest } from "next/server";
+
 import { prisma } from "@/lib/prisma";
 import { createPagination } from "@/lib/pagination-server";
-import bcrypt from "bcrypt";
 import { verifyTokenAdmin } from "@/lib/verify-token-server";
-import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   if (verifyTokenAdmin(req)) {
@@ -13,7 +14,7 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 403,
-      }
+      },
     );
   }
   const { user_name, email, password } = await req.json();
@@ -22,10 +23,11 @@ export async function POST(req: NextRequest) {
     const checkDuplicateEmail = await prisma.user.findUnique({
       where: { email },
     });
+
     if (checkDuplicateEmail)
       return Response.json(
         { status: 401, message: "Email already registerd" },
-        { status: 401 }
+        { status: 401 },
       );
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -37,9 +39,11 @@ export async function POST(req: NextRequest) {
         is_admin: true,
       },
     });
+
     return Response.json({ status: 201, message: "Success register" });
   } catch (error) {
     console.log({ error });
+
     return Response.json(
       {
         status: 500,
@@ -48,7 +52,7 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -84,6 +88,7 @@ export async function GET(req: Request) {
         created_at: true,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success get admin",

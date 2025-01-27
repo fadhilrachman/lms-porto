@@ -1,4 +1,3 @@
-import { NextApiRequest } from "next";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 
@@ -23,11 +22,12 @@ export function verifyTokenCustomer(req: NextRequest) {
         },
         {
           status: 403,
-        }
+        },
       );
     }
 
     req.headers.set("user", JSON.stringify(decoded) as any);
+
     // next(); // Lanjutkan ke handler berikutnya
     return null;
   });
@@ -44,7 +44,7 @@ export function verifyTokenAdmin(req: NextRequest) {
       },
       {
         status: 403,
-      }
+      },
     );
   const tokenWithoutBearer = token.startsWith("Bearer ")
     ? token.slice(7)
@@ -59,7 +59,7 @@ export function verifyTokenAdmin(req: NextRequest) {
         },
         {
           status: 403,
-        }
+        },
       );
     }
 
@@ -71,11 +71,12 @@ export function verifyTokenAdmin(req: NextRequest) {
         },
         {
           status: 403,
-        }
+        },
       );
     }
 
     req.headers.set("user", JSON.stringify(decoded) as any);
+
     return null;
   });
 }

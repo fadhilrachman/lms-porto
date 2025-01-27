@@ -6,8 +6,9 @@ const Footer = () => {
       <p>
         Design Insipired By{" "}
         <a
-          href="https://buildwithangga.com/"
           className="text-blue-500"
+          href="https://buildwithangga.com/"
+          rel="noreferrer"
           target="_blank"
         >
           @Buildwithangga

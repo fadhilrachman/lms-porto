@@ -8,12 +8,13 @@ import {
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 import { useForm } from "react-hook-form";
-import { Input } from "@nextui-org/input";
+import { useRouter } from "next/navigation";
+
 import FormGenerator, {
   DataFormType,
 } from "@/components/shared/form-generator";
 import { usePostCourse } from "@/hooks/course.hook";
-import { useRouter } from "next/navigation";
+
 const ModalCreateCourse = ({
   isOpen,
   onOpenChange,
@@ -33,30 +34,32 @@ const ModalCreateCourse = ({
       validation: { required: true },
     },
   ];
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">Create Course</ModalHeader>
         <ModalBody>
           <FormGenerator
-            form={form}
             data={dataForm}
+            form={form}
             id="courseForm"
             onSubmit={async (val) => {
               const result = await mutateAsync(val);
+
               router.push(`/admin/course/${result?.result?.id}`);
             }}
           />
         </ModalBody>
         <ModalFooter>
-          <Button onPress={onOpenChange} type="button">
+          <Button type="button" onPress={onOpenChange}>
             Close
           </Button>
           <Button
-            isLoading={status == "pending"}
             color="primary"
-            type="submit"
             form="courseForm"
+            isLoading={status == "pending"}
+            type="submit"
           >
             Submit
           </Button>

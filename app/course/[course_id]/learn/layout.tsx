@@ -28,7 +28,7 @@ const LayoutLearn = ({ children }: { children: React.ReactNode }) => {
           <div className=" border-r border-neutral-800 w-full col-span-2 space-y-4">
             <div className="sticky top-14 min-h-max px-2 py-0">
               <h2 className="pl-3 pb-6 text-xl font-semibold">Chapter</h2>
-              <Accordion variant="splitted" className="space-y-2">
+              <Accordion className="space-y-2" variant="splitted">
                 {data?.result.chapter.map((chapter, key) => {
                   return (
                     <AccordionItem
@@ -42,13 +42,13 @@ const LayoutLearn = ({ children }: { children: React.ReactNode }) => {
                           {chapter.content.map((content, key) => (
                             <Button
                               key={key}
+                              className="w-full justify-start py-6"
                               color={
                                 content.id == content_id ? "primary" : "default"
                               }
-                              className="w-full justify-start py-6"
                               onPress={() => {
                                 router.push(
-                                  `/course/${course_id}/learn/${content.id}`
+                                  `/course/${course_id}/learn/${content.id}`,
                                 );
                               }}
                             >

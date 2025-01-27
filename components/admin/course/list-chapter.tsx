@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import { Grip, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { Chip } from "@nextui-org/chip";
-import { ChapterType } from "@/types/chapter.type";
-import ModalCreateChapter from "./chapter/modal-create-chapter";
-import Dnd from "@/components/admin/course/chapter/dnd";
 import { Spinner } from "@nextui-org/spinner";
+
+import ModalCreateChapter from "./chapter/modal-create-chapter";
+
+import { ChapterType } from "@/types/chapter.type";
+import Dnd from "@/components/admin/course/chapter/dnd";
 
 const ListChapter = ({
   data,
@@ -21,6 +22,7 @@ const ListChapter = ({
     chapterCreate: false,
   });
   const router = useRouter();
+
   console.log({ data });
 
   return (
@@ -30,10 +32,10 @@ const ListChapter = ({
           <h3 className="text-xl">Chapter</h3>
           <Button
             color="primary"
-            startContent={<Plus className="w-4 h-4" />}
-            size="sm"
-            type="button"
             disabled={isLoading}
+            size="sm"
+            startContent={<Plus className="w-4 h-4" />}
+            type="button"
             onPress={() => {
               setModal((p) => ({ ...p, chapterCreate: true }));
             }}
@@ -53,7 +55,7 @@ const ListChapter = ({
           {data?.length == 0 ? (
             "tidak ada data"
           ) : (
-            <Dnd data={data?.map((val) => val.title)} currentData={data} />
+            <Dnd currentData={data} data={data?.map((val) => val.title)} />
           )}
         </div>
       </CardBody>

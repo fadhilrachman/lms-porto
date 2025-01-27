@@ -16,17 +16,17 @@ export async function nextAuthSignIn(nextAuthBody: NextAuthBody) {
         await signIn("credentials", {
           email: nextAuthBody.email,
           password: nextAuthBody.password,
-          redirect: false
+          redirect: false,
         });
       },
     });
 
     if (response.success) {
-      console.log('AUTH ACTION: Redirect');
-      
-      return { redirect: '/profile/course' }; // Mengembalikan lokasi redirect
+      console.log("AUTH ACTION: Redirect");
+
+      return { redirect: "/profile/course" }; // Mengembalikan lokasi redirect
     } else {
-      return { error: 'Login failed' };
+      return { error: "Login failed" };
     }
   } catch (err: any) {
     return { error: err.message };

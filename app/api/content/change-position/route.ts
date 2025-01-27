@@ -1,9 +1,10 @@
-import { prisma } from "@/lib/prisma";
-import { verifyTokenAdmin } from "@/lib/verify-token-server";
 import { NextRequest } from "next/server";
 
+import { prisma } from "@/lib/prisma";
+import { verifyTokenAdmin } from "@/lib/verify-token-server";
+
 export async function PATCH(
-  req: NextRequest
+  req: NextRequest,
   // { params }: { params: { chapter_id: string } }
 ) {
   if (verifyTokenAdmin(req)) {
@@ -14,7 +15,7 @@ export async function PATCH(
       },
       {
         status: 403,
-      }
+      },
     );
   }
   const { data }: { data: string[] } = await req.json();
@@ -31,9 +32,10 @@ export async function PATCH(
           data: {
             position: key + 1,
           },
-        })
-      )
+        }),
+      ),
     );
+
     return Response.json({
       status: 200,
       message: "Success update chapter",
@@ -48,7 +50,7 @@ export async function PATCH(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

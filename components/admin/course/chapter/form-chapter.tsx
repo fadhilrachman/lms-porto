@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import { Grip, Plus } from "lucide-react";
-import { Chip } from "@nextui-org/chip";
+import { useForm } from "react-hook-form";
+import { useParams } from "next/navigation";
+
 import FormGenerator, {
   DataFormType,
 } from "@/components/shared/form-generator";
-import { useForm } from "react-hook-form";
-import { usePostChapter, usePutChapter } from "@/hooks/chapter.hook";
-import { useParams } from "next/navigation";
+import { usePutChapter } from "@/hooks/chapter.hook";
 
 const FormChapter = ({
   title,
@@ -34,9 +33,11 @@ const FormChapter = ({
   const handleFillData = () => {
     form.setValue("title", title);
   };
+
   useEffect(() => {
     handleFillData();
   }, [isLoading]);
+
   return (
     <Card title="asd">
       <CardHeader>
@@ -44,8 +45,8 @@ const FormChapter = ({
       </CardHeader>
       <CardBody>
         <FormGenerator
-          form={form}
           data={dataForm}
+          form={form}
           id="chapterForm"
           onSubmit={async (val) => {
             await mutateAsync({ ...val });
@@ -54,15 +55,15 @@ const FormChapter = ({
       </CardBody>
       <CardFooter>
         <div className="flex justify-end space-x-2 w-full">
-          <Button onPress={handleFillData} isDisabled={status == "pending"}>
+          <Button isDisabled={status == "pending"} onPress={handleFillData}>
             Cancel
           </Button>
           <Button
-            isLoading={status == "pending"}
             color="primary"
-            type="submit"
-            isDisabled={dataNoUpdate}
             form="chapterForm"
+            isDisabled={dataNoUpdate}
+            isLoading={status == "pending"}
+            type="submit"
           >
             Submit
           </Button>

@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
-import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Link } from "lucide-react";
-import FormGenerator, {
-  DataFormType,
-} from "@/components/shared/form-generator";
 import { useForm } from "react-hook-form";
-import { usePutCourse } from "@/hooks/course.hook";
 import { useParams } from "next/navigation";
+
+import FormGenerator from "@/components/shared/form-generator";
+import { usePutCourse } from "@/hooks/course.hook";
 
 interface DataType {
   title: string;
@@ -35,6 +33,7 @@ const FormGeneralCourse = ({
     form.setValue("introduction_vid", introduction_vid);
     form.setValue("description", description);
   };
+
   useEffect(() => {
     handleFillData();
   }, [isLoading]);
@@ -46,11 +45,6 @@ const FormGeneralCourse = ({
       </CardHeader>
       <CardBody>
         <FormGenerator
-          form={form}
-          id="courseForm"
-          onSubmit={(val) => {
-            mutate(val);
-          }}
           data={[
             {
               name: "title",
@@ -90,19 +84,24 @@ const FormGeneralCourse = ({
               },
             },
           ]}
+          form={form}
+          id="courseForm"
+          onSubmit={(val) => {
+            mutate(val);
+          }}
         />
       </CardBody>
       <CardFooter>
         <div className="flex justify-end space-x-2 w-full">
-          <Button onPress={handleFillData} isDisabled={status == "pending"}>
+          <Button isDisabled={status == "pending"} onPress={handleFillData}>
             Cancel
           </Button>
           <Button
-            isLoading={status == "pending"}
             color="primary"
-            type="submit"
-            isDisabled={dataNoUpdate}
             form="courseForm"
+            isDisabled={dataNoUpdate}
+            isLoading={status == "pending"}
+            type="submit"
           >
             Submit
           </Button>

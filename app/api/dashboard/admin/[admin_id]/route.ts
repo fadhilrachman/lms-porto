@@ -1,11 +1,11 @@
-import { prisma } from "@/lib/prisma";
-import { createPagination } from "@/lib/pagination-server";
-import { verifyTokenAdmin } from "@/lib/verify-token-server";
 import { NextRequest } from "next/server";
+
+import { prisma } from "@/lib/prisma";
+import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { admin_id: string } }
+  { params }: { params: { admin_id: string } },
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -15,7 +15,7 @@ export async function PUT(
       },
       {
         status: 403,
-      }
+      },
     );
   }
   const { admin_id } = params;
@@ -31,6 +31,7 @@ export async function PUT(
         id: admin_id as string,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success update user",
@@ -45,14 +46,14 @@ export async function PUT(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { admin_id: string } }
+  { params }: { params: { admin_id: string } },
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -62,16 +63,18 @@ export async function DELETE(
       },
       {
         status: 403,
-      }
+      },
     );
   }
   const { admin_id } = params;
+
   try {
     const result = await prisma.user.delete({
       where: {
         id: admin_id as string,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success delete user",
@@ -86,7 +89,7 @@ export async function DELETE(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

@@ -1,10 +1,11 @@
+import { NextRequest } from "next/server";
+
 import { prisma } from "@/lib/prisma";
 import { verifyTokenCustomer } from "@/lib/verify-token-server";
-import { NextRequest } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { course_id: string } }
+  { params }: { params: { course_id: string } },
 ) {
   if (verifyTokenCustomer(req)) {
     return Response.json({
@@ -15,6 +16,7 @@ export async function GET(
   const user = JSON.parse(req.headers.get("user") as string);
 
   const { course_id } = params;
+
   try {
     const result = await prisma.course.findUnique({
       where: {
@@ -70,7 +72,7 @@ export async function GET(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

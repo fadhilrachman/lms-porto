@@ -5,14 +5,13 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/dropdown";
-import { Input } from "@nextui-org/input";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
 } from "@nextui-org/navbar";
-import { Link, SearchCodeIcon } from "lucide-react";
+import { Link } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
@@ -35,8 +34,9 @@ export default function NavbarAdminUser() {
     Cookies.remove(process.env.COOKIE_NAME as string);
     router.push("/login");
   };
+
   return (
-    <Navbar maxWidth="full" className="border-b border-neutral-800">
+    <Navbar className="border-b border-neutral-800" maxWidth="full">
       <NavbarContent justify="start">
         <NavbarBrand className="mr-4">
           <AcmeLogo />

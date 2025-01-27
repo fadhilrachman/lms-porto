@@ -7,13 +7,7 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
-import { useForm } from "react-hook-form";
-import FormGenerator, {
-  DataFormType,
-} from "@/components/shared/form-generator";
-import { useParams, useRouter } from "next/navigation";
-import { Link } from "lucide-react";
-import { usePostContent } from "@/hooks/content.hook";
+
 const ModalPublish = ({
   isOpen,
   onOpenChange,
@@ -38,10 +32,10 @@ const ModalPublish = ({
           will be made publicly accessible
         </ModalBody>
         <ModalFooter>
-          <Button onPress={onOpenChange} type="button">
+          <Button type="button" onPress={onOpenChange}>
             Close
           </Button>
-          <Button isLoading={isLoading} onPress={onPublish} color="primary">
+          <Button color="primary" isLoading={isLoading} onPress={onPublish}>
             Publish
           </Button>
         </ModalFooter>

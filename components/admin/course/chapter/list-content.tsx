@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import { Grip, Plus } from "lucide-react";
-import { Chip } from "@nextui-org/chip";
-import { ContentType } from "@/types/content.type";
+import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import ModalCreateContent from "./content/modal-create-content";
-import DndContent from "./content/dnd-content";
 import { Spinner } from "@nextui-org/spinner";
+
+import DndContent from "./content/dnd-content";
+import ModalCreateContent from "./content/modal-create-content";
+
+import { ContentType } from "@/types/content.type";
 
 const ListContent = ({
   data,
@@ -22,6 +23,7 @@ const ListContent = ({
   });
   const { course_id, chapter_id } = useParams();
   const router = useRouter();
+
   return (
     <Card>
       <CardHeader>
@@ -29,8 +31,8 @@ const ListContent = ({
           <h3 className="text-xl">Content</h3>
           <Button
             color="primary"
-            startContent={<Plus className="w-4 h-4" />}
             size="sm"
+            startContent={<Plus className="w-4 h-4" />}
             onPress={() => {
               setModal((p) => ({ ...p, createContent: true }));
             }}
@@ -50,8 +52,8 @@ const ListContent = ({
             "tidak ada data"
           ) : (
             <DndContent
-              data={data?.map((val) => val.title)}
               currentData={data}
+              data={data?.map((val) => val.title)}
             />
           )}
         </div>

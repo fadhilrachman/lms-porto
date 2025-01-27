@@ -14,11 +14,12 @@ function Provider({ children }: React.PropsWithChildren) {
             if (error.status === 404) return false;
             if (error.status === 403) return false;
             if (failureCount < 2) return true;
+
             return false;
           },
         },
       },
-    })
+    }),
   );
 
   return <QueryClientProvider client={client}>{children}</QueryClientProvider>;

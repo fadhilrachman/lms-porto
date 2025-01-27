@@ -1,6 +1,7 @@
+import { NextRequest } from "next/server";
+
 import { prisma } from "@/lib/prisma";
 import { createPagination } from "@/lib/pagination-server";
-import { NextRequest } from "next/server";
 import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function POST(req: NextRequest) {
@@ -12,16 +13,18 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 403,
-      }
+      },
     );
   }
   const { title } = await req.json();
+
   try {
     const result = await prisma.course.create({
       data: {
         title,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success create course",
@@ -36,7 +39,7 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -85,6 +88,7 @@ export async function GET(req: NextRequest) {
         created_at: true,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success get course",
@@ -100,7 +104,7 @@ export async function GET(req: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

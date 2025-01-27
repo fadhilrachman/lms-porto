@@ -2,8 +2,7 @@
 import { Input } from "@nextui-org/input";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Eye, EyeClosed } from "lucide-react";
-import React, { useCallback, useEffect, useState, ReactNode } from "react";
-
+import React, { useState, ReactNode } from "react";
 import { Controller, RegisterOptions, UseFormReturn } from "react-hook-form";
 
 export interface DataFormType {
@@ -56,33 +55,32 @@ const FormGenerator = ({
 }: Props) => {
   return (
     <form
-      onSubmit={form.handleSubmit(onSubmit)}
-      id={id}
       key={id}
       className={`${className} grid   gap-4`}
+      id={id}
+      onSubmit={form.handleSubmit(onSubmit)}
     >
       {data.map((val, key) => {
         if (val.type === "select") {
           return (
             <Controller
               key={key}
-              name={val.name}
               control={form.control}
-              rules={val.validation}
+              name={val.name}
               render={({ field, fieldState }) => {
                 return (
                   <Autocomplete
                     {...field}
-                    onInputChange={(value) => field.onChange(value)}
+                    disabled={val?.disabled || disabled}
+                    endContent={val.endContent}
+                    errorMessage={fieldState.error?.message}
+                    inputValue={field.value}
+                    isInvalid={!!fieldState.error}
                     label={val.label}
                     labelPlacement="outside"
-                    disabled={val?.disabled || disabled}
                     placeholder={val.placeholder}
                     startContent={val.startContent}
-                    inputValue={field.value}
-                    endContent={val.endContent}
-                    isInvalid={!!fieldState.error}
-                    errorMessage={fieldState.error?.message}
+                    onInputChange={(value) => field.onChange(value)}
                   >
                     {(val?.options || []).map((animal) => (
                       <AutocompleteItem key={animal.key}>
@@ -92,6 +90,7 @@ const FormGenerator = ({
                   </Autocomplete>
                 );
               }}
+              rules={val.validation}
             />
           );
         }
@@ -99,27 +98,27 @@ const FormGenerator = ({
           return (
             <Controller
               key={key}
-              name={val.name}
               control={form.control}
-              rules={val.validation}
+              name={val.name}
               render={({ field, fieldState }) => {
                 return (
                   <Input
                     {...field}
+                    disabled={val?.disabled || disabled}
+                    endContent={val.endContent}
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={!!fieldState.error}
+                    placeholder={val.placeholder}
+                    startContent={val.startContent}
                     type="text"
+                    validationState={fieldState.error ? "invalid" : "valid"}
                     label={val.label}
                     // isRequired={!!val.validation?.required}
                     labelPlacement="outside"
-                    disabled={val?.disabled || disabled}
-                    placeholder={val.placeholder}
-                    startContent={val.startContent}
-                    endContent={val.endContent}
-                    isInvalid={!!fieldState.error}
-                    validationState={fieldState.error ? "invalid" : "valid"}
-                    errorMessage={fieldState.error?.message}
                   />
                 );
               }}
+              rules={val.validation}
             />
           );
         }
@@ -128,50 +127,44 @@ const FormGenerator = ({
           return (
             <Controller
               key={key}
-              name={val.name}
               control={form.control}
-              rules={val.validation}
+              name={val.name}
               render={({ field, fieldState }) => {
                 console.log({ error: fieldState.error });
 
                 return (
                   <Input
                     {...field}
+                    disabled={val?.disabled || disabled}
+                    endContent={val.endContent}
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={!!fieldState.error}
+                    labelPlacement="outside"
+                    placeholder={val.placeholder}
+                    startContent={val.startContent}
+                    validationState={fieldState.error ? "invalid" : "valid"}
                     type="text"
                     // isRequired={!!val.validation?.required}
                     label={val.label}
-                    labelPlacement="outside"
-                    disabled={val?.disabled || disabled}
-                    placeholder={val.placeholder}
-                    startContent={val.startContent}
-                    endContent={val.endContent}
-                    isInvalid={!!fieldState.error}
-                    validationState={fieldState.error ? "invalid" : "valid"}
-                    errorMessage={fieldState.error?.message}
                   />
                 );
               }}
+              rules={val.validation}
             />
           );
         }
 
         if (val.type === "password") {
           const [isShow, setIsShow] = useState(false);
+
           return (
             <Controller
               key={key}
-              name={val.name}
               control={form.control}
-              rules={val.validation}
+              name={val.name}
               render={({ field, fieldState }) => (
                 <Input
                   {...field}
-                  type={isShow ? "text" : "password"}
-                  label={val.label}
-                  labelPlacement="outside"
-                  // isRequired={!!val.validation?.required}
-                  disabled={val?.disabled || disabled}
-                  placeholder={val.placeholder}
                   endContent={
                     isShow ? (
                       <Eye
@@ -185,11 +178,18 @@ const FormGenerator = ({
                       />
                     )
                   }
-                  isInvalid={!!fieldState.error}
-                  validationState={fieldState.error ? "invalid" : "valid"}
                   errorMessage={fieldState.error?.message}
+                  isInvalid={!!fieldState.error}
+                  label={val.label}
+                  placeholder={val.placeholder}
+                  type={isShow ? "text" : "password"}
+                  validationState={fieldState.error ? "invalid" : "valid"}
+                  labelPlacement="outside"
+                  // isRequired={!!val.validation?.required}
+                  disabled={val?.disabled || disabled}
                 />
               )}
+              rules={val.validation}
             />
           );
         }

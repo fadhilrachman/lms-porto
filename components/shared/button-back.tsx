@@ -5,13 +5,14 @@ import React from "react";
 
 const ButtonBack = ({ href }: { href: string }) => {
   const router = useRouter();
+
   return (
     <Button
+      isIconOnly
       startContent={<ChevronLeft />}
       onPress={() => {
         router.push(href);
       }}
-      isIconOnly
     />
   );
 };

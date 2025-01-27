@@ -1,8 +1,8 @@
+import { NextRequest } from "next/server";
+
 import { prisma } from "@/lib/prisma";
 import { createPagination } from "@/lib/pagination-server";
-import bcrypt from "bcrypt";
 import { verifyTokenAdmin } from "@/lib/verify-token-server";
-import { NextRequest } from "next/server";
 
 // export async function POST(req: Request) {
 //   const { user_name, email, password } = await req.json();
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
       },
       {
         status: 403,
-      }
+      },
     );
   }
   const { searchParams } = new URL(req.url);
@@ -90,6 +90,7 @@ export async function GET(req: NextRequest) {
         },
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success get transaction",

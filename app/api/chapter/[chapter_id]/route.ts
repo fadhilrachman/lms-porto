@@ -1,11 +1,11 @@
-import { prisma } from "@/lib/prisma";
-import { createPagination } from "@/lib/pagination-server";
-import { verifyTokenAdmin } from "@/lib/verify-token-server";
 import { NextRequest } from "next/server";
+
+import { prisma } from "@/lib/prisma";
+import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { chapter_id: string } }
+  { params }: { params: { chapter_id: string } },
 ) {
   // if (verifyTokenAdmin(req)) {
   //   return Response.json(
@@ -20,6 +20,7 @@ export async function PUT(
   // }
   const { chapter_id } = params;
   const { title } = await req.json();
+
   try {
     const result = await prisma.chapter.update({
       data: {
@@ -29,6 +30,7 @@ export async function PUT(
         id: chapter_id as string,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success update chapter",
@@ -43,14 +45,14 @@ export async function PUT(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { chapter_id: string } }
+  { params }: { params: { chapter_id: string } },
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -60,16 +62,18 @@ export async function DELETE(
       },
       {
         status: 403,
-      }
+      },
     );
   }
   const { chapter_id } = params;
+
   try {
     const result = await prisma.chapter.delete({
       where: {
         id: chapter_id as string,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success delete chapter",
@@ -84,16 +88,17 @@ export async function DELETE(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function GET(
   req: Request,
-  { params }: { params: { chapter_id: string } }
+  { params }: { params: { chapter_id: string } },
 ) {
   const { chapter_id } = params;
+
   try {
     const result = await prisma.chapter.findUnique({
       where: {
@@ -107,6 +112,7 @@ export async function GET(
         },
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success get chapter",
@@ -121,7 +127,7 @@ export async function GET(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

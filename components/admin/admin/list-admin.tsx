@@ -1,14 +1,15 @@
+import { Avatar } from "@nextui-org/avatar";
+import { Button } from "@nextui-org/button";
+import { Trash } from "lucide-react";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+
 import BaseInputSearch from "@/components/shared/base-input-search";
 import BasePagination from "@/components/shared/base-pagination";
 import BaseTable, { ColumnTable } from "@/components/shared/base-table";
 import ModalDelete from "@/components/shared/modal-delete";
 import { useDeleteAdmin, useGetAdmin } from "@/hooks/admin.hook";
 import { AdminType } from "@/types/admin.type";
-import { Avatar } from "@nextui-org/avatar";
-import { Button } from "@nextui-org/button";
-import { Edit, Trash } from "lucide-react";
-import moment from "moment";
-import React, { useEffect, useState } from "react";
 
 const ListAdmin = () => {
   const [params, setParams] = useState({ search: "", page: 1, per_page: 10 });
@@ -56,14 +57,14 @@ const ListAdmin = () => {
           <div className="space-x-2">
             <Button
               // size={"small"}
+              isIconOnly
+              color="danger"
+              size="sm"
+              startContent={<Trash className="h-4 w-4" />}
               onPress={() => {
                 setDialog((p) => ({ ...p, delete: true }));
                 setSelected(obj);
               }}
-              size="sm"
-              color="danger"
-              startContent={<Trash className="h-4 w-4" />}
-              isIconOnly
             />
           </div>
         );
@@ -74,13 +75,14 @@ const ListAdmin = () => {
   useEffect(() => {
     refetch();
   }, [params]);
+
   return (
     <div className="space-y-4">
       <BaseInputSearch
+        placeholder="Search Admin"
         onChange={(e) => {
           setParams((p) => ({ ...p, search: e }));
         }}
-        placeholder="Search Admin"
       />
       <div className="space-y-2">
         <BaseTable
@@ -98,12 +100,12 @@ const ListAdmin = () => {
         />
       </div>
       <ModalDelete
+        isLoading={status == "pending"}
         isOpen={dialog.delete}
+        onDelete={handleDelete}
         onOpenChange={() => {
           setDialog((p) => ({ ...p, delete: false }));
         }}
-        onDelete={handleDelete}
-        isLoading={status == "pending"}
       />
     </div>
   );

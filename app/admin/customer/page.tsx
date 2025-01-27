@@ -1,7 +1,8 @@
 "use client";
 import { Button } from "@nextui-org/button";
-import { Plus, Search } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { Plus } from "lucide-react";
+import React, { useState } from "react";
+
 import ListCustomer from "@/components/admin/customer/list-customer";
 import CreateCustoemr from "@/components/admin/customer/create-customer";
 const Customer = () => {
@@ -12,8 +13,8 @@ const Customer = () => {
       <div className="flex justify-between">
         <h3 className="text-2xl">Customer</h3>
         <Button
-          startContent={<Plus />}
           color="primary"
+          startContent={<Plus />}
           onPress={() => {
             setModal((p) => ({ ...p, create: true }));
           }}
