@@ -9,10 +9,9 @@ import {
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 import { useForm } from "react-hook-form";
-import FormGenerator, {
-  DataFormType,
-} from "@/components/shared/form-generator";
 import * as VscIcons from "react-icons/si";
+
+import FormGenerator from "@/components/shared/form-generator";
 import { usePostCustomer } from "@/hooks/customer.hook";
 
 const CreateCustoemr = ({
@@ -32,6 +31,7 @@ const CreateCustoemr = ({
     form.reset();
     onOpenChange();
   };
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
@@ -40,10 +40,6 @@ const CreateCustoemr = ({
         </ModalHeader>
         <ModalBody>
           <FormGenerator
-            onSubmit={handleCreateAdmin}
-            id="formCreateCustomer"
-            form={form}
-            disabled={status == "pending"}
             data={[
               {
                 name: "user_name",
@@ -85,25 +81,31 @@ const CreateCustoemr = ({
                   required: "This field is required",
                   validate: (confirmPassword: string) => {
                     const { password } = form.getValues();
+
                     if (confirmPassword !== password) {
                       return "Confirm password does not match";
                     }
+
                     return true;
                   },
                 },
               },
             ]}
+            disabled={status == "pending"}
+            form={form}
+            id="formCreateCustomer"
+            onSubmit={handleCreateAdmin}
           />
         </ModalBody>
         <ModalFooter>
-          <Button onPress={onOpenChange} type="button">
+          <Button type="button" onPress={onOpenChange}>
             Close
           </Button>
           <Button
-            type="submit"
+            color="primary"
             form="formCreateCustomer"
             isLoading={status == "pending"}
-            color="primary"
+            type="submit"
           >
             Submit
           </Button>

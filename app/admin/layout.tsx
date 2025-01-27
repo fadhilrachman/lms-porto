@@ -1,8 +1,8 @@
 "use client";
-import { Navbar } from "@/components/shared/navbar";
+import React from "react";
+
 import NavbarAdmin from "@/components/shared/navbar-admin-user";
 import SidebarAdmin from "@/components/shared/sidebar-admin";
-import React from "react";
 
 const LayoutAdmin = ({ children }: { children: React.ReactNode }) => {
   return (

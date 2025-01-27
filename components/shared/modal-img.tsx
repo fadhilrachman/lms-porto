@@ -24,10 +24,10 @@ const ModalImg = ({
           Thumbnail Course
         </ModalHeader>
         <ModalBody>
-          <img src={img} alt="" />
+          <img alt="" src={img} />
         </ModalBody>
         <ModalFooter>
-          <Button onPress={onOpenChange} type="button">
+          <Button type="button" onPress={onOpenChange}>
             Close
           </Button>
         </ModalFooter>

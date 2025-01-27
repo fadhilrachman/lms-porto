@@ -14,7 +14,8 @@ const Faq = () => {
     },
     {
       title: "Can I access this LMS via mobile device?",
-      description: "Yes! The LMS is compatible with desktop, tablet, and smartphone devices via browser.",
+      description:
+        "Yes! The LMS is compatible with desktop, tablet, and smartphone devices via browser.",
     },
     {
       title: "How to register as a user?",
@@ -22,13 +23,14 @@ const Faq = () => {
         "To register, click the “Register” button on the main page, fill out the registration form, and confirm via the email sent.",
     },
   ];
+
   return (
     <section className="px-16 space-y-6" id="faq">
       <h3 className="text-3xl text-center font-semibold ">
         Frequently Asked Questions
       </h3>
       <div className="!max-w-[1000px] mx-auto">
-        <Accordion variant="splitted" className="space-y-6">
+        <Accordion className="space-y-6" variant="splitted">
           {listDataAccordion.map((val, key) => {
             return (
               <AccordionItem

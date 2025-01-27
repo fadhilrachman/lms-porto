@@ -8,11 +8,12 @@ import {
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 import { useForm } from "react-hook-form";
+import { useParams } from "next/navigation";
+import { Link } from "lucide-react";
+
 import FormGenerator, {
   DataFormType,
 } from "@/components/shared/form-generator";
-import { useParams, useRouter } from "next/navigation";
-import { Link } from "lucide-react";
 import { usePostContent } from "@/hooks/content.hook";
 const ModalCreateContent = ({
   isOpen,
@@ -56,6 +57,7 @@ const ModalCreateContent = ({
       },
     },
   ];
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
@@ -64,8 +66,8 @@ const ModalCreateContent = ({
         </ModalHeader>
         <ModalBody>
           <FormGenerator
-            form={form}
             data={dataForm}
+            form={form}
             id="contentForm"
             onSubmit={async (val) => {
               await mutateAsync({ ...val, chapter_id });
@@ -75,14 +77,14 @@ const ModalCreateContent = ({
           />
         </ModalBody>
         <ModalFooter>
-          <Button onPress={onOpenChange} type="button">
+          <Button type="button" onPress={onOpenChange}>
             Close
           </Button>
           <Button
-            isLoading={status == "pending"}
             color="primary"
-            type="submit"
             form="contentForm"
+            isLoading={status == "pending"}
+            type="submit"
           >
             Submit
           </Button>

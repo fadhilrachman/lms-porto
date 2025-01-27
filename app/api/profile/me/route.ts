@@ -1,6 +1,7 @@
+import { NextRequest } from "next/server";
+
 import { prisma } from "@/lib/prisma";
 import { verifyTokenCustomer } from "@/lib/verify-token-server";
-import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   if (verifyTokenCustomer(req)) {
@@ -23,6 +24,7 @@ export async function GET(req: NextRequest) {
         created_at: true,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success delete category",
@@ -37,7 +39,7 @@ export async function GET(req: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

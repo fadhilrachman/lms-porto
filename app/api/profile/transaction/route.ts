@@ -1,12 +1,12 @@
-import { prisma } from "@/lib/prisma";
-import { createPagination } from "@/lib/pagination-server";
-import bcrypt from "bcrypt";
-import { NextApiRequest } from "next";
 import { NextRequest } from "next/server";
+
+import { createPagination } from "@/lib/pagination-server";
+import { prisma } from "@/lib/prisma";
 import { verifyTokenCustomer } from "@/lib/verify-token-server";
 
 export async function POST(req: NextRequest) {
   const { course_id } = await req.json();
+
   if (verifyTokenCustomer(req)) {
     return Response.json({
       status: 403,
@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
         user_id: user.id,
       },
     });
+
     if (checkDuplicateTransaction)
       return Response.json({
         status: 400,
@@ -33,6 +34,7 @@ export async function POST(req: NextRequest) {
         user_id: user.id,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success create course",
@@ -47,7 +49,7 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -104,6 +106,7 @@ export async function GET(req: NextRequest) {
         },
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success get transaction",

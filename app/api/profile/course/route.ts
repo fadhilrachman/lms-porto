@@ -1,8 +1,7 @@
-import { prisma } from "@/lib/prisma";
-import { createPagination } from "@/lib/pagination-server";
-import bcrypt from "bcrypt";
-import { NextApiRequest } from "next";
 import { NextRequest } from "next/server";
+
+import { createPagination } from "@/lib/pagination-server";
+import { prisma } from "@/lib/prisma";
 import { verifyTokenCustomer } from "@/lib/verify-token-server";
 
 export async function GET(req: NextRequest) {
@@ -61,6 +60,7 @@ export async function GET(req: NextRequest) {
         },
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success get transaction",

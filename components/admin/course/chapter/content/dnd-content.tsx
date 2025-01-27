@@ -3,11 +3,10 @@
 import * as React from "react";
 import { useState } from "react";
 import { Reorder } from "framer-motion";
-import { ItemContent } from "./Item-content";
-import { ChapterType } from "@/types/chapter.type";
-import { usePatchChangePosition } from "@/hooks/chapter.hook";
-import { useParams } from "next/navigation";
 import { Spinner } from "@nextui-org/spinner";
+
+import { ItemContent } from "./Item-content";
+
 import { ContentType } from "@/types/content.type";
 import { usePatchChangePositionContent } from "@/hooks/content.hook";
 
@@ -23,8 +22,9 @@ export default function DndContent({
 
   const handleChangePosition = async () => {
     const newData = items.map(
-      (val) => currentData.find((valCurrent) => val == valCurrent.title)?.id
+      (val) => currentData.find((valCurrent) => val == valCurrent.title)?.id,
     );
+
     await mutateAsync({
       data: newData as string[],
     });
@@ -33,6 +33,7 @@ export default function DndContent({
   React.useEffect(() => {
     setItems(data);
   }, [data]);
+
   return (
     <>
       {status === "pending" && (
@@ -44,26 +45,26 @@ export default function DndContent({
         "Tidak ada data"
       ) : (
         <Reorder.Group
-          className="space-y-4"
-          //   axis="y"
-          onClick={() => {
-            console.log("cuuyyy");
-          }}
+          values={items}
           onReorder={(val) => {
             console.log({ val });
 
             setItems(val);
           }}
-          values={items}
+          className="space-y-4"
+          //   axis="y"
+          onClick={() => {
+            console.log("cuuyyy");
+          }}
         >
           {items.map((item) => {
             return (
               <ItemContent
                 key={item}
+                currentData={currentData}
+                data={items}
                 handleChangePosition={handleChangePosition}
                 item={item}
-                data={items}
-                currentData={currentData}
               />
             );
           })}

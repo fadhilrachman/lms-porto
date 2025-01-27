@@ -1,9 +1,4 @@
 "use client";
-import AboutCourse from "@/components/home/course/detail/about-course";
-import Footer from "@/components/home/footer";
-import Title from "@/components/home/title";
-import { Navbar } from "@/components/shared/navbar";
-import VideoRender from "@/components/shared/video-render";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import {
@@ -14,7 +9,12 @@ import {
   TableOfContents,
 } from "lucide-react";
 import React, { useState } from "react";
-import YouTube from "react-youtube";
+
+import AboutCourse from "@/components/home/course/detail/about-course";
+import Footer from "@/components/home/footer";
+import Title from "@/components/home/title";
+import { Navbar } from "@/components/shared/navbar";
+import VideoRender from "@/components/shared/video-render";
 const CourseDetail = () => {
   const [tab, setTab] = useState("About");
 
@@ -32,6 +32,7 @@ const CourseDetail = () => {
     //   href: "#reviewCourse",
     // },
   ];
+
   return (
     <div className="relative space-y-12  ">
       {" "}
@@ -60,12 +61,12 @@ const CourseDetail = () => {
               {listTab.map((val, key) => {
                 return (
                   <Button
+                    key={key}
                     color={val.title == tab ? "secondary" : "default"}
+                    size="lg"
                     onPress={() => {
                       setTab(val.title);
                     }}
-                    size="lg"
-                    key={key}
                   >
                     {val.title}
                   </Button>
@@ -104,7 +105,7 @@ const CourseDetail = () => {
               </CardBody>
             </Card>
 
-            <Button color="primary" className="w-full">
+            <Button className="w-full" color="primary">
               Buy Course
             </Button>
           </div>

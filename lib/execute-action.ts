@@ -18,12 +18,12 @@ const executeAction = async <T>({
         message: successMessage,
       };
     });
-
   } catch (error) {
     if (error instanceof AuthError) {
       console.log(
         "[auth error message]:",
-        JSON.stringify({
+        JSON.stringify(
+          {
             name: error.name,
             type: error.type,
             message: error.message,
@@ -31,9 +31,9 @@ const executeAction = async <T>({
           },
           null,
           2,
-        )
+        ),
       );
-      
+
       // if (isRedirectError(error)) {
       //   throw error;
       // }

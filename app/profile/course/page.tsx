@@ -32,10 +32,10 @@ const UserCourse = () => {
       </div>
 
       <BaseInputSearch
+        placeholder="Search Course"
         onChange={(e) => {
           setPrams((p) => ({ ...p, search: e }));
         }}
-        placeholder="Search Course"
       />
       <div className="grid-cols-3 gap-4 pt-7 pb-8">
         {isFetching ? (

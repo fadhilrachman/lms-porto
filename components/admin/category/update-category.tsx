@@ -9,12 +9,10 @@ import {
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 import { useForm } from "react-hook-form";
-import FormGenerator, {
-  DataFormType,
-} from "@/components/shared/form-generator";
 import * as VscIcons from "react-icons/si";
-import BaseIcon from "@/components/shared/base-icon";
-import { usePostCategory, usePutCategory } from "@/hooks/category.hook";
+
+import FormGenerator from "@/components/shared/form-generator";
+import { usePutCategory } from "@/hooks/category.hook";
 import { CategoryType } from "@/types/category.type";
 
 const UpdateCategory = ({
@@ -41,6 +39,7 @@ const UpdateCategory = ({
     form.setValue("name", data?.name);
     form.setValue("icon", data?.icon);
   }, [data]);
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
@@ -49,10 +48,6 @@ const UpdateCategory = ({
         </ModalHeader>
         <ModalBody>
           <FormGenerator
-            onSubmit={handleCreateCategory}
-            id="formCategory"
-            form={form}
-            disabled={status == "pending"}
             data={[
               {
                 name: "name",
@@ -83,17 +78,21 @@ const UpdateCategory = ({
                 },
               },
             ]}
+            disabled={status == "pending"}
+            form={form}
+            id="formCategory"
+            onSubmit={handleCreateCategory}
           />
         </ModalBody>
         <ModalFooter>
-          <Button onPress={onOpenChange} type="button">
+          <Button type="button" onPress={onOpenChange}>
             Close
           </Button>
           <Button
-            type="submit"
+            color="primary"
             form="formCategory"
             isLoading={status == "pending"}
-            color="primary"
+            type="submit"
           >
             Submit
           </Button>

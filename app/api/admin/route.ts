@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   const { name, icon } = await req.json();
+
   try {
     const result = await prisma.category.create({
       data: {
@@ -9,6 +10,7 @@ export async function POST(req: Request) {
         icon,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success create category",
@@ -23,7 +25,7 @@ export async function POST(req: Request) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

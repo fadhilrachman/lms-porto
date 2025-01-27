@@ -1,6 +1,7 @@
-import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
+import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   const { email, password } = await req.json();
@@ -15,25 +16,27 @@ export async function POST(req: Request) {
     if (!checkCredenttial)
       return Response.json(
         { status: 401, message: "Login failed" },
-        { status: 401 }
+        { status: 401 },
       );
     const checkPassword = await bcrypt.compare(
       password,
-      checkCredenttial.password
+      checkCredenttial.password,
     );
 
     if (!checkPassword)
       return Response.json(
         { status: 401, message: "Login failed" },
-        { status: 401 }
+        { status: 401 },
       );
 
     const token = await jwt.sign(checkCredenttial, "asdasdasd", {
       expiresIn: "28d",
     });
+
     return Response.json({ status: 201, message: "Success login", token });
   } catch (error) {
     console.log({ error });
+
     return Response.json(
       {
         status: 500,
@@ -42,7 +45,7 @@ export async function POST(req: Request) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

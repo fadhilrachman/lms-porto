@@ -16,6 +16,7 @@ export const useGetUserCourse = (params: {
     queryKey: ["USER_LIST_COURSE"],
     queryFn: async () => {
       const result = await fetcher.get("/profile/course", { params });
+
       return result.data;
     },
   });
@@ -28,6 +29,7 @@ export const useGetDetailUserCourse = (id: string) => {
     queryKey: ["USER_DETAIL_COURSE"],
     queryFn: async () => {
       const result = await fetcher.get(`/profile/course/${id}`);
+
       return result.data;
     },
   });
@@ -41,22 +43,26 @@ export const usePatchUserCourse = (id: string) => {
     mutationFn: async (body) => {
       const result = await fetcher.patch(
         `/profile/course/${id}/completed`,
-        body
+        body,
       );
+
       return result.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["DETAIL_COURSE"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
+
   useEffect(() => {
     const status = mutation.status;
+
     if (status == "success") {
       toast.success("Success update course");
     }
 
     if (status == "error") {
       const error = mutation.error as AxiosError<any>;
+
       toast.error(error.response?.data.message);
     }
   }, [mutation.status]);

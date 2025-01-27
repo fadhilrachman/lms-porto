@@ -2,16 +2,16 @@ import { CategoryType } from "./category.type";
 import { ChapterType } from "./chapter.type";
 
 export interface CourseType {
-  id: string,
+  id: string;
   course: {
-    id: string,
-    title: string,
-    is_free: boolean,
-    category?: CategoryType,
-    price: number,
-    thumbnail_img: string,
-    created_at: Date
-  }
+    id: string;
+    title: string;
+    is_free: boolean;
+    category?: CategoryType;
+    price: number;
+    thumbnail_img: string;
+    created_at: Date;
+  };
 }
 
 export interface CourseDetailType {

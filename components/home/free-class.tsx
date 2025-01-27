@@ -1,20 +1,21 @@
 import { Card, CardBody } from "@nextui-org/card";
 import Image from "next/image";
 import React from "react";
-import Title from "./title";
 import { Button } from "@nextui-org/button";
-import Marquee from "react-fast-marquee";
-import benchAccountingImage from "@/public/images/bench-accounting.jpg"
-import glenCarstensPetersImage from "@/public/images/glenn-carstens-peters.jpg"
-import kobuAgencyImage from "@/public/images/kobu-agency.jpg"
-import linkedinSalesSolutionsImage from "@/public/images/linkedin-sales-solutions.jpg"
-import mimiThianImage from "@/public/images/mimi-thian.jpg"
-import nathanDumlaoImage from "@/public/images/nathan-dumlao.jpg"
-import priscillaDuPrezzImage from "@/public/images/priscilla-du-preez.jpg"
-import scottGrahamImage from "@/public/images/scott-graham.jpg"
-import surfaceImage from "@/public/images/surface.jpg"
-import thoughtCatalogImage from "@/public/images/thought-catalog.jpg"
-import trueAgencyImage from "@/public/images/true-agency.jpg"
+
+import Title from "./title";
+
+import benchAccountingImage from "@/public/images/bench-accounting.jpg";
+import glenCarstensPetersImage from "@/public/images/glenn-carstens-peters.jpg";
+import kobuAgencyImage from "@/public/images/kobu-agency.jpg";
+import linkedinSalesSolutionsImage from "@/public/images/linkedin-sales-solutions.jpg";
+import mimiThianImage from "@/public/images/mimi-thian.jpg";
+import nathanDumlaoImage from "@/public/images/nathan-dumlao.jpg";
+import priscillaDuPrezzImage from "@/public/images/priscilla-du-preez.jpg";
+import scottGrahamImage from "@/public/images/scott-graham.jpg";
+import surfaceImage from "@/public/images/surface.jpg";
+import thoughtCatalogImage from "@/public/images/thought-catalog.jpg";
+import trueAgencyImage from "@/public/images/true-agency.jpg";
 
 const srcList = [
   {
@@ -50,7 +51,7 @@ const srcList = [
   {
     image: trueAgencyImage,
   },
-]
+];
 
 // const FreeClass = () => {
 //   return (

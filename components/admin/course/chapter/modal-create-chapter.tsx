@@ -8,12 +8,11 @@ import {
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 import { useForm } from "react-hook-form";
-import { Input } from "@nextui-org/input";
+import { useParams, useRouter } from "next/navigation";
+
 import FormGenerator, {
   DataFormType,
 } from "@/components/shared/form-generator";
-import { usePostCourse } from "@/hooks/course.hook";
-import { useParams, useRouter } from "next/navigation";
 import { usePostChapter } from "@/hooks/chapter.hook";
 const ModalCreateChapter = ({
   isOpen,
@@ -35,6 +34,7 @@ const ModalCreateChapter = ({
       validation: { required: "This field is required" },
     },
   ];
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
@@ -43,8 +43,8 @@ const ModalCreateChapter = ({
         </ModalHeader>
         <ModalBody>
           <FormGenerator
-            form={form}
             data={dataForm}
+            form={form}
             id="chapterForm"
             onSubmit={async (val) => {
               await mutateAsync({ ...val, course_id });
@@ -55,14 +55,14 @@ const ModalCreateChapter = ({
           />
         </ModalBody>
         <ModalFooter>
-          <Button onPress={onOpenChange} type="button">
+          <Button type="button" onPress={onOpenChange}>
             Close
           </Button>
           <Button
-            isLoading={status == "pending"}
             color="primary"
-            type="submit"
             form="chapterForm"
+            isLoading={status == "pending"}
+            type="submit"
           >
             Submit
           </Button>

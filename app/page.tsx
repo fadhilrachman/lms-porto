@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
+import { useRouter } from "next/navigation";
+import { useGetCookie } from "cookies-next";
+import Cookies from "js-cookie";
+
 import ListCourse from "@/components/home/list-course";
 import { Navbar } from "@/components/shared/navbar";
 import Faq from "@/components/home/faq";
@@ -11,23 +14,22 @@ import Title from "@/components/home/title";
 import FreeClass from "@/components/home/free-class";
 import Community from "@/components/home/community";
 import Footer from "@/components/home/footer";
-import { useRouter } from "next/navigation";
-
-import { useGetCookie } from 'cookies-next';
-import Cookies from "js-cookie";
 
 export default function Home() {
   const router = useRouter();
   const getCookie = useGetCookie();
-  
+
   useEffect(() => {
     // const token = Cookies.get('yourCookieName');
-    const docCookie = document.cookie
-    console.log('DOCUMENT COOKIE=', docCookie); // Nilai cookie tertentu
+    const docCookie = document.cookie;
+
+    console.log("DOCUMENT COOKIE=", docCookie); // Nilai cookie tertentu
     const myCookie = Cookies.get(process.env.COOKIE_NAME as string);
-    console.log('MY COOKIE=', myCookie); // Nilai cookie tertentu
-    const value = getCookie('authjs.session-token');
-    console.log('USECOOKIE COOKIE=', value); // Nilai cookie tertentu
+
+    console.log("MY COOKIE=", myCookie); // Nilai cookie tertentu
+    const value = getCookie("authjs.session-token");
+
+    console.log("USECOOKIE COOKIE=", value); // Nilai cookie tertentu
   }, []);
 
   return (
@@ -37,8 +39,8 @@ export default function Home() {
         <div className="space-y-16 ">
           <section className="flex   px-16 items-end justify-between  ">
             <Title
-              title="  Our Recomended"
               subTitle="Learn New Skills According to your interests"
+              title="  Our Recomended"
             />
             <Button
               color="primary"

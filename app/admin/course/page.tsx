@@ -1,18 +1,18 @@
 "use client";
 import { Button } from "@nextui-org/button";
-import { Eye, Plus, Search } from "lucide-react";
+import { Eye, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import BaseTable, { ColumnTable } from "@/components/shared/base-table";
-import { Pagination } from "@nextui-org/pagination";
-import ModalCreateCourse from "@/components/admin/course/modal-create-course";
-import { useGetCourse } from "@/hooks/course.hook";
 import moment from "moment";
 import { Chip } from "@nextui-org/chip";
+import { useRouter } from "next/navigation";
+
+import BaseTable, { ColumnTable } from "@/components/shared/base-table";
+import ModalCreateCourse from "@/components/admin/course/modal-create-course";
+import { useGetCourse } from "@/hooks/course.hook";
 import { formatRupiah } from "@/lib/helper";
 import { CourseType } from "@/types/course.type";
 import ModalImg from "@/components/shared/modal-img";
 import BaseInputSearch from "@/components/shared/base-input-search";
-import { useRouter } from "next/navigation";
 import BasePagination from "@/components/shared/base-pagination";
 
 const AdminCategory = () => {
@@ -32,12 +32,12 @@ const AdminCategory = () => {
         return (
           <div className="flex items-center space-x-2">
             <img
+              alt=""
+              className="max-w-12 max-h-12 cursor-pointer"
+              src={obj.thumbnail_img}
               onClick={() => {
                 setModal((p) => ({ ...p, img: true }));
               }}
-              src={obj.thumbnail_img}
-              className="max-w-12 max-h-12 cursor-pointer"
-              alt=""
             />
             <span>{value}</span>
           </div>
@@ -49,7 +49,7 @@ const AdminCategory = () => {
       label: "Price",
       render: (value, obj) => {
         return obj?.is_free ? (
-          <Chip size="sm" color="primary">
+          <Chip color="primary" size="sm">
             Free
           </Chip>
         ) : (
@@ -70,7 +70,7 @@ const AdminCategory = () => {
       render: (value) => {
         return (
           <>
-            <Chip size="sm" color={value ? "primary" : "default"}>
+            <Chip color={value ? "primary" : "default"} size="sm">
               {value ? "Publish" : "draft"}
             </Chip>
           </>
@@ -100,12 +100,12 @@ const AdminCategory = () => {
           <>
             <Button
               // size={"small"}
+              isIconOnly
+              size="sm"
+              startContent={<Eye className="h-4 w-4" />}
               onPress={() => {
                 router.push(`/admin/course/${obj.id}`);
               }}
-              size="sm"
-              startContent={<Eye className="h-4 w-4" />}
-              isIconOnly
             />
           </>
         );
@@ -118,8 +118,8 @@ const AdminCategory = () => {
       <div className="flex justify-between">
         <h3 className="text-2xl">Course</h3>
         <Button
-          startContent={<Plus />}
           color="primary"
+          startContent={<Plus />}
           onPress={() => {
             setModal((p) => ({ ...p, create: true }));
           }}
@@ -129,10 +129,10 @@ const AdminCategory = () => {
       </div>
 
       <BaseInputSearch
+        placeholder="Search Course"
         onChange={(e) => {
           setParams((p) => ({ ...p, search: e }));
         }}
-        placeholder="Search Course"
       />
       <BaseTable
         columns={columns}
@@ -154,11 +154,11 @@ const AdminCategory = () => {
         }}
       />
       <ModalImg
+        img="https://nextui.org/images/hero-card-complete.jpeg"
         isOpen={modal.img}
         onOpenChange={() => {
           setModal((p) => ({ ...p, img: false }));
         }}
-        img="https://nextui.org/images/hero-card-complete.jpeg"
       />
     </div>
   );

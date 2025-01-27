@@ -1,8 +1,6 @@
-import { prisma } from "@/lib/prisma";
-import { createPagination } from "@/lib/pagination-server";
-import { verifyTokenAdmin } from "@/lib/verify-token-server";
-import { NextApiRequest } from "next";
 import { NextRequest } from "next/server";
+
+import { prisma } from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   // if (verifyTokenAdmin(req)) {
@@ -32,6 +30,7 @@ export async function POST(req: NextRequest) {
         description,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success create content",

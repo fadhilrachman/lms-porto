@@ -1,3 +1,6 @@
+import { Avatar } from "@nextui-org/avatar";
+import React, { useState } from "react";
+
 import BaseInputSearch from "@/components/shared/base-input-search";
 import BasePagination from "@/components/shared/base-pagination";
 import BaseTable, { ColumnTable } from "@/components/shared/base-table";
@@ -6,8 +9,6 @@ import { useDeleteCustomer } from "@/hooks/customer.hook";
 import { useGetTransaction } from "@/hooks/transaction.hook";
 import { CustomerType } from "@/types/customer.type";
 import { TransactionType } from "@/types/transaction.type";
-import { Avatar } from "@nextui-org/avatar";
-import React, { useState } from "react";
 
 const ListTransaction = () => {
   const [params, setParams] = useState({ search: "", page: 1, per_page: 10 });
@@ -61,12 +62,12 @@ const ListTransaction = () => {
         return (
           <div className="flex items-center space-x-2">
             <img
+              alt=""
+              className="max-w-12 max-h-12 cursor-pointer"
+              src={obj.course.thumbnail_img}
               onClick={() => {
                 setDialog((p) => ({ ...p, img: true }));
               }}
-              src={obj.course.thumbnail_img}
-              className="max-w-12 max-h-12 cursor-pointer"
-              alt=""
             />
             <span>{obj.course.title}</span>
           </div>
@@ -103,10 +104,10 @@ const ListTransaction = () => {
   return (
     <div className="space-y-4">
       <BaseInputSearch
+        placeholder="Search Transaction"
         onChange={(e) => {
           setParams((p) => ({ ...p, search: e }));
         }}
-        placeholder="Search Transaction"
       />
       <div className="space-y-2">
         <BaseTable
@@ -124,12 +125,12 @@ const ListTransaction = () => {
         />
       </div>
       <ModalDelete
+        isLoading={status == "pending"}
         isOpen={dialog.delete}
+        onDelete={handleDelete}
         onOpenChange={() => {
           setDialog((p) => ({ ...p, delete: false }));
         }}
-        onDelete={handleDelete}
-        isLoading={status == "pending"}
       />
     </div>
   );

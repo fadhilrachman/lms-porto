@@ -1,9 +1,10 @@
 import React from "react";
+
 import Title from "../../title";
 
 const AboutCourse = () => {
   return (
-    <section id="aboutCourse" className="space-y-4">
+    <section className="space-y-4" id="aboutCourse">
       <Title subTitle="About" />
       <div className="space-y-3">
         <p>

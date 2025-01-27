@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import { Plus, Search } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { Plus } from "lucide-react";
+import React, { useState } from "react";
+
 import ListAdmin from "@/components/admin/admin/list-admin";
 import CreateAdmin from "@/components/admin/admin/create-admin";
 
@@ -24,8 +24,8 @@ const Admin = () => {
       <div className="flex justify-between">
         <h3 className="text-2xl">Admin</h3>
         <Button
-          startContent={<Plus />}
           color="primary"
+          startContent={<Plus />}
           onPress={() => {
             setModal((p) => ({ ...p, create: true }));
           }}

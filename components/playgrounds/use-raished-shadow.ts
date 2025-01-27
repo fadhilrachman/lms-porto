@@ -8,8 +8,10 @@ export function useRaisedShadow(value: MotionValue<number>) {
 
   useEffect(() => {
     let isActive = false;
+
     value.onChange((latest) => {
       const wasActive = isActive;
+
       if (latest !== 0) {
         isActive = true;
         if (isActive !== wasActive) {

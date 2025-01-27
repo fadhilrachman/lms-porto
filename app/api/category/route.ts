@@ -1,6 +1,7 @@
+import { NextRequest } from "next/server";
+
 import { prisma } from "@/lib/prisma";
 import { createPagination } from "@/lib/pagination-server";
-import { NextRequest } from "next/server";
 import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function POST(req: NextRequest) {
@@ -12,11 +13,12 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 403,
-      }
+      },
     );
   }
 
   const { name, icon } = await req.json();
+
   try {
     const result = await prisma.category.create({
       data: {
@@ -24,6 +26,7 @@ export async function POST(req: NextRequest) {
         icon,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success create category",
@@ -38,13 +41,14 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function GET(req: NextRequest) {
   const cuy = req.cookies.get("cookie");
+
   console.log({ cuy });
   const { searchParams } = new URL(req.url);
   const page = Number(searchParams.get("page") || 1);
@@ -65,6 +69,7 @@ export async function GET(req: NextRequest) {
         created_at: "desc",
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success get category",
@@ -80,7 +85,7 @@ export async function GET(req: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

@@ -20,88 +20,87 @@ import {
   IoLogoAndroid,
   IoLogoApple,
   IoLogoFigma,
-
 } from "react-icons/io5";
+
 import Title from "./title";
 
 const logoListFirst = [
   {
-    name: 'HTML',
-    logo: <IoLogoHtml5 size={24}/>
+    name: "HTML",
+    logo: <IoLogoHtml5 size={24} />,
   },
   {
-    name: 'CSS',
-    logo: <IoLogoCss3 size={24}/>
+    name: "CSS",
+    logo: <IoLogoCss3 size={24} />,
   },
   {
-    name: 'Javascript',
-    logo: <IoLogoJavascript size={24}/>
+    name: "Javascript",
+    logo: <IoLogoJavascript size={24} />,
   },
   {
-    name: 'Python',
-    logo: <IoLogoPython size={24}/>
+    name: "Python",
+    logo: <IoLogoPython size={24} />,
   },
   {
-    name: 'React',
-    logo: <IoLogoReact size={24}/>
+    name: "React",
+    logo: <IoLogoReact size={24} />,
   },
   {
-    name: 'Vue',
-    logo: <IoLogoVue size={24}/>
+    name: "Vue",
+    logo: <IoLogoVue size={24} />,
   },
   {
-    name: 'Angular',
-    logo: <IoLogoAngular size={24}/>
+    name: "Angular",
+    logo: <IoLogoAngular size={24} />,
   },
   {
-    name: 'Nodejs',
-    logo: <IoLogoNodejs size={24}/>
+    name: "Nodejs",
+    logo: <IoLogoNodejs size={24} />,
   },
   {
-    name: 'Laravel',
-    logo: <IoLogoLaravel size={24}/>
+    name: "Laravel",
+    logo: <IoLogoLaravel size={24} />,
   },
-]
+];
 
 const logoListSecond = [
   {
-    name: 'Github',
-    logo: <IoLogoGithub size={24}/>
+    name: "Github",
+    logo: <IoLogoGithub size={24} />,
   },
   {
-    name: 'Gitlab',
-    logo: <IoLogoGitlab size={24}/>
+    name: "Gitlab",
+    logo: <IoLogoGitlab size={24} />,
   },
   {
-    name: 'Docker',
-    logo: <IoLogoDocker size={24}/>
+    name: "Docker",
+    logo: <IoLogoDocker size={24} />,
   },
   {
-    name: 'Vercel',
-    logo: <IoLogoVercel size={24}/>
+    name: "Vercel",
+    logo: <IoLogoVercel size={24} />,
   },
   {
-    name: 'Amazon',
-    logo: <IoLogoAmazon size={24}/>
+    name: "Amazon",
+    logo: <IoLogoAmazon size={24} />,
   },
   {
-    name: 'Google',
-    logo: <IoLogoGoogle size={24}/>
+    name: "Google",
+    logo: <IoLogoGoogle size={24} />,
   },
   {
-    name: 'Android',
-    logo: <IoLogoAndroid size={24}/>
+    name: "Android",
+    logo: <IoLogoAndroid size={24} />,
   },
   {
-    name: 'Apple',
-    logo: <IoLogoApple size={24}/>
+    name: "Apple",
+    logo: <IoLogoApple size={24} />,
   },
   {
-    name: 'Figma',
-    logo: <IoLogoFigma size={24}/>
+    name: "Figma",
+    logo: <IoLogoFigma size={24} />,
   },
-]
-
+];
 
 const Category = () => {
   return (
@@ -109,12 +108,12 @@ const Category = () => {
       {" "}
       <Title
         className="text-center"
-        title="  Our Recomended"
         subTitle="Learn New Skills According to your interests"
+        title="  Our Recomended"
       />
       <Marquee
-        className="flex space-x-4 "
         pauseOnHover
+        className="flex space-x-4 "
         gradient={false}
         speed={50}
       >
@@ -135,11 +134,11 @@ const Category = () => {
         })}
       </Marquee>
       <Marquee
-        className="flex space-x-4 "
         pauseOnHover
+        className="flex space-x-4 "
+        direction="right"
         gradient={false}
         speed={50}
-        direction="right"
       >
         {logoListSecond.map((item, key) => {
           return (

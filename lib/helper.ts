@@ -23,6 +23,7 @@ export const validatePassword = (password: string) => {
     },
     { regex: /.{8,}/, message: "Password must be at least 8 characters long" },
   ];
+
   for (const rule of passwordRules) {
     if (!rule.regex.test(password)) {
       return rule.message;

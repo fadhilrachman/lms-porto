@@ -1,11 +1,10 @@
-import { prisma } from "@/lib/prisma";
-import { createPagination } from "@/lib/pagination-server";
-import { verifyTokenAdmin } from "@/lib/verify-token-server";
 import { NextRequest } from "next/server";
+
+import { prisma } from "@/lib/prisma";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { course_id: string } }
+  { params }: { params: { course_id: string } },
 ) {
   const { course_id } = params;
   const {
@@ -16,6 +15,7 @@ export async function PUT(
     thumbnail_img,
     resource,
   } = await req.json();
+
   try {
     const result = await prisma.course.update({
       data: {
@@ -30,6 +30,7 @@ export async function PUT(
         id: course_id as string,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success update category",
@@ -44,17 +45,18 @@ export async function PUT(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { course_id: string } }
+  { params }: { params: { course_id: string } },
 ) {
   const { course_id } = params;
   const { is_free, is_published } = await req.json();
+
   try {
     const result = await prisma.course.update({
       data: {
@@ -65,6 +67,7 @@ export async function PATCH(
         id: course_id as string,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success update category",
@@ -79,22 +82,24 @@ export async function PATCH(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { course_id: string } }
+  { params }: { params: { course_id: string } },
 ) {
   const { course_id } = params;
+
   try {
     const result = await prisma.course.delete({
       where: {
         id: course_id as string,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success delete category",
@@ -109,16 +114,17 @@ export async function DELETE(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function GET(
   req: Request,
-  { params }: { params: { course_id: string } }
+  { params }: { params: { course_id: string } },
 ) {
   const { course_id } = params;
+
   try {
     const result = await prisma.course.findUnique({
       where: {
@@ -152,6 +158,7 @@ export async function GET(
         },
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success delete category",
@@ -166,7 +173,7 @@ export async function GET(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

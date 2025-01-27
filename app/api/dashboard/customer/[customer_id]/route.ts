@@ -1,11 +1,11 @@
-import { prisma } from "@/lib/prisma";
-import { createPagination } from "@/lib/pagination-server";
-import { verifyTokenAdmin } from "@/lib/verify-token-server";
 import { NextRequest } from "next/server";
+
+import { prisma } from "@/lib/prisma";
+import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { customer_id: string } }
+  { params }: { params: { customer_id: string } },
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -15,16 +15,18 @@ export async function DELETE(
       },
       {
         status: 403,
-      }
+      },
     );
   }
   const { customer_id } = params;
+
   try {
     const result = await prisma.user.delete({
       where: {
         id: customer_id as string,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success delete user",
@@ -39,7 +41,7 @@ export async function DELETE(
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

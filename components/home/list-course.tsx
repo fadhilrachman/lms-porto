@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import Image from "next/image";
 import { Chip } from "@nextui-org/chip";
 import { Star, User } from "lucide-react";
 const ListCourse = () => {

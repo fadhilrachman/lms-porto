@@ -1,7 +1,7 @@
+import { NextRequest } from "next/server";
+
 import { prisma } from "@/lib/prisma";
 import { createPagination } from "@/lib/pagination-server";
-import { NextRequest } from "next/server";
-import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function POST(req: NextRequest) {
   // if (verifyTokenAdmin(req)) {
@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
   //   );
   // }
   const { title, course_id } = await req.json();
+
   console.log({ title, course_id });
 
   try {
@@ -30,6 +31,7 @@ export async function POST(req: NextRequest) {
         course_id,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success create chapter",
@@ -78,6 +80,7 @@ export async function GET(req: Request) {
         position: true,
       },
     });
+
     return Response.json({
       status: 200,
       message: "Success get chapter",

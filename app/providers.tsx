@@ -6,8 +6,9 @@ import * as React from "react";
 import { NextUIProvider } from "@nextui-org/system";
 import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import Provider from "@/lib/provider";
 import { Toaster } from "react-hot-toast";
+
+import Provider from "@/lib/provider";
 
 export interface ProvidersProps {
   children: React.ReactNode;

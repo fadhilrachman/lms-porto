@@ -1,17 +1,19 @@
 "use client";
-import { Navbar } from "@/components/shared/navbar";
 import React from "react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Chip } from "@nextui-org/chip";
 import { Search, Star, User } from "lucide-react";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
+import { useRouter } from "next/navigation";
+
 import Title from "@/components/home/title";
 import Footer from "@/components/home/footer";
-import { useRouter } from "next/navigation";
+import { Navbar } from "@/components/shared/navbar";
 
 const Course = () => {
   const router = useRouter();
+
   return (
     <div className="relative space-y-12  ">
       <Navbar />
@@ -23,12 +25,12 @@ const Course = () => {
         />
         <div className="flex space-x-2">
           <Input
+            className="w-max"
             placeholder="Search Course..."
             size="lg"
-            className="w-max"
             startContent={<Search />}
           />
-          <Button size="lg" color="primary">
+          <Button color="primary" size="lg">
             Search
           </Button>
         </div>

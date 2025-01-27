@@ -21,8 +21,9 @@ fetcher.interceptors.response.use(
       Cookies.remove(process.env.COOKIE_NAME as string);
       window.location.href = "/login";
     }
+
     return Promise.reject(error);
-  }
+  },
 );
 
 export { fetcher };

@@ -1,4 +1,9 @@
 "use client";
+import { Button } from "@nextui-org/button";
+import { Share, Trash } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import React, { useState } from "react";
+
 import FormContent from "@/components/admin/course/chapter/content/form-content";
 import ButtonBack from "@/components/shared/button-back";
 import LoadingFullpage from "@/components/shared/loading-fullpage";
@@ -9,10 +14,6 @@ import {
   useGetDetailContent,
   usePatchContent,
 } from "@/hooks/content.hook";
-import { Button } from "@nextui-org/button";
-import { Grip, Link, Plus, Share, Trash } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
-import React, { useState } from "react";
 
 const AdminDetailChapter = () => {
   const router = useRouter();
@@ -35,6 +36,7 @@ const AdminDetailChapter = () => {
     setModal((p) => ({ ...p, deleteContent: false }));
     router.push(`/admin/course/${course_id}/${chapter_id}`);
   };
+
   return (
     <div className="space-y-4">
       {isFetching && <LoadingFullpage />}{" "}
@@ -51,19 +53,19 @@ const AdminDetailChapter = () => {
         </div>
         <div className="flex space-x-2">
           <Button
+            color="danger"
+            startContent={<Trash className="w-4 h-4" />}
+            type="button"
             onPress={() => {
               setModal((p) => ({ ...p, deleteContent: true }));
             }}
-            startContent={<Trash className="w-4 h-4" />}
-            type="button"
-            color="danger"
           >
             Delete
           </Button>
           {data?.result.is_published ? (
             <Button
-              startContent={<Share className="w-4 h-4" />}
               color="secondary"
+              startContent={<Share className="w-4 h-4" />}
               onPress={() => {
                 setModal((p) => ({ ...p, publishContent: true }));
               }}
@@ -72,8 +74,8 @@ const AdminDetailChapter = () => {
             </Button>
           ) : (
             <Button
-              startContent={<Share className="w-4 h-4" />}
               color="primary"
+              startContent={<Share className="w-4 h-4" />}
               type="button"
               onPress={() => {
                 setModal((p) => ({ ...p, publishContent: true }));
@@ -86,29 +88,29 @@ const AdminDetailChapter = () => {
       </div>
       <div className="gap-8">
         <FormContent
-          title={data?.result?.title as string}
           content_vid={data?.result?.content_vid as string}
           description={data?.result?.description as string}
           isLoading={isFetching}
+          title={data?.result?.title as string}
         />
       </div>
       <ModalDelete
-        onDelete={handleDelete}
         isLoading={status == "pending"}
         isOpen={modal.deleteContent}
+        onDelete={handleDelete}
         onOpenChange={() => {
           setModal((p) => ({ ...p, deleteContent: false }));
         }}
       />
       <ModalPublish
-        type="content"
-        onPublish={() => {
-          handlePublishUnpublish(!data?.result?.is_published as boolean);
-        }}
         isLoading={statusPatch == "pending"}
         isOpen={modal.publishContent}
+        type="content"
         onOpenChange={() => {
           setModal((p) => ({ ...p, publishContent: false }));
+        }}
+        onPublish={() => {
+          handlePublishUnpublish(!data?.result?.is_published as boolean);
         }}
       />
     </div>
