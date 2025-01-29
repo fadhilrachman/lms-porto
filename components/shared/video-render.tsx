@@ -11,17 +11,16 @@ export default function VideoRender({ url }: { url: string }) {
   const videoId = getVideoId(url);
 
   const opts = {
-    height: "390",
+    height: "500",
     width: "100%",
     playerVars: {
-      autoplay: 1, // Aktifkan autoplay (opsional)
+      autoplay: 0, // Aktifkan autoplay (opsional)
     },
   };
 
   return videoId ? (
     <YouTube
       opts={opts}
-      style={{ position: "relative", width: "100%" }}
       videoId={videoId}
       onEnd={() => {
         console.log("cuyyyyyyy");

@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { course_id: string } },
+  { params }: { params: { course_id: string } }
 ) {
   const { course_id } = params;
   const {
@@ -45,14 +45,14 @@ export async function PUT(
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { course_id: string } },
+  { params }: { params: { course_id: string } }
 ) {
   const { course_id } = params;
   const { is_free, is_published } = await req.json();
@@ -82,14 +82,14 @@ export async function PATCH(
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { course_id: string } },
+  { params }: { params: { course_id: string } }
 ) {
   const { course_id } = params;
 
@@ -114,15 +114,18 @@ export async function DELETE(
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
 
 export async function GET(
   req: Request,
-  { params }: { params: { course_id: string } },
+  { params }: { params: { course_id: string } }
 ) {
+  const { searchParams } = new URL(req.url);
+
+  const is_published = Boolean(searchParams.get("is_published")) || false;
   const { course_id } = params;
 
   try {
@@ -144,6 +147,9 @@ export async function GET(
           },
           include: {
             content: {
+              where: {
+                is_published,
+              },
               select: {
                 id: true,
                 title: true,
@@ -173,7 +179,7 @@ export async function GET(
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

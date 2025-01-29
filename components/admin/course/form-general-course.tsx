@@ -11,6 +11,7 @@ import { usePutCourse } from "@/hooks/course.hook";
 interface DataType {
   title: string;
   introduction_vid: string;
+  thumbnail_img: string;
   description: string;
   isLoading: boolean;
 }
@@ -19,23 +20,28 @@ const FormGeneralCourse = ({
   introduction_vid,
   title,
   isLoading,
+  thumbnail_img,
 }: DataType) => {
   const { course_id } = useParams();
   const { mutate, status } = usePutCourse(course_id as string);
   const form = useForm();
   const dataNoUpdate =
     form.watch("title") == title &&
+    form.watch("thumbnail_img") == thumbnail_img &&
     form.watch("introduction_vid") == introduction_vid &&
     form.watch("description") == description;
 
   const handleFillData = () => {
     form.setValue("title", title);
     form.setValue("introduction_vid", introduction_vid);
+    form.setValue("thumbnail_img", thumbnail_img);
     form.setValue("description", description);
   };
 
   useEffect(() => {
-    handleFillData();
+    if (!isLoading) {
+      handleFillData();
+    }
   }, [isLoading]);
 
   return (
@@ -61,6 +67,16 @@ const FormGeneralCourse = ({
               type: "text",
               placeholder: "Enter video link",
               label: "Introduction Video",
+              validation: {
+                required: "This field is required",
+              },
+            },
+            {
+              name: "thumbnail_img",
+              startContent: <Link />,
+              type: "text",
+              placeholder: "Enter Img",
+              label: "Thumbnail Image",
               validation: {
                 required: "This field is required",
               },

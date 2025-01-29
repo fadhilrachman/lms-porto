@@ -6,7 +6,7 @@ import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
-
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -36,7 +36,7 @@ export default function RootLayout({
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable
         )}
       >
         <Providers
@@ -47,7 +47,7 @@ export default function RootLayout({
             enableSystem: false,
           }}
         >
-          {children}
+          <NuqsAdapter>{children}</NuqsAdapter>
         </Providers>
       </body>
     </html>
