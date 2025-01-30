@@ -4,9 +4,10 @@ import { useDebounce } from "use-debounce";
 import { Input } from "@nextui-org/input";
 interface Props {
   placeholder?: string;
+  size?: "sm" | "md" | "lg";
   onChange: (text: string) => void;
 }
-const BaseInputSearch = ({ onChange, placeholder }: Props) => {
+const BaseInputSearch = ({ onChange, placeholder, size }: Props) => {
   const [text, setText] = useState("");
   const [value] = useDebounce(text, 1000);
 
@@ -18,6 +19,7 @@ const BaseInputSearch = ({ onChange, placeholder }: Props) => {
     <div className="relative">
       <Search className="absolute left-2 top-2 h-5 w-5 text-primary" />
       <Input
+        size={size}
         className="w-max"
         placeholder={placeholder}
         startContent={<Search />}

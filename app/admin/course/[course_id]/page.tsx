@@ -27,7 +27,7 @@ const AdminDetailCourse = () => {
   const { mutateAsync: mutateAsyncDelete, status: statusDelete } =
     useDeleteCourse(course_id as string);
   const { mutateAsync: mutatePatchAsync, status: statusPatch } = usePatchCourse(
-    course_id as string,
+    course_id as string
   );
   const handleDelete = async () => {
     await mutateAsyncDelete();
@@ -89,6 +89,7 @@ const AdminDetailCourse = () => {
       </div>
       <div className="grid grid-cols-2 gap-8">
         <FormGeneralCourse
+          thumbnail_img={data?.result.thumbnail_img as string}
           description={data?.result.description as string}
           introduction_vid={data?.result.introduction_vid as string}
           isLoading={isFetching}

@@ -37,6 +37,7 @@ export const useGetCourse = (params: {
   page: number;
   per_page: number;
   search?: string;
+  is_published?: boolean;
 }) => {
   const query = useQuery<BaseResponseList<CourseType>>({
     queryKey: ["LIST_COURSE"],
@@ -50,11 +51,19 @@ export const useGetCourse = (params: {
   return query;
 };
 
-export const useGetDetailCourse = (id: string) => {
+export const useGetDetailCourse = (
+  id: string,
+  is_published?: boolean
+  // { is_published }: { is_published?: boolean }
+) => {
   const query = useQuery<BaseResponse<CourseDetailType>>({
     queryKey: ["DETAIL_COURSE"],
     queryFn: async () => {
-      const result = await fetcher.get(`/course/${id}`);
+      const result = await fetcher.get(`/course/${id}`, {
+        params: {
+          is_published,
+        },
+      });
 
       return result.data;
     },

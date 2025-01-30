@@ -11,6 +11,7 @@ export interface CourseType {
   category: CategoryType;
   _count: {
     chapter: number;
+    transaction: number;
   };
 }
 

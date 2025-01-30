@@ -1,19 +1,54 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Chip } from "@nextui-org/chip";
 import { Search, Star, User } from "lucide-react";
-import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
-import { useRouter } from "next/navigation";
-
+import { useRouter, useSearchParams } from "next/navigation";
 import Title from "@/components/home/title";
 import Footer from "@/components/home/footer";
 import { Navbar } from "@/components/shared/navbar";
+import { useGetCourse } from "@/hooks/course.hook";
+import SckeletonLoading from "@/components/home/sckeleton-loading";
+import { formatRupiah } from "@/lib/helper";
+import BaseInputSearch from "@/components/shared/base-input-search";
+import { Select, SelectItem } from "@nextui-org/select";
+import { useQueryState } from "nuqs";
+import { useGetCategory } from "@/hooks/category.hook";
+import BaseIcon from "@/components/shared/base-icon";
+
+export const animals = [
+  { key: "cat", label: "Cat" },
+  { key: "dog", label: "Dog" },
+  { key: "elephant", label: "Elephant" },
+  { key: "lion", label: "Lion" },
+  { key: "tiger", label: "Tiger" },
+  { key: "giraffe", label: "Giraffe" },
+  { key: "dolphin", label: "Dolphin" },
+  { key: "penguin", label: "Penguin" },
+  { key: "zebra", label: "Zebra" },
+  { key: "shark", label: "Shark" },
+  { key: "whale", label: "Whale" },
+  { key: "otter", label: "Otter" },
+  { key: "crocodile", label: "Crocodile" },
+];
 
 const Course = () => {
   const router = useRouter();
+  const [category, setCategory] = useQueryState("category");
+  const [params, setParams] = useState({ search: "", page: 1, per_page: 10 });
+  const { data: dataCategory } = useGetCategory({ page: 1, per_page: 100 });
+  console.log({ dataCategory });
 
+  const { data, isFetching, refetch } = useGetCourse({
+    page: 1,
+    per_page: 20,
+    is_published: true,
+  });
+  console.log({ category });
+
+  useEffect(() => {
+    refetch();
+  }, [params, category]);
   return (
     <div className="relative space-y-12  ">
       <Navbar />
@@ -24,54 +59,78 @@ const Course = () => {
           subTitle2="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, nisi"
         />
         <div className="flex space-x-2">
-          <Input
-            className="w-max"
-            placeholder="Search Course..."
+          <BaseInputSearch
             size="lg"
-            startContent={<Search />}
+            placeholder="Search Course"
+            onChange={(e) => {
+              setParams((p) => ({ ...p, search: e }));
+            }}
           />
-          <Button color="primary" size="lg">
-            Search
-          </Button>
+          <Select
+            className="max-w-[200px]"
+            onChange={(e) => {
+              setCategory(e.target.value);
+            }}
+            placeholder="Category"
+            aria-label="category"
+            size="lg"
+          >
+            {dataCategory?.result?.map((val) => (
+              <SelectItem key={val.id}>
+                <div className="flex space-x-2 items-center">
+                  <BaseIcon iconKey={val.icon} />
+                  <span>{val.name}</span>
+                </div>
+              </SelectItem>
+            ))}
+          </Select>
         </div>
         <div className="grid grid-cols-4 gap-6 ">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 89].map((val, key) => {
-            return (
-              <Card
-                key={key}
-                className="py-4 w-full cursor-pointer hover:scale-95"
-              >
-                <CardHeader className="pb-0 w pt-2 px-4 flex-col items-start">
-                  <div className="flex justify-between w-full items-center">
-                    <h4 className="font-bold text-large">Frontend Course</h4>
-                    <Chip size="sm">Tech</Chip>
-                  </div>
-                  <small className="text-default-500">Rp.12.000.00</small>
-                </CardHeader>
-                <CardBody className="overflow-visible py-2">
-                  <img
-                    alt="Card background"
-                    className="object-cover w-full rounded-xl"
-                    src="https://nextui.org/images/hero-card-complete.jpeg"
-                    width={270}
-                  />
-                </CardBody>
-                <CardFooter>
-                  <div className="flex w-full justify-between items-center">
-                    <div className="flex space-x-1">
-                      {[0, 2, 3, 4, 5].map((val) => (
-                        <Star key={val} className="text-yellow-500" />
-                      ))}
-                    </div>
-                    <div className="flex items-center">
-                      <User className="w-4 h-4" />
-                      <small>12</small>
-                    </div>
-                  </div>
-                </CardFooter>
-              </Card>
-            );
-          })}
+          {isFetching
+            ? [1, 4, 2, 3].map((val) => <SckeletonLoading key={val} />)
+            : data?.result.map((val, key) => {
+                return (
+                  <Card
+                    key={key}
+                    isPressable
+                    className="py-4 w-full cursor-pointer"
+                    onPress={() => {
+                      router.push(`/course/${val.id}`);
+                    }}
+                  >
+                    <CardHeader className="pb-0 w pt-2 px-4 flex-col items-start">
+                      <div className="flex justify-between w-full items-center">
+                        <h4 className="font-bold text-large">{val.title}</h4>
+                        <Chip size="sm">Tech</Chip>
+                      </div>
+                      <small className="text-default-500">
+                        {formatRupiah(val.price)}
+                      </small>
+                    </CardHeader>
+                    <CardBody className="overflow-visible py-2">
+                      <img
+                        alt="Card background"
+                        className="object-cover w-full rounded-xl"
+                        src={val.thumbnail_img}
+                        width={270}
+                      />
+                    </CardBody>
+                    <CardFooter>
+                      <div className="flex w-full justify-between items-center">
+                        <div className="flex space-x-1">
+                          {[0, 2, 3, 4, 5].map((val) => (
+                            <Star key={val} className="text-yellow-500" />
+                          ))}
+                        </div>
+                        <div className="flex items-center">
+                          <User className="w-4 h-4" />
+                          <small>{val._count.transaction}</small>
+                        </div>
+                      </div>
+                    </CardFooter>
+                  </Card>
+                );
+              })}
         </div>
       </div>
       <Footer />
