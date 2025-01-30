@@ -1,14 +1,23 @@
 "use client";
-import { Input } from "@nextui-org/input";
+import { Input, Textarea } from "@nextui-org/input";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Eye, EyeClosed } from "lucide-react";
 import React, { useState, ReactNode } from "react";
 import { Controller, RegisterOptions, UseFormReturn } from "react-hook-form";
+import { usePostImage } from "@/hooks/common.hook";
+import { Spinner } from "@nextui-org/spinner";
 
 export interface DataFormType {
   // name:''
   label?: string | ReactNode;
-  type: "text" | "email" | "password" | "select";
+  type:
+    | "text"
+    | "email"
+    | "password"
+    | "select"
+    | "file"
+    | "number"
+    | "textarea";
 
   name: string;
   placeholder?: string;
@@ -94,6 +103,34 @@ const FormGenerator = ({
             />
           );
         }
+        if (val.type === "number") {
+          return (
+            <Controller
+              key={key}
+              control={form.control}
+              name={val.name}
+              render={({ field, fieldState }) => {
+                return (
+                  <Input
+                    {...field}
+                    disabled={val?.disabled || disabled}
+                    endContent={val.endContent}
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={!!fieldState.error}
+                    placeholder={val.placeholder}
+                    startContent={val.startContent}
+                    type="number"
+                    validationState={fieldState.error ? "invalid" : "valid"}
+                    label={val.label}
+                    // isRequired={!!val.validation?.required}
+                    labelPlacement="outside"
+                  />
+                );
+              }}
+              rules={val.validation}
+            />
+          );
+        }
         if (val.type === "text") {
           return (
             <Controller
@@ -116,6 +153,105 @@ const FormGenerator = ({
                     // isRequired={!!val.validation?.required}
                     labelPlacement="outside"
                   />
+                );
+              }}
+              rules={val.validation}
+            />
+          );
+        }
+        if (val.type === "textarea") {
+          return (
+            <Controller
+              key={key}
+              control={form.control}
+              name={val.name}
+              render={({ field, fieldState }) => {
+                return (
+                  <Textarea
+                    {...field}
+                    disabled={val?.disabled || disabled}
+                    endContent={val.endContent}
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={!!fieldState.error}
+                    placeholder={val.placeholder}
+                    startContent={val.startContent}
+                    type="text"
+                    validationState={fieldState.error ? "invalid" : "valid"}
+                    label={val.label}
+                    // isRequired={!!val.validation?.required}
+                    labelPlacement="outside"
+                  />
+                );
+              }}
+              rules={val.validation}
+            />
+          );
+        }
+        if (val.type === "file") {
+          const { mutateAsync, status } = usePostImage();
+
+          return (
+            <Controller
+              key={key}
+              control={form.control}
+              name={val.name}
+              render={({ field, fieldState }) => {
+                return (
+                  <div>
+                    <div className="flex space-x-2 items-center">
+                      <Input
+                        // {...field}
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+
+                          const reader = new FileReader();
+                          reader.readAsDataURL(file);
+
+                          reader.onload = async () => {
+                            const base64String = reader.result as string;
+
+                            const result = await mutateAsync({
+                              file: base64String,
+                              file_name: file.name,
+                              file_type: file.type,
+                            });
+                            form.setValue(val.name, result.response);
+                          };
+
+                          reader.onerror = (error) => {
+                            console.error("Error reading file:", error);
+                          };
+                        }}
+                        disabled={
+                          status == "pending" || val?.disabled || disabled
+                        }
+                        endContent={val.endContent}
+                        errorMessage={fieldState.error?.message}
+                        isInvalid={!!fieldState.error}
+                        placeholder={val.placeholder}
+                        startContent={val.startContent}
+                        type="file"
+                        validationState={fieldState.error ? "invalid" : "valid"}
+                        label={val.label}
+                        // isRequired={!!val.validation?.required}
+                        labelPlacement="outside"
+                      />
+
+                      {status == "pending" && <Spinner />}
+                    </div>
+                    <div>
+                      {form.watch(val.name) && (
+                        <a
+                          href={form.watch(val.name)}
+                          target="_blank"
+                          className="text-blue-500 underline"
+                        >
+                          Image
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 );
               }}
               rules={val.validation}

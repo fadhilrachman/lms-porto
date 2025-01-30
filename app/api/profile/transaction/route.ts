@@ -3,10 +3,17 @@ import { NextRequest } from "next/server";
 import { createPagination } from "@/lib/pagination-server";
 import { prisma } from "@/lib/prisma";
 import { verifyTokenCustomer } from "@/lib/verify-token-server";
+import Midtrans from "midtrans-client";
+import { generateRandomCode } from "@/lib/helper";
 
 export async function POST(req: NextRequest) {
   const { course_id } = await req.json();
 
+  const snap = new Midtrans.Snap({
+    serverKey: process.env.MIDTRANS_SERVER_KEY,
+    clientKey: process.env.MIDTRANS_CLIENT_KEY,
+    isProduction: false,
+  });
   if (verifyTokenCustomer(req)) {
     return Response.json({
       status: 403,
@@ -28,17 +35,34 @@ export async function POST(req: NextRequest) {
         status: 400,
         message: "This course already purchased",
       });
+
+    const code = generateRandomCode("TRA");
+
     const result = await prisma.transaction.create({
       data: {
         course_id,
         user_id: user.id,
+        code,
+      },
+      include: {
+        course: true,
       },
     });
 
+    let parameterMidtrans = {
+      transaction_details: {
+        order_id: result.code,
+        gross_amount: result.course.price,
+      },
+    };
+
+    const token = await snap.createTransactionToken(parameterMidtrans);
+
     return Response.json({
       status: 200,
-      message: "Success create course",
+      message: "Success create transaction",
       result,
+      token,
     });
   } catch (error) {
     return Response.json(
@@ -49,7 +73,7 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

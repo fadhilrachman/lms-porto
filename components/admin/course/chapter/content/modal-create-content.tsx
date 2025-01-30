@@ -49,7 +49,7 @@ const ModalCreateContent = ({
     },
     {
       name: "description",
-      type: "text",
+      type: "textarea",
       label: "Description",
       placeholder: "Enter Description",
       validation: {

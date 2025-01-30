@@ -14,6 +14,7 @@ import { CourseType } from "@/types/course.type";
 import ModalImg from "@/components/shared/modal-img";
 import BaseInputSearch from "@/components/shared/base-input-search";
 import BasePagination from "@/components/shared/base-pagination";
+import BaseIcon from "@/components/shared/base-icon";
 
 const AdminCategory = () => {
   const [params, setParams] = useState({ search: "", page: 1, per_page: 10 });
@@ -54,6 +55,24 @@ const AdminCategory = () => {
           </Chip>
         ) : (
           formatRupiah(obj.price)
+        );
+      },
+    },
+    {
+      key: "category",
+      label: "Category",
+      render: (_, obj) => {
+        return (
+          <>
+            {obj.category ? (
+              <div className="flex items-center space-x-1">
+                <BaseIcon iconKey={obj.category.icon} />
+                <span>{obj.category.name}</span>
+              </div>
+            ) : (
+              "-"
+            )}
+          </>
         );
       },
     },

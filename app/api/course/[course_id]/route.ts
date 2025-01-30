@@ -14,17 +14,19 @@ export async function PUT(
     introduction_vid,
     thumbnail_img,
     resource,
+    category_id,
   } = await req.json();
 
   try {
     const result = await prisma.course.update({
       data: {
         title,
-        price,
+        price: Number(price || 0),
         description,
         introduction_vid,
         thumbnail_img,
         resource,
+        category_id,
       },
       where: {
         id: course_id as string,
@@ -33,15 +35,17 @@ export async function PUT(
 
     return Response.json({
       status: 200,
-      message: "Success update category",
+      message: "Success update course",
       result,
     });
   } catch (error) {
+    console.log({ error });
+
     return Response.json(
       {
         status: 500,
         message: "Internal server error",
-        result: error,
+        // result: error,
       },
       {
         status: 500,
@@ -147,9 +151,9 @@ export async function GET(
           },
           include: {
             content: {
-              where: {
-                is_published,
-              },
+              // where: {
+              //   is_published: false,
+              // },
               select: {
                 id: true,
                 title: true,

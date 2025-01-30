@@ -45,7 +45,7 @@ export const Item = ({ item, currentData, handleChangePosition }: Props) => {
       <div className="space-x-1">
         {/* <Chip size="sm">{countContentUnPublished} Unpublished</Chip> */}
         <Chip color="primary" size="sm">
-          2 Published
+          {obj?.content?.length || 0} Content Published
         </Chip>
       </div>
     </Reorder.Item>

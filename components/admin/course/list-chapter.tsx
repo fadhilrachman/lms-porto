@@ -23,8 +23,6 @@ const ListChapter = ({
   });
   const router = useRouter();
 
-  console.log({ data });
-
   return (
     <Card className="">
       <CardHeader>
