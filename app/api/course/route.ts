@@ -97,6 +97,8 @@ export async function GET(req: NextRequest) {
       pagination,
     });
   } catch (error) {
+    console.log({ error });
+
     return Response.json(
       {
         statusbar: 500,
