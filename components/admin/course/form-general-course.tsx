@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 
 import FormGenerator from "@/components/shared/form-generator";
 import { usePutCourse } from "@/hooks/course.hook";
+import { useGetCategory } from "@/hooks/category.hook";
 
 interface DataType {
   title: string;
@@ -14,6 +15,8 @@ interface DataType {
   thumbnail_img: string;
   description: string;
   isLoading: boolean;
+  category_id: string;
+  price: number;
 }
 const FormGeneralCourse = ({
   description,
@@ -21,19 +24,31 @@ const FormGeneralCourse = ({
   title,
   isLoading,
   thumbnail_img,
+  category_id,
+  price,
 }: DataType) => {
   const { course_id } = useParams();
   const { mutate, status } = usePutCourse(course_id as string);
+  const { data } = useGetCategory({ page: 1, per_page: 1000 });
+  const optionCategory = data?.result?.map((val) => ({
+    key: val.id,
+    label: val.name,
+  }));
+
   const form = useForm();
   const dataNoUpdate =
     form.watch("title") == title &&
+    form.watch("category_id") == category_id &&
     form.watch("thumbnail_img") == thumbnail_img &&
+    form.watch("price") == price &&
     form.watch("introduction_vid") == introduction_vid &&
     form.watch("description") == description;
 
   const handleFillData = () => {
     form.setValue("title", title);
     form.setValue("introduction_vid", introduction_vid);
+    form.setValue("category_id", category_id);
+    form.setValue("price", price);
     form.setValue("thumbnail_img", thumbnail_img);
     form.setValue("description", description);
   };
@@ -73,26 +88,36 @@ const FormGeneralCourse = ({
             },
             {
               name: "thumbnail_img",
-              startContent: <Link />,
-              type: "text",
+              // startContent: <Link />,
+              type: "file",
               placeholder: "Enter Img",
               label: "Thumbnail Image",
               validation: {
                 required: "This field is required",
               },
             },
-            // {
-            //   name: "category_id",
-            //   type: "text",
-            //   label: "Category",
-            //   placeholder: "Enter Category",
-            //   validation: {
-            //     required: "This field is required",
-            //   },
-            // },
+            {
+              name: "price",
+              type: "number",
+              label: "Price",
+              placeholder: "Enter Price",
+              validation: {
+                required: "This field is required",
+              },
+            },
+            {
+              name: "category_id",
+              type: "select",
+              options: optionCategory || [],
+              label: "Category",
+              placeholder: "Enter Category",
+              validation: {
+                required: "This field is required",
+              },
+            },
             {
               name: "description",
-              type: "text",
+              type: "textarea",
               label: "Description",
               placeholder: "Enter Description",
               validation: {
@@ -103,7 +128,12 @@ const FormGeneralCourse = ({
           form={form}
           id="courseForm"
           onSubmit={(val) => {
-            mutate(val);
+            mutate({
+              ...val,
+              category_id: optionCategory.find(
+                (item) => item.label == val.category_id
+              ).key,
+            });
           }}
         />
       </CardBody>

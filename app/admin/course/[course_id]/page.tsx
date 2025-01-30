@@ -15,6 +15,7 @@ import {
   useGetDetailCourse,
   usePatchCourse,
 } from "@/hooks/course.hook";
+import { Alert } from "@heroui/alert";
 
 const AdminDetailCourse = () => {
   const [modal, setModal] = useState({
@@ -40,8 +41,17 @@ const AdminDetailCourse = () => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pb-8">
       {status == "pending" && <LoadingFullpage />}
+      {!data?.result?.is_published && (
+        <Alert
+          description={
+            "You must be create content first and publish this course"
+          }
+          title={"Public Can't access this course"}
+          color="warning"
+        />
+      )}
       <div className="flex justify-between">
         <div className="flex justify-center items-center space-x-2">
           <ButtonBack href="/admin/course" />
@@ -89,7 +99,9 @@ const AdminDetailCourse = () => {
       </div>
       <div className="grid grid-cols-2 gap-8">
         <FormGeneralCourse
+          category_id={data?.result?.category?.id}
           thumbnail_img={data?.result.thumbnail_img as string}
+          price={data?.result.price || 0}
           description={data?.result.description as string}
           introduction_vid={data?.result.introduction_vid as string}
           isLoading={isFetching}

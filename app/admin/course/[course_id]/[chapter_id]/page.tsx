@@ -13,7 +13,7 @@ const AdminDetailChapter = () => {
   const { data, isFetching } = useGetDetailChapter(chapter_id as string);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pb-8">
       {isFetching && <LoadingFullpage />}{" "}
       <div className="flex justify-between">
         <div className="flex justify-center items-center space-x-2">

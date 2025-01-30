@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const page = Number(searchParams.get("page") || 1);
   const per_page = Number(searchParams.get("per_page") || 10);
-  const is_published = Boolean(searchParams.get("is_published")) || false;
+  // const is_published = Boolean(searchParams.get("is_published")) || false;
   const skip = (page - 1) * per_page;
 
   try {
@@ -61,10 +61,10 @@ export async function GET(req: NextRequest) {
     const result = await prisma.course.findMany({
       skip,
       take: Number(per_page),
-      where: {
-        // is_published
-        is_published,
-      },
+      // where: {
+      //   // is_published
+      //   is_published,
+      // },
       select: {
         id: true,
         title: true,
