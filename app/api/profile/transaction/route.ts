@@ -15,10 +15,15 @@ export async function POST(req: NextRequest) {
     isProduction: false,
   });
   if (verifyTokenCustomer(req)) {
-    return Response.json({
-      status: 403,
-      message: "Access Denied. No token provided.",
-    });
+    return Response.json(
+      {
+        status: 403,
+        message: "Access Denied. No token provided.",
+      },
+      {
+        status: 403,
+      }
+    );
   }
   const user = JSON.parse(req.headers.get("user") as string);
 
@@ -31,10 +36,15 @@ export async function POST(req: NextRequest) {
     });
 
     if (checkDuplicateTransaction)
-      return Response.json({
-        status: 400,
-        message: "This course already purchased",
-      });
+      return Response.json(
+        {
+          status: 400,
+          message: "This course already purchased",
+        },
+        {
+          status: 400,
+        }
+      );
 
     const code = generateRandomCode("TRA");
 

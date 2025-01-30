@@ -22,7 +22,7 @@ export function verifyTokenCustomer(req: NextRequest) {
         },
         {
           status: 403,
-        },
+        }
       );
     }
 
@@ -44,7 +44,7 @@ export function verifyTokenAdmin(req: NextRequest) {
       },
       {
         status: 403,
-      },
+      }
     );
   const tokenWithoutBearer = token.startsWith("Bearer ")
     ? token.slice(7)
@@ -59,7 +59,7 @@ export function verifyTokenAdmin(req: NextRequest) {
         },
         {
           status: 403,
-        },
+        }
       );
     }
 
@@ -71,7 +71,7 @@ export function verifyTokenAdmin(req: NextRequest) {
         },
         {
           status: 403,
-        },
+        }
       );
     }
 
