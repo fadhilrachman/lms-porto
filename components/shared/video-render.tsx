@@ -3,7 +3,6 @@ import YouTube from "react-youtube";
 
 const getVideoId = (url: string) => {
   const urlObj = new URL(url);
-
   return urlObj.searchParams.get("v"); // Ambil parameter `v` dari URL
 };
 
@@ -19,13 +18,7 @@ export default function VideoRender({ url }: { url: string }) {
   };
 
   return videoId ? (
-    <YouTube
-      opts={opts}
-      videoId={videoId}
-      onEnd={() => {
-        console.log("cuyyyyyyy");
-      }}
-    />
+    <YouTube opts={opts} videoId={videoId} onEnd={() => {}} />
   ) : (
     <p>Invalid YouTube URL</p>
   );

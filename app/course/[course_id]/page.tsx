@@ -9,7 +9,6 @@ import {
   TableOfContents,
 } from "lucide-react";
 import React, { useState } from "react";
-
 import AboutCourse from "@/components/home/course/detail/about-course";
 import Footer from "@/components/home/footer";
 import Title from "@/components/home/title";
@@ -22,6 +21,7 @@ import moment from "moment";
 import LoadingFullpage from "@/components/shared/loading-fullpage";
 import ModalBuyCourse from "@/components/home/course/detail/buy-course";
 import { formatRupiah } from "@/lib/helper";
+
 const CourseDetail = () => {
   const { course_id } = useParams();
   const [modal, setModal] = useState({
