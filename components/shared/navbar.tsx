@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -7,33 +7,33 @@ import {
   NavbarBrand,
   NavbarItem,
   NavbarMenuItem,
-} from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
-import { link as linkStyles } from "@nextui-org/theme";
-import NextLink from "next/link";
-import clsx from "clsx";
-import { Avatar } from "@nextui-org/avatar";
+} from '@nextui-org/navbar';
+import { Button } from '@nextui-org/button';
+import { Link } from '@nextui-org/link';
+import { link as linkStyles } from '@nextui-org/theme';
+import NextLink from 'next/link';
+import clsx from 'clsx';
+import { Avatar } from '@nextui-org/avatar';
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@nextui-org/dropdown";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+} from '@nextui-org/dropdown';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-import { GithubIcon, Logo } from "@/components/shared/icons";
-import { ThemeSwitch } from "@/components/theme-switch";
-import { siteConfig } from "@/config/site";
+import { GithubIcon, Logo } from '@/components/shared/icons';
+import { ThemeSwitch } from '@/components/theme-switch';
+import { siteConfig } from '@/config/site';
 
 export const Navbar = () => {
   const [myCookie, setMyCookie] = useState<string | undefined>(undefined);
   const router = useRouter();
   const handleLogout = () => {
     Cookies.remove(process.env.COOKIE_NAME as string);
-    router.push("/login");
+    router.push('/login');
   };
 
   useEffect(() => {
@@ -57,8 +57,8 @@ export const Navbar = () => {
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  linkStyles({ color: 'foreground' }),
+                  'data-[active=true]:text-primary data-[active=true]:font-medium',
                 )}
                 color="foreground"
                 href={item.href}
@@ -92,7 +92,7 @@ export const Navbar = () => {
               <DropdownItem
                 key="help_and_feedback"
                 onPress={() => {
-                  router.push("/profile/course");
+                  router.push('/profile/profile');
                 }}
               >
                 Profile
@@ -106,11 +106,11 @@ export const Navbar = () => {
         ) : (
           <NextLink
             className={clsx(
-              linkStyles({ color: "foreground" }),
-              "data-[active=true]:text-primary data-[active=true]:font-medium",
+              linkStyles({ color: 'foreground' }),
+              'data-[active=true]:text-primary data-[active=true]:font-medium',
             )}
             color="foreground"
-            href={"/login"}
+            href={'/login'}
           >
             <Button color="primary">Login</Button>
           </NextLink>
@@ -132,10 +132,10 @@ export const Navbar = () => {
               <Link
                 color={
                   index === 2
-                    ? "primary"
+                    ? 'primary'
                     : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
+                      ? 'danger'
+                      : 'foreground'
                 }
                 href="#"
                 size="lg"
