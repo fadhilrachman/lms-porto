@@ -24,7 +24,7 @@ export default function Dnd({
 
   const handleChangePosition = async () => {
     const newData = items.map(
-      (val) => currentData.find((valCurrent) => val == valCurrent.title)?.id,
+      (val) => currentData.find((valCurrent) => val == valCurrent.title)?.id
     );
 
     await mutateAsync({
@@ -54,7 +54,6 @@ export default function Dnd({
             setItems(val);
           }}
           className="space-y-4"
-          //   axis="y"
           onClick={() => {
             console.log("cuuyyy");
           }}

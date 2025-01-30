@@ -91,6 +91,9 @@ model Content{
 model Transaction {
   id String @id @default(uuid())
 
+  code String? @unique  
+  token_snap String? 
+  is_checkout Boolean @default(false)
   course Course @relation(fields: [course_id], references: [id])
   course_id String 
 
