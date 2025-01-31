@@ -39,7 +39,12 @@ export async function POST(req: Request) {
       expiresIn: "28d",
     });
 
-    return Response.json({ status: 201, message: "Success login", token });
+    return Response.json({
+      status: 201,
+      message: "Success login",
+      token,
+      is_admin: checkCredenttial.is_admin,
+    });
   } catch (error) {
     console.log({ error });
 
