@@ -1,8 +1,41 @@
 import bcrypt from "bcrypt";
 
 import { prisma } from "@/lib/prisma";
-import { generateOTP, sendEmail } from "@/lib/helper";
+import { generateOTP } from "@/lib/helper";
+import nodemailer from "nodemailer";
 
+interface EmailOptions {
+  from?: string;
+  to: string;
+  subject: string;
+  text?: string;
+  html?: string;
+}
+async function sendEmail(options: EmailOptions): Promise<void> {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: options.to,
+      subject: options.subject,
+      text: options.text || "",
+      html: options.html || "",
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent: %s", info.messageId);
+  } catch (error) {
+    console.error("Error sending email:", error);
+    throw error;
+  }
+}
 export async function POST(req: Request) {
   const { user_name, email, password } = await req.json();
 
@@ -33,7 +66,7 @@ export async function POST(req: Request) {
 
     await sendEmail({
       to: email,
-      subject: "USER VERIFIED OTP!",
+      subject: "USER VERIFIED!",
       text: `This is your otp bro ${otp}`,
     });
 

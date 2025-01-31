@@ -1,45 +1,9 @@
-import nodemailer from "nodemailer";
-
-interface EmailOptions {
-  from?: string;
-  to: string;
-  subject: string;
-  text?: string;
-  html?: string;
-}
-
 export function formatRupiah(angka: number) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
     maximumFractionDigits: 0,
   }).format(angka);
-}
-
-export async function sendEmail(options: EmailOptions): Promise<void> {
-  try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.EMAIL,
-      to: options.to,
-      subject: options.subject,
-      text: options.text || "",
-      html: options.html || "",
-    };
-
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent: %s", info.messageId);
-  } catch (error) {
-    console.error("Error sending email:", error);
-    throw error;
-  }
 }
 
 export function generateRandomCode(prefix: string, length: number = 6): string {

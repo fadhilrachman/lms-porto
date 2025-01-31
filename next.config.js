@@ -9,6 +9,13 @@ const nextConfig = {
         pathname: "*/**",
         search: "",
       },
+      {
+        protocol: "https",
+        hostname: "mycbuckethris.s3.ap-southeast-2.amazonaws.com",
+        port: "",
+        pathname: "*/**",
+        search: "",
+      },
     ],
   },
   env: {
