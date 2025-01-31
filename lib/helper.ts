@@ -17,6 +17,15 @@ export function generateRandomCode(prefix: string, length: number = 6): string {
 
   return `${prefix}-${randomString}`;
 }
+
+export function generateOTP(): number {
+  const digits = "0123456789";
+  let otp = "";
+  for (let i = 0; i < 6; i++) {
+    otp += digits[Math.floor(Math.random() * digits.length)];
+  }
+  return Number(otp);
+}
 export const validatePassword = (password: string) => {
   const passwordRules = [
     {

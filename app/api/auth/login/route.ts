@@ -13,27 +13,38 @@ export async function POST(req: Request) {
       },
     });
 
+    if (!checkCredenttial.is_verified)
+      return Response.json(
+        { status: 401, message: "Verify account first" },
+        { status: 401 }
+      );
+
     if (!checkCredenttial)
       return Response.json(
         { status: 401, message: "Login failed" },
-        { status: 401 },
+        { status: 401 }
       );
     const checkPassword = await bcrypt.compare(
       password,
-      checkCredenttial.password,
+      checkCredenttial.password
     );
 
     if (!checkPassword)
       return Response.json(
         { status: 401, message: "Login failed" },
-        { status: 401 },
+        { status: 401 }
       );
 
     const token = await jwt.sign(checkCredenttial, "asdasdasd", {
       expiresIn: "28d",
     });
 
-    return Response.json({ status: 201, message: "Success login", token });
+    return Response.json({
+      status: 201,
+      message: "Success login",
+      token,
+      is_admin: checkCredenttial.is_admin,
+    });
   } catch (error) {
     console.log({ error });
 
@@ -45,7 +56,7 @@ export async function POST(req: Request) {
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

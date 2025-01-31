@@ -3,11 +3,18 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'nextui.org',
-        port: '',
-        pathname: '*/**',
-        search: '',
+        protocol: "https",
+        hostname: "nextui.org",
+        port: "",
+        pathname: "*/**",
+        search: "",
+      },
+      {
+        protocol: "https",
+        hostname: "mycbuckethris.s3.ap-southeast-2.amazonaws.com",
+        port: "",
+        pathname: "*/**",
+        search: "",
       },
     ],
   },
@@ -26,6 +33,9 @@ const nextConfig = {
     MIDTRANS_IS_PRODUCTION: process.env.MIDTRANS_IS_PRODUCTION,
     MIDTRANS_IS_SANITIZED: process.env.MIDTRANS_IS_SANITIZED,
     MIDTRANS_IS_3DS: process.env.MIDTRANS_IS_3DS,
+
+    EMAIL_PASS: process.env.EMAIL_PASS,
+    EMAIL: process.env.EMAIL,
   },
 };
 
