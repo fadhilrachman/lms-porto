@@ -1,15 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/card';
-import { Chip } from '@nextui-org/chip';
-import { Star, User } from 'lucide-react';
-import { useGetCourse } from '@/hooks/course.hook';
-import { formatRupiah } from '@/lib/helper';
-import { Spinner } from '@nextui-org/spinner';
-import { Image } from '@heroui/react';
-import SckeletonLoading from './sckeleton-loading';
-import { useRouter } from 'next/navigation';
+import React from "react";
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { Chip } from "@nextui-org/chip";
+import { Star, User } from "lucide-react";
+import { useGetCourse } from "@/hooks/course.hook";
+import { formatRupiah } from "@/lib/helper";
+import SckeletonLoading from "./sckeleton-loading";
+import { useRouter } from "next/navigation";
+import BaseImg from "../shared/base-image";
 const ListCourse = () => {
   const router = useRouter();
   const { data, isFetching } = useGetCourse({ page: 1, per_page: 4 });
@@ -28,14 +27,13 @@ const ListCourse = () => {
                   className="py-4 w-full"
                 >
                   <CardHeader className="w-full block">
-                    <Image
-                      isZoomed
-                      alt="Card background"
-                      className="object-cover bg-cover w-full rounded-xl"
-                      src={val.thumbnail_img}
-                      width={570}
-                      height={250}
-                    />
+                    {val?.thumbnail_img && (
+                      <BaseImg
+                        src={val?.thumbnail_img}
+                        alt="img"
+                        className="object-cover bg-cover w-full rounded-xl"
+                      />
+                    )}
                   </CardHeader>
                   <CardBody className="overflow-visible py-2">
                     <div className="pb-0 w pt-2 px-4 flex-col items-start">

@@ -5,7 +5,7 @@ import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { content_id: string } },
+  { params }: { params: { content_id: string } }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -15,7 +15,7 @@ export async function PUT(
       },
       {
         status: 403,
-      },
+      }
     );
   }
   const { content_id } = params;
@@ -51,7 +51,7 @@ export async function PUT(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { content_id: string } },
+  { params }: { params: { content_id: string } }
 ) {
   // if (verifyTokenAdmin(req)) {
   //   return Response.json(
@@ -91,14 +91,14 @@ export async function PATCH(
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { content_id: string } },
+  { params }: { params: { content_id: string } }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -108,7 +108,7 @@ export async function DELETE(
       },
       {
         status: 403,
-      },
+      }
     );
   }
   const { content_id } = params;
@@ -128,20 +128,20 @@ export async function DELETE(
   } catch (error) {
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
 
 export async function GET(
   req: Request,
-  { params }: { params: { content_id: string } },
+  { params }: { params: { content_id: string } }
 ) {
   const { content_id } = params;
 
@@ -160,13 +160,13 @@ export async function GET(
   } catch (error) {
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

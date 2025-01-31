@@ -112,7 +112,7 @@ export async function DELETE(
   } catch (error) {
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },
@@ -177,7 +177,7 @@ export async function GET(
   } catch (error) {
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },

@@ -5,7 +5,7 @@ import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { customer_id: string } },
+  { params }: { params: { customer_id: string } }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -15,7 +15,7 @@ export async function DELETE(
       },
       {
         status: 403,
-      },
+      }
     );
   }
   const { customer_id } = params;
@@ -35,13 +35,13 @@ export async function DELETE(
   } catch (error) {
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

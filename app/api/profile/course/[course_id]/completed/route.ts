@@ -5,7 +5,7 @@ import { verifyTokenCustomer } from "@/lib/verify-token-server";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { course_id: string } },
+  { params }: { params: { course_id: string } }
 ) {
   if (verifyTokenCustomer(req)) {
     return Response.json({
@@ -37,13 +37,13 @@ export async function PATCH(
 
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

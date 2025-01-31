@@ -17,11 +17,12 @@ model User{
   id String @id @default(uuid())
   user_name String
   email String @unique
-  password String
+  password String?
+  is_verified Boolean @default(false)
   is_admin Boolean @default(false)
   created_at DateTime @default(now())
   update_at DateTime @updatedAt 
-
+  otp Int?
   content_progress ContentProgress[]
   transaction Transaction[]
 }

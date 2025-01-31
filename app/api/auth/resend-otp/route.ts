@@ -1,5 +1,3 @@
-import bcrypt from "bcrypt";
-
 import { prisma } from "@/lib/prisma";
 import { generateOTP } from "@/lib/helper";
 import nodemailer from "nodemailer";
@@ -36,41 +34,33 @@ async function sendEmail(options: EmailOptions): Promise<void> {
     throw error;
   }
 }
+
 export async function POST(req: Request) {
-  const { user_name, email, password } = await req.json();
-
+  const { email } = await req.json();
   try {
-    const checkDuplicateEmail = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (checkDuplicateEmail)
-      return Response.json(
-        { status: 401, message: "Email already registered" },
-        {
-          status: 401,
-        }
-      );
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const otp = generateOTP();
-    await prisma.user.create({
-      data: {
-        password: hashedPassword,
-        user_name,
+    const user = await prisma.user.update({
+      where: {
         email,
-        is_admin: true,
+      },
+      data: {
         otp,
       },
     });
-
     await sendEmail({
-      to: email,
-      subject: "USER VERIFIED!",
+      to: user.email,
+      subject: "USER VERIFICATION!",
       text: `This is your otp bro ${otp}`,
     });
 
-    return Response.json({ status: 201, message: "Success register" });
+    return Response.json({
+      status: 200,
+      message: "Succes resend OTP",
+
+      result: {
+        otp,
+      },
+    });
   } catch (error) {
     console.log({ error });
 

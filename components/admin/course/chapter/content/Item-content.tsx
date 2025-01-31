@@ -44,7 +44,6 @@ export const ItemContent = ({
         <Grip className="h-4 w-4" />
         <span>
           {item}
-          {/* {val.title} */}
         </span>
       </div>
       <div className="space-x-1">
