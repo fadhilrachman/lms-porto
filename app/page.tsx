@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { Button } from "@nextui-org/button";
-import { useRouter } from "next/navigation";
-import { useGetCookie } from "cookies-next";
-import Cookies from "js-cookie";
+import { useEffect } from 'react';
+import { Button } from '@nextui-org/button';
+import { useRouter } from 'next/navigation';
+import { useGetCookie } from 'cookies-next';
+import Cookies from 'js-cookie';
 
-import ListCourse from "@/components/home/list-course";
-import { Navbar } from "@/components/shared/navbar";
-import Faq from "@/components/home/faq";
-import Category from "@/components/home/category";
-import Title from "@/components/home/title";
-import FreeClass from "@/components/home/free-class";
-import Community from "@/components/home/community";
-import Footer from "@/components/home/footer";
+import ListCourse from '@/components/home/list-course';
+import { Navbar } from '@/components/shared/navbar';
+import Faq from '@/components/home/faq';
+import Category from '@/components/home/category';
+import Title from '@/components/home/title';
+import FreeClass from '@/components/home/free-class';
+import Community from '@/components/home/community';
+import Footer from '@/components/home/footer';
 
 export default function Home() {
   const router = useRouter();
@@ -27,12 +27,13 @@ export default function Home() {
           <section className="flex   px-16 items-end justify-between  ">
             <Title
               subTitle="Learn New Skills According to your interests"
-              title="  Our Recomended"
+              title="OurRecomended"
+              className="max-w-[450px]"
             />
             <Button
               color="primary"
               onPress={() => {
-                router.push("/course");
+                router.push('/course');
               }}
             >
               See All Class

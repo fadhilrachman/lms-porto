@@ -1,12 +1,17 @@
-import React from "react";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import { Chip } from "@nextui-org/chip";
-import { Star, User } from "lucide-react";
-import { useGetCourse } from "@/hooks/course.hook";
-import { formatRupiah } from "@/lib/helper";
-import { Spinner } from "@nextui-org/spinner";
-import SckeletonLoading from "./sckeleton-loading";
+'use client';
+
+import React from 'react';
+import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/card';
+import { Chip } from '@nextui-org/chip';
+import { Star, User } from 'lucide-react';
+import { useGetCourse } from '@/hooks/course.hook';
+import { formatRupiah } from '@/lib/helper';
+import { Spinner } from '@nextui-org/spinner';
+import { Image } from '@heroui/react';
+import SckeletonLoading from './sckeleton-loading';
+import { useRouter } from 'next/navigation';
 const ListCourse = () => {
+  const router = useRouter();
   const { data, isFetching } = useGetCourse({ page: 1, per_page: 4 });
 
   return (
@@ -16,23 +21,32 @@ const ListCourse = () => {
           ? [1, 4, 2, 3].map((val) => <SckeletonLoading key={val} />)
           : data?.result.map((val, key) => {
               return (
-                <Card key={key} className="py-4 w-full">
-                  <CardHeader className="pb-0 w pt-2 px-4 flex-col items-start">
-                    <div className="flex justify-between w-full items-center">
-                      <h4 className="font-bold text-large">{val.title}</h4>
-                      <Chip size="sm">Tech</Chip>
-                    </div>
-                    <small className="text-default-500">
-                      {formatRupiah(val.price)}
-                    </small>
+                <Card
+                  key={key}
+                  isPressable
+                  onPress={() => router.push(`/course/${val.id}`)}
+                  className="py-4 w-full"
+                >
+                  <CardHeader className="w-full block">
+                    <Image
+                      isZoomed
+                      alt="Card background"
+                      className="object-cover bg-cover w-full rounded-xl"
+                      src={val.thumbnail_img}
+                      width={570}
+                      height={250}
+                    />
                   </CardHeader>
                   <CardBody className="overflow-visible py-2">
-                    <img
-                      alt="Card background"
-                      className="object-cover w-full rounded-xl"
-                      src={val.thumbnail_img}
-                      width={270}
-                    />
+                    <div className="pb-0 w pt-2 px-4 flex-col items-start">
+                      <div className="flex justify-between w-full items-center">
+                        <p className="font-bold text-large">{val.title}</p>
+                        <Chip size="sm">Tech</Chip>
+                      </div>
+                      <small className="text-default-500">
+                        {formatRupiah(val.price)}
+                      </small>
+                    </div>
                   </CardBody>
                   <CardFooter>
                     <div className="flex w-full justify-between items-center">

@@ -27,6 +27,7 @@ import { useEffect, useState } from 'react';
 import { GithubIcon, Logo } from '@/components/shared/icons';
 import { ThemeSwitch } from '@/components/theme-switch';
 import { siteConfig } from '@/config/site';
+import { LogOut, LucideBookMarked, User } from 'lucide-react';
 
 export const Navbar = () => {
   const [myCookie, setMyCookie] = useState<string | undefined>(undefined);
@@ -44,7 +45,7 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <NextUINavbar className="shadow px-16" maxWidth="full" position="sticky">
+    <NextUINavbar className="shadow px-6" maxWidth="full" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -78,7 +79,7 @@ export const Navbar = () => {
           <Dropdown placement="bottom-end">
             <DropdownTrigger>
               <Avatar
-                isBordered
+                // isBordered
                 as="button"
                 className="transition-transform"
                 color="secondary"
@@ -95,11 +96,28 @@ export const Navbar = () => {
                   router.push('/profile/profile');
                 }}
               >
-                Profile
+                <div className="flex items-center gap-2">
+                  <User size={20} />
+                  <span>Profile</span>
+                </div>
+              </DropdownItem>
+              <DropdownItem
+                key="my_courses"
+                onPress={() => {
+                  router.push('/profile/courses');
+                }}
+              >
+                <div className="flex items-center gap-2">
+                  <LucideBookMarked size={20} />
+                  <span>My Courses</span>
+                </div>
               </DropdownItem>
 
               <DropdownItem key="logout" color="danger" onPress={handleLogout}>
-                Log Out
+                <div className="flex items-center gap-2">
+                  <LogOut size={20} />
+                  <span>Log Out</span>
+                </div>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
