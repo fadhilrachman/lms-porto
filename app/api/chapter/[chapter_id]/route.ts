@@ -5,7 +5,7 @@ import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { chapter_id: string } },
+  { params }: { params: { chapter_id: string } }
 ) {
   // if (verifyTokenAdmin(req)) {
   //   return Response.json(
@@ -39,20 +39,20 @@ export async function PUT(
   } catch (error) {
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { chapter_id: string } },
+  { params }: { params: { chapter_id: string } }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -62,7 +62,7 @@ export async function DELETE(
       },
       {
         status: 403,
-      },
+      }
     );
   }
   const { chapter_id } = params;
@@ -82,20 +82,20 @@ export async function DELETE(
   } catch (error) {
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
 
 export async function GET(
   req: Request,
-  { params }: { params: { chapter_id: string } },
+  { params }: { params: { chapter_id: string } }
 ) {
   const { chapter_id } = params;
 
@@ -121,13 +121,13 @@ export async function GET(
   } catch (error) {
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

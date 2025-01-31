@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function PATCH(
-  req: NextRequest,
+  req: NextRequest
   // { params }: { params: { chapter_id: string } }
 ) {
   if (verifyTokenAdmin(req)) {
@@ -15,7 +15,7 @@ export async function PATCH(
       },
       {
         status: 403,
-      },
+      }
     );
   }
   // const { chapter_id } = params;
@@ -33,8 +33,8 @@ export async function PATCH(
           data: {
             position: key + 1,
           },
-        }),
-      ),
+        })
+      )
     );
 
     return Response.json({
@@ -45,13 +45,13 @@ export async function PATCH(
   } catch (error) {
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

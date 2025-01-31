@@ -5,7 +5,7 @@ import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { admin_id: string } },
+  { params }: { params: { admin_id: string } }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -15,7 +15,7 @@ export async function PUT(
       },
       {
         status: 403,
-      },
+      }
     );
   }
   const { admin_id } = params;
@@ -40,20 +40,20 @@ export async function PUT(
   } catch (error) {
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { admin_id: string } },
+  { params }: { params: { admin_id: string } }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -63,7 +63,7 @@ export async function DELETE(
       },
       {
         status: 403,
-      },
+      }
     );
   }
   const { admin_id } = params;
@@ -83,13 +83,13 @@ export async function DELETE(
   } catch (error) {
     return Response.json(
       {
-        statusbar: 500,
+        status: 500,
         message: "Internal server error",
         result: error,
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
