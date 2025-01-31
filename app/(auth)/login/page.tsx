@@ -19,7 +19,9 @@ export default function Login() {
   const { mutateAsync, status } = usePostLogin();
   const handleLogin = async (val: PostLoginType) => {
     const result = await mutateAsync(val);
-
+    // if (typeof window !== 'undefined'){
+    //   localStorage.setItem('user', {})
+    // }
     Cookies.set(process.env.COOKIE_NAME as string, result?.token);
     router.push('/');
   };

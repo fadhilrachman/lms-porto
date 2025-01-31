@@ -11,6 +11,8 @@
 	"dependencies": {
 		"@heroui/alert": "^2.2.10",
 		"@heroui/autocomplete": "^2.3.11",
+		"@heroui/checkbox": "^2.3.9",
+		"@heroui/radio": "^2.3.9",
 		"@heroui/system": "^2.4.7",
 		"@heroui/theme": "^2.4.6",
 		"@nextui-org/accordion": "^2.2.7",

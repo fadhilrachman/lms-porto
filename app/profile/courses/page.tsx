@@ -32,7 +32,7 @@ const UserCourse = () => {
   return (
     <LayoutProfile>
       <div className="space-y-6">
-        <div className=" border-b border-neutral-400 py-3 space-y-3">
+        <div className=" border-b border-neutral-400 space-y-3">
           <div className="flex items-center gap-3">
             <LucideBookMarked />
             <h3 className="text-2xl font-bold">My Course</h3>
@@ -62,7 +62,7 @@ const UserCourse = () => {
                 isPressable
                 key={key}
                 className="py-4 cursor-pointer hover:scale-95"
-                onPress={() => router.push(`/profile/course/${obj.id}`)}
+                onPress={() => router.push(`/profile/courses/${obj.id}`)}
               >
                 <CardHeader className="pb-0 w pt-2 px-4 flex-col items-start">
                   <Image
@@ -103,7 +103,7 @@ const UserCourse = () => {
             ))
           )}
         </div>
-        {!isFetching && data?.result?.length !== 0 && (
+        {/* {!isFetching && data?.result?.length !== 0 && (
           <div className="flex justify-between items-center">
             <p>
               Show {data?.pagination.total_data} from{' '}
@@ -117,7 +117,7 @@ const UserCourse = () => {
               onChange={setCurrentPage}
             />
           </div>
-        )}
+        )} */}
       </div>
     </LayoutProfile>
   );

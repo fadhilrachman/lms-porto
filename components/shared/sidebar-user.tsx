@@ -25,7 +25,7 @@ const SidebarUser = () => {
   ];
 
   return (
-    <div className="border-r min-w-[300px] min-h-full px-6 py-3 border-neutral-800 space-y-3">
+    <div className="border-r fixed min-w-[300px] min-h-full px-6 py-3 border-neutral-800 space-y-3">
       {listSidebar.map((val, key) => {
         return (
           <div

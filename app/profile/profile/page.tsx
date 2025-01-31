@@ -1,8 +1,13 @@
-import LayoutProfile from "@/components/shared/layout-profile";
-import React from "react";
+import Profile from '@/components/profile/profile';
+import LayoutProfile from '@/components/shared/layout-profile';
+import React from 'react';
 
-const Profile = () => {
-  return <LayoutProfile>Profile</LayoutProfile>;
+const Page = () => {
+  return (
+    <LayoutProfile>
+      <Profile />
+    </LayoutProfile>
+  );
 };
 
-export default Profile;
+export default Page;

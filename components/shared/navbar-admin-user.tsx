@@ -36,7 +36,10 @@ export default function NavbarAdminUser() {
   };
 
   return (
-    <Navbar className="border-b border-neutral-800" maxWidth="full">
+    <Navbar
+      className="border-b border-neutral-800 fixed top-0 left-0 right-0"
+      maxWidth="full"
+    >
       <NavbarContent justify="start">
         <NavbarBrand
           onClick={() => router.push('/')}
