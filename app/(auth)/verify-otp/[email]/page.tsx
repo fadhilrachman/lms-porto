@@ -1,24 +1,8 @@
-'use client';
-
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
-import { useForm } from 'react-hook-form';
 import { Button } from '@nextui-org/button';
+import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
+import React from 'react';
 
-import FormGenerator from '@/components/shared/form-generator';
-import { usePostRegister } from '@/hooks/auth.hook';
-import { PostRegisterType } from '@/types/auth.type';
-
-export default function Register() {
-  const router = useRouter();
-  const { mutateAsync, status, data } = usePostRegister();
-  const form = useForm();
-  const handleRegister = async (val: PostRegisterType) => {
-    await mutateAsync(val);
-    router.push(`verify-otp/${data.email}`);
-  };
-
+export default function Page() {
   return (
     <div className="flex h-screen items-center justify-center">
       <Card className="w-[500px]">
@@ -26,7 +10,8 @@ export default function Register() {
           <h3 className="text-2xl">Register</h3>
         </CardHeader>
         <CardBody>
-          <FormGenerator
+          kontoll
+          {/* <FormGenerator
             key={1}
             data={[
               {
@@ -83,7 +68,7 @@ export default function Register() {
             form={form}
             id="formRegister"
             onSubmit={handleRegister}
-          />
+          /> */}
         </CardBody>
         <CardFooter className="">
           <div className="w-full space-y-2">
