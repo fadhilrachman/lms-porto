@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from '@nextui-org/modal';
-import { Button } from '@nextui-org/button';
-import Cookies from 'js-cookie';
-import toast from 'react-hot-toast';
-import { useParams, useRouter } from 'next/navigation';
-import { usePostTransaction } from '@/hooks/transaction.hook';
+} from "@nextui-org/modal";
+import { Button } from "@nextui-org/button";
+import Cookies from "js-cookie";
+import toast from "react-hot-toast";
+import { useParams, useRouter } from "next/navigation";
+import { usePostTransaction } from "@/hooks/transaction.hook";
 
 const ModalBuyCourse = ({
   isOpen,
@@ -23,13 +23,12 @@ const ModalBuyCourse = ({
 }) => {
   const router = useRouter();
   const { course_id }: { course_id: string } = useParams();
-  console.log(course_id);
   const { mutate, status } = usePostTransaction({ course_id });
   const handleBuyCourse = () => {
     const myCookie = Cookies.get(process.env.COOKIE_NAME as string);
     if (!myCookie) {
-      toast.error('You must be login first!');
-      router.push('/login');
+      toast.error("You must be login first!");
+      router.push("/login");
       return null;
     }
     mutate();
@@ -45,7 +44,7 @@ const ModalBuyCourse = ({
           </Button>
           <Button
             color="primary"
-            isLoading={status === 'pending'}
+            isLoading={status === "pending"}
             onPress={() => {
               handleBuyCourse();
             }}
