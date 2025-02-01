@@ -1,91 +1,75 @@
+'use client';
+
 import { Button } from '@nextui-org/button';
 import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
-import React from 'react';
+import { InputOtp } from '@heroui/input-otp';
+import React, { useState } from 'react';
+import { usePostResendOTP, usePostVerifiedEmail } from '@/hooks/auth.hook';
+import { useParams } from 'next/navigation';
+import OTPCounter from '@/components/shared/OTPCounter';
 
 export default function Page() {
+  const { email } = useParams();
+  const [value, setValue] = React.useState('');
+  const { mutate, status } = usePostVerifiedEmail();
+  const { mutateAsync: resendOtp, status: resendOtpStatus } =
+    usePostResendOTP();
+  const [otpDate, setOtpDate] = useState(null);
+
+  const decodedEmail = email ? decodeURIComponent(email as string) : '';
+  const handleDate = async () => {
+    try {
+      const response: any = await resendOtp({
+        email: decodedEmail as string,
+      });
+      if (response) {
+        const seccond = 5; // one minute
+        setOtpDate(Date.now() + seccond * 10000); //seccond
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  console.log(email);
   return (
     <div className="flex h-screen items-center justify-center">
-      <Card className="w-[500px]">
-        <CardHeader>
-          <h3 className="text-2xl">Register</h3>
+      <Card className="w-[500px] p-6">
+        <CardHeader className="flex flex-col justify-center items-center">
+          <h3 className="text-2xl font-semibold">Register</h3>
+          <p>Check your email to get OTP code</p>
         </CardHeader>
-        <CardBody>
-          kontoll
-          {/* <FormGenerator
-            key={1}
-            data={[
-              {
-                name: 'user_name',
-                type: 'text',
-                label: 'Username',
-                placeholder: 'Enter your username',
-                validation: {
-                  required: 'This field is required',
-                },
-              },
-              {
-                name: 'email',
-                type: 'email',
-                label: 'Email',
-                placeholder: 'Enter your email',
-                validation: {
-                  required: 'This field is required',
-                },
-              },
-              {
-                name: 'password',
-                type: 'password',
-                label: 'Password',
-                placeholder: 'Enter your password',
-                validation: {
-                  required: 'This field is required',
-                  minLength: {
-                    value: 6,
-                    message: 'Minimal character 6',
-                  },
-                },
-              },
-              {
-                name: 'confirm_password',
-                type: 'password',
-                label: 'Confirm Password',
-                placeholder: 'Enter your password',
-                validation: {
-                  required: 'This field is required',
-                  validate: (confirmPassword: string) => {
-                    const { password } = form.getValues();
-
-                    if (confirmPassword !== password) {
-                      return 'Confirm password does not match';
-                    }
-
-                    return true;
-                  },
-                },
-              },
-            ]}
-            disabled={status == 'pending'}
-            form={form}
-            id="formRegister"
-            onSubmit={handleRegister}
-          /> */}
+        <CardBody className="flex flex-row justify-center items-center gap-3">
+          <InputOtp
+            autoFocus
+            length={6}
+            value={value}
+            onValueChange={setValue}
+          />
         </CardBody>
-        <CardFooter className="">
-          <div className="w-full space-y-2">
+        <CardFooter>
+          <div className="w-full flex items-center flex-col justify-center space-y-3">
             <Button
-              className="w-full"
+              isLoading={status === 'pending'}
+              className="w-fit"
               color="primary"
-              form="formRegister"
-              isLoading={status == 'pending'}
-              type="submit"
+              onPress={() =>
+                mutate({
+                  email: decodedEmail,
+                  otp: value,
+                })
+              }
             >
-              Register
+              Verify OTP
             </Button>
             <p className="text-sm">
-              Already have an account?{' '}
-              <a className="text-blue-400" href="/login">
-                Login
-              </a>
+              don't get the OTP code?{' '}
+              <OTPCounter
+                date={otpDate}
+                handleDate={handleDate}
+                // key={DateSendOtp}
+                loading={resendOtpStatus === 'pending'}
+              />
             </p>
           </div>
         </CardFooter>

@@ -12,11 +12,12 @@ import { PostRegisterType } from '@/types/auth.type';
 
 export default function Register() {
   const router = useRouter();
-  const { mutateAsync, status, data } = usePostRegister();
+  const { mutateAsync, status } = usePostRegister();
   const form = useForm();
   const handleRegister = async (val: PostRegisterType) => {
     await mutateAsync(val);
-    router.push(`verify-otp/${data.email}`);
+    console.log(val);
+    router.push(`verify-otp/${val.email}`);
   };
 
   return (

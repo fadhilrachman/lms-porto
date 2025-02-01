@@ -7,7 +7,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@heroui/theme/dist/components/(alert|autocomplete|button|ripple|spinner|form|input|listbox|divider|popover|scroll-shadow).js",
+    "./node_modules/@heroui/theme/dist/components/(alert|autocomplete|checkbox|image|input-otp|radio|button|ripple|spinner|form|input|listbox|divider|popover|scroll-shadow).js"
   ],
   theme: {
     extend: {
