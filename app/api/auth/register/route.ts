@@ -59,7 +59,7 @@ export async function POST(req: Request) {
         password: hashedPassword,
         user_name,
         email,
-        is_admin: true,
+        is_admin: false,
         otp,
       },
     });
