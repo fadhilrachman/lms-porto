@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     );
   }
   const user = JSON.parse(req.headers.get("user") as string);
-  console.log({ user });
+  // console.log({ user });
 
   try {
     const checkDuplicateTransaction = await prisma.transaction.findFirst({
@@ -49,21 +49,21 @@ export async function POST(req: NextRequest) {
 
     const code = generateRandomCode("TRA");
 
-    const result = await prisma.transaction.create({
-      data: {
-        course_id,
-        user_id: user.id,
-        code,
-      },
-      include: {
-        course: true,
-      },
-    });
+    // const result = await prisma.transaction.create({
+    //   data: {
+    //     course_id,
+    //     user_id: user.id,
+    //     code,
+    //   },
+    //   include: {
+    //     course: true,
+    //   },
+    // });
 
     let parameterMidtrans = {
       transaction_details: {
-        order_id: result.code,
-        gross_amount: result.course.price,
+        order_id: code,
+        gross_amount: 1000,
       },
     };
 
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
     return Response.json({
       status: 200,
       message: "Success create transaction",
-      result,
+      // result,
       token,
     });
   } catch (error) {
