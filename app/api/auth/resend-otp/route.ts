@@ -57,9 +57,9 @@ export async function POST(req: Request) {
       status: 200,
       message: "Succes resend OTP",
 
-      result: {
-        otp,
-      },
+      // result: {
+      //   otp,
+      // },
     });
   } catch (error) {
     console.log({ error });
