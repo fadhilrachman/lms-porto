@@ -58,7 +58,7 @@ export const useSnapMidtrans = () => {
     if (snap) {
       snap.pay(snap_token, {
         onSuccess: function (result) {
-          console.log("success", result);
+          console.log("SUCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS", result);
         },
         onPending: function (result) {
           console.log("pending", result);
@@ -79,10 +79,35 @@ export const useSnapMidtrans = () => {
 };
 
 export const usePostTransaction = (body: { course_id: string }) => {
-  const queryClient = useQueryClient();
   const mutation = useMutation<any, Error>({
     mutationFn: async () => {
       const result = await fetcher.post(`/profile/transaction`, body);
+
+      return result.data;
+    },
+  });
+
+  useEffect(() => {
+    const status = mutation.status;
+
+    if (status == "success") {
+      toast.success("Success transaction");
+    }
+
+    if (status == "error") {
+      const error = mutation.error as AxiosError<any>;
+
+      toast.error(error.response?.data.message);
+    }
+  }, [mutation.status]);
+
+  return mutation;
+};
+
+export const usePatchCheckout = () => {
+  const mutation = useMutation<any, Error, string>({
+    mutationFn: async (id) => {
+      const result = await fetcher.post(`/profile/transaction/${id}/checkout`);
 
       return result.data;
     },
