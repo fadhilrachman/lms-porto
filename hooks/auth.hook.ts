@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 
 import { PostLoginType, PostRegisterType } from '@/types/auth.type';
 import { fetcher } from '@/lib/fetcher';
+import { useRouter } from 'next/navigation';
 
 export const usePostLogin = () => {
   const mutation = useMutation<any, Error, PostLoginType>({
@@ -38,6 +39,7 @@ export const usePostLogin = () => {
 };
 
 export const usePostVerifiedEmail = () => {
+  const router = useRouter();
   const mutation = useMutation<any, Error, { email: string; otp: string }>({
     mutationFn: async (body) => {
       const finalyPayload = {
@@ -65,6 +67,9 @@ export const usePostVerifiedEmail = () => {
       const error = mutation?.error as AxiosError<any>;
       console.log({ error });
 
+      // if (error.response?.data?.message === 'Verify account first') {
+      //   router.push('/sen')
+      // }
       toast.error(error.response?.data?.message);
     }
   }, [mutation.status]);
