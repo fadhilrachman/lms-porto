@@ -2,8 +2,7 @@ import { NextRequest } from "next/server";
 import { google } from "googleapis";
 import { prisma } from "@/lib/prisma";
 import jwt from "jsonwebtoken";
-import cookie from "cookies-js";
-
+import { cookies } from "next/headers";
 export async function GET(req: NextRequest) {
   const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
@@ -34,16 +33,14 @@ export async function GET(req: NextRequest) {
     //     });
     //   }
 
-    const checkUser = await prisma.user.findUnique({
+    let user = await prisma.user.findUnique({
       where: {
         email: data?.email,
       },
     });
-    const token = await jwt.sign(checkUser, "asdasdasd", {
-      expiresIn: "28d",
-    });
-    if (!checkUser) {
-      await prisma.user.create({
+
+    if (!user) {
+      user = await prisma.user.create({
         data: {
           email: data?.email,
           user_name: data?.name,
@@ -52,9 +49,11 @@ export async function GET(req: NextRequest) {
         },
       });
     }
-
-    cookie.set(process.env.COOKIE_NAME, token);
-    return Response.redirect("/");
+    const token = await jwt.sign(user, "asdasdasd", {
+      expiresIn: "28d",
+    });
+    (await cookies()).set(process.env.COOKIE_NAME, token);
+    return Response.redirect("http://localhost:3000/");
   } catch (error) {
     console.log({ error });
 
@@ -62,6 +61,7 @@ export async function GET(req: NextRequest) {
       {
         status: 500,
         message: "Internal server error",
+        error,
       },
       {
         status: 500,

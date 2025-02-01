@@ -33,7 +33,6 @@ const ModalBuyCourse = ({
       return null;
     }
     const result = await mutateAsync();
-    console.log({ result });
     snapModal(result?.token);
   };
   return (
