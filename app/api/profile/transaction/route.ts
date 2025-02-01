@@ -49,16 +49,16 @@ export async function POST(req: NextRequest) {
 
     const code = generateRandomCode("TRA");
 
-    // const result = await prisma.transaction.create({
-    //   data: {
-    //     course_id,
-    //     user_id: user.id,
-    //     code,
-    //   },
-    //   include: {
-    //     course: true,
-    //   },
-    // });
+    const result = await prisma.transaction.create({
+      data: {
+        course_id,
+        user_id: user.id,
+        code,
+      },
+      include: {
+        course: true,
+      },
+    });
 
     let parameterMidtrans = {
       transaction_details: {
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
     return Response.json({
       status: 200,
       message: "Success create transaction",
-      // result,
+      result,
       token,
     });
   } catch (error) {

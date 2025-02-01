@@ -27,12 +27,6 @@ export async function GET(req: NextRequest) {
 
     const { data } = await oauth2.userinfo.get();
 
-    // if (!data.email || !data.name) {
-    //     return Response.json({
-    //       data: data,
-    //     });
-    //   }
-
     let user = await prisma.user.findUnique({
       where: {
         email: data?.email,
