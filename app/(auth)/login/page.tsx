@@ -8,7 +8,7 @@ import { Button } from '@nextui-org/button';
 import Cookies from 'js-cookie';
 
 import FormGenerator from '@/components/shared/form-generator';
-import { usePostLogin } from '@/hooks/auth.hook';
+import { useOauthGoogle, usePostLogin } from '@/hooks/auth.hook';
 import { PostLoginType } from '@/types/auth.type';
 import { SiGoogle } from 'react-icons/si';
 import Image from 'next/image';
@@ -16,6 +16,7 @@ import Image from 'next/image';
 export default function Login() {
   const router = useRouter();
   const form = useForm();
+  const { mutateAsync: oAouth, status: oAouthStatus } = useOauthGoogle();
   const { mutateAsync, status } = usePostLogin();
   const handleLogin = async (val: PostLoginType) => {
     const result = await mutateAsync(val);
@@ -24,6 +25,13 @@ export default function Login() {
     // }
     Cookies.set(process.env.COOKIE_NAME as string, result?.token);
     router.push('/');
+  };
+
+  const handleOauthGoogle = async () => {
+    const result = await oAouth();
+    console.log({ result });
+
+    window.location.href = result.url;
   };
 
   return (
@@ -78,9 +86,17 @@ export default function Login() {
               </a>
             </p>
           </div>
-          <p>Login or Register with</p>
-          <Button className="bg-white font-semibold text-lg text-black px-12">
-            <Image
+          <div className="flex items-center justify-center gap-2 w-full">
+            <div className="w-28 h-[2px] rounded-full bg-white"></div>
+            <p>Login or Register with</p>
+            <div className="w-28 h-[2px] rounded-full bg-white"></div>
+          </div>
+          <Button
+            onPress={handleOauthGoogle}
+            isLoading={oAouthStatus === 'pending'}
+            className="bg-white font-semibold text-lg text-black px-12"
+          >
+            <img
               src={'/images/google-logo.png'}
               alt="Google Logo"
               width={32}

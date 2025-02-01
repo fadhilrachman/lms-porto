@@ -7,12 +7,14 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@nextui-org/button';
 
 import FormGenerator from '@/components/shared/form-generator';
-import { usePostRegister } from '@/hooks/auth.hook';
+import { useOauthGoogle, usePostRegister } from '@/hooks/auth.hook';
 import { PostRegisterType } from '@/types/auth.type';
+import BaseImg from '@/components/shared/base-image';
 
 export default function Register() {
   const router = useRouter();
   const { mutateAsync, status } = usePostRegister();
+  const { mutateAsync: oAouth, status: oAouthStatus } = useOauthGoogle();
   const form = useForm();
   const handleRegister = async (val: PostRegisterType) => {
     await mutateAsync(val, {
@@ -27,11 +29,18 @@ export default function Register() {
     router.push(`verify-otp/${val.email}`);
   };
 
+  const handleOauthGoogle = async () => {
+    const result = await oAouth();
+    console.log({ result });
+
+    window.location.href = result.url;
+  };
+
   return (
     <div className="flex h-screen items-center justify-center">
-      <Card className="w-[500px]">
-        <CardHeader>
-          <h3 className="text-2xl">Register</h3>
+      <Card className="w-[500px] p-6">
+        <CardHeader className="justify-center">
+          <h3 className="text-2xl font-semibold">Register</h3>
         </CardHeader>
         <CardBody>
           <FormGenerator
@@ -93,7 +102,7 @@ export default function Register() {
             onSubmit={handleRegister}
           />
         </CardBody>
-        <CardFooter className="">
+        <CardFooter className="flex flex-col justify-center space-y-8">
           <div className="w-full space-y-2">
             <Button
               className="w-full"
@@ -111,6 +120,25 @@ export default function Register() {
               </a>
             </p>
           </div>
+          <div className="flex items-center justify-center gap-2 w-full">
+            <div className="w-28 h-[2px] rounded-full bg-white"></div>
+            <p>Login or Register with</p>
+            <div className="w-28 h-[2px] rounded-full bg-white"></div>
+          </div>
+          <Button
+            onPress={handleOauthGoogle}
+            isLoading={oAouthStatus === 'pending'}
+            className="bg-white font-semibold text-lg text-black px-12"
+          >
+            <img
+              src={'/images/google-logo.png'}
+              alt="Google Logo"
+              width={32}
+              height={32}
+              className="bg-contain bg-center"
+            />
+            <span className="">Google</span>
+          </Button>
         </CardFooter>
       </Card>
     </div>

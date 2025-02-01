@@ -61,7 +61,7 @@ export const usePostVerifyOtp = () => {
 
     if (status == 'success') {
       toast.success('Success verified email');
-      router.push('login');
+      router.push('/login');
     }
 
     if (status == 'error') {
@@ -134,26 +134,14 @@ export const usePostRegister = () => {
 
   return mutation;
 };
-// export const useOauthGoogle = () => {
-//   const mutation = useMutation<any, Error>({
-//     mutationFn: async (body) => {
-//       const result = await fetcher.post("/auth/google");
-//       return result.data;
-//     },
-//   });
 
-//   return mutation;
-// };
+export const useOauthGoogle = () => {
+  const mutation = useMutation<any, Error>({
+    mutationFn: async (body) => {
+      const result = await fetcher.post('/auth/google');
+      return result.data;
+    },
+  });
 
-// export const useOauthGoogle = (triger: boolean) => {
-//   const query = useQuery({
-//     queryKey: ["OAUTH_GOOGLE"],
-//     enabled: triger,
-//     queryFn: async () => {
-//       const result = await fetcher.get(`/auth/google`);
-//       return result.data;
-//     },
-//   });
-
-//   return query;
-// };
+  return mutation;
+};
