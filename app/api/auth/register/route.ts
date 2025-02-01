@@ -44,6 +44,12 @@ export async function POST(req: Request) {
       where: { email },
     });
 
+    if (checkDuplicateEmail && !checkDuplicateEmail.is_verified)
+      return Response.json(
+        { status: 401, message: "Verify account first" },
+        { status: 401 }
+      );
+
     if (checkDuplicateEmail)
       return Response.json(
         { status: 401, message: "Email already registered" },
@@ -51,6 +57,7 @@ export async function POST(req: Request) {
           status: 401,
         }
       );
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const otp = generateOTP();
