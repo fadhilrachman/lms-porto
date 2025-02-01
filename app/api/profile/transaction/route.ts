@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
     );
   }
   const user = JSON.parse(req.headers.get("user") as string);
+  console.log({ user });
 
   try {
     const checkDuplicateTransaction = await prisma.transaction.findFirst({
@@ -75,6 +76,8 @@ export async function POST(req: NextRequest) {
       token,
     });
   } catch (error) {
+    console.log({ error });
+
     return Response.json(
       {
         status: 500,

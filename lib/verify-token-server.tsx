@@ -3,12 +3,18 @@ import jwt from "jsonwebtoken";
 
 export function verifyTokenCustomer(req: NextRequest) {
   const token = req.headers.get("authorization");
+  console.log({ token });
 
   if (!token)
-    return Response.json({
-      status: 403,
-      message: "Access Denied. No token provided.",
-    });
+    return Response.json(
+      {
+        status: 403,
+        message: "Access Denied. No token provided.",
+      },
+      {
+        status: 400,
+      }
+    );
   const tokenWithoutBearer = token.startsWith("Bearer ")
     ? token.slice(7)
     : token;
@@ -21,7 +27,7 @@ export function verifyTokenCustomer(req: NextRequest) {
           message: "Access Denied. No token provided.",
         },
         {
-          status: 403,
+          status: 400,
         }
       );
     }
