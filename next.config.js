@@ -33,6 +33,7 @@ const nextConfig = {
     MIDTRANS_IS_PRODUCTION: process.env.MIDTRANS_IS_PRODUCTION,
     MIDTRANS_IS_SANITIZED: process.env.MIDTRANS_IS_SANITIZED,
     MIDTRANS_IS_3DS: process.env.MIDTRANS_IS_3DS,
+    MIDTRANS_API_SNAP: process.env.MIDTRANS_API_SNAP,
 
     EMAIL_PASS: process.env.EMAIL_PASS,
     EMAIL: process.env.EMAIL,

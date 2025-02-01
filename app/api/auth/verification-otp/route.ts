@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
       },
       data: {
         otp: null,
+        is_verified: true,
       },
     });
 
