@@ -38,7 +38,7 @@ export const usePostLogin = () => {
   return mutation;
 };
 
-export const usePostVerifiedEmail = () => {
+export const usePostVerifyOtp = () => {
   const router = useRouter();
   const mutation = useMutation<any, Error, { email: string; otp: string }>({
     mutationFn: async (body) => {
@@ -61,15 +61,13 @@ export const usePostVerifiedEmail = () => {
 
     if (status == 'success') {
       toast.success('Success verified email');
+      router.push('login');
     }
 
     if (status == 'error') {
       const error = mutation?.error as AxiosError<any>;
       console.log({ error });
 
-      // if (error.response?.data?.message === 'Verify account first') {
-      //   router.push('/sen')
-      // }
       toast.error(error.response?.data?.message);
     }
   }, [mutation.status]);
@@ -77,7 +75,7 @@ export const usePostVerifiedEmail = () => {
   return mutation;
 };
 
-export const usePostResendOTP = () => {
+export const usePostResentOtp = () => {
   const mutation = useMutation<any, Error, { email: string }>({
     mutationFn: async (body) => {
       const result = await fetcher.post('/auth/resend-otp', body);
@@ -91,7 +89,7 @@ export const usePostResendOTP = () => {
     console.log({ status });
 
     if (status == 'success') {
-      toast.success('Please check your email to get a new OTP');
+      toast.success('Success verified email');
     }
 
     if (status == 'error') {

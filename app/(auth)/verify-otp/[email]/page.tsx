@@ -4,16 +4,16 @@ import { Button } from '@nextui-org/button';
 import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
 import { InputOtp } from '@heroui/input-otp';
 import React, { useState } from 'react';
-import { usePostResendOTP, usePostVerifiedEmail } from '@/hooks/auth.hook';
 import { useParams } from 'next/navigation';
 import OTPCounter from '@/components/shared/OTPCounter';
+import { usePostResentOtp, usePostVerifyOtp } from '@/hooks/auth.hook';
 
 export default function Page() {
   const { email } = useParams();
   const [value, setValue] = React.useState('');
-  const { mutate, status } = usePostVerifiedEmail();
+  const { mutate, status } = usePostVerifyOtp();
   const { mutateAsync: resendOtp, status: resendOtpStatus } =
-    usePostResendOTP();
+    usePostResentOtp();
   const [otpDate, setOtpDate] = useState(null);
 
   const decodedEmail = email ? decodeURIComponent(email as string) : '';

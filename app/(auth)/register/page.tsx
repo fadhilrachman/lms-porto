@@ -15,7 +15,14 @@ export default function Register() {
   const { mutateAsync, status } = usePostRegister();
   const form = useForm();
   const handleRegister = async (val: PostRegisterType) => {
-    await mutateAsync(val);
+    await mutateAsync(val, {
+      onError: (error: any) => {
+        console.log(error);
+        if (error.response?.data?.message === 'Verify account first') {
+          router.push(`/verify-otp/${val.email}`);
+        }
+      },
+    });
     console.log(val);
     router.push(`verify-otp/${val.email}`);
   };
