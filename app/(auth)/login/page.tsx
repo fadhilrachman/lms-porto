@@ -96,13 +96,15 @@ export default function Login() {
             isLoading={oAouthStatus === 'pending'}
             className="bg-white font-semibold text-lg text-black px-12"
           >
-            <img
-              src={'/images/google-logo.png'}
-              alt="Google Logo"
-              width={32}
-              height={32}
-              className="bg-contain bg-center"
-            />
+            {oAouthStatus !== 'pending' && (
+              <img
+                src={'/images/google-logo.png'}
+                alt="Google Logo"
+                width={32}
+                height={32}
+                className="bg-contain bg-center"
+              />
+            )}
             <span className="">Google</span>
           </Button>
         </CardFooter>
