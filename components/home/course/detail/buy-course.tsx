@@ -12,7 +12,7 @@ import { Button } from "@nextui-org/button";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
-import { usePostTransaction } from "@/hooks/transaction.hook";
+import { usePostTransaction, useSnapMidtrans } from "@/hooks/transaction.hook";
 
 const ModalBuyCourse = ({
   isOpen,
@@ -23,15 +23,18 @@ const ModalBuyCourse = ({
 }) => {
   const router = useRouter();
   const { course_id }: { course_id: string } = useParams();
-  const { mutate, status } = usePostTransaction({ course_id });
-  const handleBuyCourse = () => {
+  const { snapModal } = useSnapMidtrans();
+  const { mutateAsync, status } = usePostTransaction({ course_id });
+  const handleBuyCourse = async () => {
     const myCookie = Cookies.get(process.env.COOKIE_NAME as string);
     if (!myCookie) {
       toast.error("You must be login first!");
       router.push("/login");
       return null;
     }
-    mutate();
+    const result = await mutateAsync();
+    console.log({ result });
+    snapModal(result?.token);
   };
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
