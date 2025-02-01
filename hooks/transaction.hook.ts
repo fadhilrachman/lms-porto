@@ -7,6 +7,11 @@ import { TransactionType } from "@/types/transaction.type";
 import { BaseResponseList } from "@/types";
 import { fetcher } from "@/lib/fetcher";
 
+declare global {
+  interface Window {
+    snap: any;
+  }
+}
 export const useGetTransaction = (params: {
   page: number;
   per_page: number;
@@ -24,17 +29,24 @@ export const useGetTransaction = (params: {
   return query;
 };
 
-const useSnap = () => {
-  const [snap, setSnap] = useState(null);
+export const useSnapMidtrans = () => {
+  const [snap, setSnap] = useState<any>(null);
+
+  console.log({ snap });
 
   useEffect(() => {
-    const myMidtransClientKey = process.env.MIDTRANS_CLIENT_ID;
+    const myMidtransClientKey = process.env.MIDTRANS_CLIENT_KEY;
+    console.log({ myMidtransClientKey });
+
     const script = document.createElement("script");
-    script.src = `${process.env.MIDTRANS_API_URL}/snap/snap.js`;
+    script.src = `https://app.sandbox.midtrans.com/snap/snap.js`;
+
     script.setAttribute("data-client-key", myMidtransClientKey);
     script.onload = () => {
-      // setSnap(window.snap);
+      setSnap(window.snap);
     };
+    script.async = true;
+
     document.body.appendChild(script);
 
     return () => {
@@ -42,26 +54,28 @@ const useSnap = () => {
     };
   }, []);
 
-  const snapEmbed = (snap_token, embedId, action) => {
+  const snapModal = (snap_token: string) => {
     if (snap) {
-      snap.embed(snap_token, {
-        embedId,
+      snap.pay(snap_token, {
         onSuccess: function (result) {
           console.log("success", result);
-          action.onSuccess(result);
         },
         onPending: function (result) {
           console.log("pending", result);
-          action.onPending(result);
+        },
+        onError: function (error) {
+          console.error("error", error);
         },
         onClose: function () {
-          action.onClose();
+          console.log("Modal closed");
         },
       });
+    } else {
+      console.error("Snap error broooooo!");
     }
   };
 
-  return { snapEmbed };
+  return { snapModal };
 };
 
 export const usePostTransaction = (body: { course_id: string }) => {
@@ -71,15 +85,6 @@ export const usePostTransaction = (body: { course_id: string }) => {
       const result = await fetcher.post(`/profile/transaction`, body);
 
       return result.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["LIST_TRANSACTION"] }); // Menggunakan invalidateQueries untuk memicu ulang query
-      toast.success("Success delete transaction");
-    },
-    onError: () => {
-      const error = mutation.error as AxiosError<any>;
-
-      toast.error(error.response?.data.message);
     },
   });
 
