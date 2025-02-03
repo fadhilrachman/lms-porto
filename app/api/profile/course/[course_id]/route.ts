@@ -39,6 +39,7 @@ export async function GET(
               select: {
                 id: true,
                 title: true,
+                content_vid: true,
                 position: true,
                 content_progress: {
                   where: {
@@ -60,7 +61,7 @@ export async function GET(
 
     return Response.json({
       status: 200,
-      message: "Success delete category",
+      message: "Success get course",
       result,
     });
   } catch (error) {
