@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 import BaseTable, { ColumnTable } from "@/components/shared/base-table";
 import ModalCreateCourse from "@/components/admin/course/modal-create-course";
-import { useGetCourse } from "@/hooks/course.hook";
+import { useGetCourse, useGetCourseAdmin } from "@/hooks/course.hook";
 import { formatRupiah } from "@/lib/helper";
 import { CourseType } from "@/types/course.type";
 import ModalImg from "@/components/shared/modal-img";
@@ -20,7 +20,7 @@ const AdminCategory = () => {
   const [params, setParams] = useState({ search: "", page: 1, per_page: 10 });
   const router = useRouter();
   const [modal, setModal] = useState({ create: false, img: false });
-  const { data, isFetching, refetch } = useGetCourse(params);
+  const { data, isFetching, refetch } = useGetCourseAdmin(params);
 
   useEffect(() => {
     refetch();

@@ -151,9 +151,9 @@ export async function GET(
           },
           include: {
             content: {
-              // where: {
-              //   is_published: false,
-              // },
+              where: {
+                is_published: true,
+              },
               select: {
                 id: true,
                 title: true,

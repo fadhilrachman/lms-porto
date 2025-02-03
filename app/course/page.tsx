@@ -34,17 +34,17 @@ export const animals = [
 
 const Course = () => {
   const router = useRouter();
-  const [category, setCategory] = useQueryState("category");
-  const [params, setParams] = useState({ search: "", page: 1, per_page: 10 });
+  const [category, setCategory] = useQueryState("category_id");
+  const [params, setParams] = useState({ search: "" });
   const { data: dataCategory } = useGetCategory({ page: 1, per_page: 100 });
-  console.log({ dataCategory });
 
   const { data, isFetching, refetch } = useGetCourse({
     page: 1,
     per_page: 20,
     is_published: true,
+    ...params,
+    category_id: category,
   });
-  console.log({ category });
 
   useEffect(() => {
     refetch();
@@ -53,6 +53,7 @@ const Course = () => {
     <div className="relative space-y-12  ">
       <Navbar />
 
+      {category}
       <div className="px-16 space-y-4">
         <Title
           subTitle="Course"

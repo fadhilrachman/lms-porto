@@ -31,14 +31,14 @@ const ListCustomer = () => {
       label: "Username",
       render: (_, obj) => (
         <div className="flex items-center space-x-2">
-          <Avatar
+          {/* <Avatar
             isBordered
             as="button"
             color="primary"
             name={obj.user_name}
             size="sm"
             // src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          />
+          /> */}
           <span>{obj.user_name}</span>
         </div>
       ),
