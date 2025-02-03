@@ -9,7 +9,7 @@ const LayoutAdmin = ({ children }: { children: React.ReactNode }) => {
     <div className="px-12 pt-4 space-y-6 ">
       <NavbarAdmin />
 
-      <div className="flex space-x-4 min-h-[100vh]  ">
+      <div className="flex space-x-4 min-h-[100vh] !mt-[70px]  ">
         <SidebarAdmin />
         <div className="w-full">{children}</div>
       </div>
