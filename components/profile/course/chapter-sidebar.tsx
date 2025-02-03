@@ -1,7 +1,8 @@
 import { Accordion, AccordionItem } from '@nextui-org/accordion';
 import { Button } from '@nextui-org/button';
-import { ArrowLeft, Check, CheckCheck } from 'lucide-react';
+import { ArrowLeft, Check, CheckCheck, VideoIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useQueryState } from 'nuqs';
 import React from 'react';
 
 const items = [
@@ -48,7 +49,8 @@ const items = [
     ],
   },
 ];
-const ChapterSidebar = () => {
+const ChapterSidebar = ({ chapter }: any) => {
+  const [_, setContentId] = useQueryState('content');
   const router = useRouter();
   return (
     <div className="min-w-[350px] space-y-6 z-50 h-full fixed py-6 px-3 border-r border-neutral-800">
@@ -63,22 +65,22 @@ const ChapterSidebar = () => {
         defaultExpandedKeys={'1'}
         className="max-w-full"
       >
-        {items.map((item) => (
-          <AccordionItem
-            key={item.key}
-            aria-label={item.title}
-            title={item.title}
-          >
+        {chapter?.map((item: any, i: number) => (
+          <AccordionItem key={i} aria-label={item?.title} title={item?.title}>
             <div className="space-y-3">
-              {item.content.map((res, i) => (
+              {item?.content.map((res, i) => (
                 <div
                   key={i}
                   className="cursor-pointer flex justify-between rounded-xl bg-neutral-800  px-4 py-3"
+                  onClick={() => setContentId(res?.id)}
                 >
-                  <span>{res.sub_title}</span>
-                  {res.isChecked ? (
+                  <div className="space-x-3 flex items-center">
+                    <VideoIcon />
+                    <span>{res?.title}</span>
+                  </div>
+                  {res?.content_progress?.length > 0 && (
                     <CheckCheck className="text-green-500" />
-                  ) : null}
+                  )}
                 </div>
               ))}
             </div>

@@ -1,11 +1,12 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
-import { TransactionType } from "@/types/transaction.type";
-import { BaseResponseList } from "@/types";
-import { fetcher } from "@/lib/fetcher";
+import { TransactionType } from '@/types/transaction.type';
+import { BaseResponseList } from '@/types';
+import { fetcher } from '@/lib/fetcher';
+import { useRouter } from 'next/navigation';
 
 declare global {
   interface Window {
@@ -18,9 +19,9 @@ export const useGetTransaction = (params: {
   search?: string;
 }) => {
   const query = useQuery<BaseResponseList<TransactionType>>({
-    queryKey: ["LIST_TRANSACTION"],
+    queryKey: ['LIST_TRANSACTION'],
     queryFn: async () => {
-      const result = await fetcher.get("/dashboard/transaction", { params });
+      const result = await fetcher.get('/dashboard/transaction', { params });
 
       return result.data;
     },
@@ -30,6 +31,7 @@ export const useGetTransaction = (params: {
 };
 
 export const useSnapMidtrans = () => {
+  const router = useRouter();
   const [snap, setSnap] = useState<any>(null);
 
   console.log({ snap });
@@ -38,10 +40,10 @@ export const useSnapMidtrans = () => {
     const myMidtransClientKey = process.env.MIDTRANS_CLIENT_KEY;
     console.log({ myMidtransClientKey });
 
-    const script = document.createElement("script");
+    const script = document.createElement('script');
     script.src = `https://app.sandbox.midtrans.com/snap/snap.js`;
 
-    script.setAttribute("data-client-key", myMidtransClientKey);
+    script.setAttribute('data-client-key', myMidtransClientKey);
     script.onload = () => {
       setSnap(window.snap);
     };
@@ -58,20 +60,21 @@ export const useSnapMidtrans = () => {
     if (snap) {
       snap.pay(snap_token, {
         onSuccess: function (result) {
-          console.log("SUCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS", result);
+          // router.push('/profile/courses');
+          console.log('SUCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', result);
         },
         onPending: function (result) {
-          console.log("pending", result);
+          console.log('pending', result);
         },
         onError: function (error) {
-          console.error("error", error);
+          console.error('error', error);
         },
         onClose: function () {
-          console.log("Modal closed");
+          console.log('Modal closed');
         },
       });
     } else {
-      console.error("Snap error broooooo!");
+      console.error('Snap error broooooo!');
     }
   };
 
@@ -90,11 +93,11 @@ export const usePostTransaction = (body: { course_id: string }) => {
   useEffect(() => {
     const status = mutation.status;
 
-    if (status == "success") {
-      toast.success("Success transaction");
+    if (status == 'success') {
+      toast.success('Success transaction');
     }
 
-    if (status == "error") {
+    if (status == 'error') {
       const error = mutation.error as AxiosError<any>;
 
       toast.error(error.response?.data.message);
@@ -116,11 +119,11 @@ export const usePatchCheckout = () => {
   useEffect(() => {
     const status = mutation.status;
 
-    if (status == "success") {
-      toast.success("Success transaction");
+    if (status == 'success') {
+      toast.success('Success transaction');
     }
 
-    if (status == "error") {
+    if (status == 'error') {
       const error = mutation.error as AxiosError<any>;
 
       toast.error(error.response?.data.message);
@@ -139,18 +142,18 @@ export const useDeleteCustomer = (id: string) => {
       return result.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["LIST_CUSTOMER"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+      queryClient.invalidateQueries({ queryKey: ['LIST_CUSTOMER'] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
 
   useEffect(() => {
     const status = mutation.status;
 
-    if (status == "success") {
-      toast.success("Success delete transaction");
+    if (status == 'success') {
+      toast.success('Success delete transaction');
     }
 
-    if (status == "error") {
+    if (status == 'error') {
       const error = mutation.error as AxiosError<any>;
 
       toast.error(error.response?.data.message);

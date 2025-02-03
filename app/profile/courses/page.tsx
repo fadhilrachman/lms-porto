@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import { IoGlobeOutline } from "react-icons/io5";
-import React, { useEffect, useState } from "react";
-import { Pagination } from "@nextui-org/pagination";
-import { Chip } from "@nextui-org/chip";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import { useParams, useRouter } from "next/navigation";
-import { Spinner } from "@nextui-org/spinner";
+import { IoGlobeOutline } from 'react-icons/io5';
+import React, { useEffect, useState } from 'react';
+import { Pagination } from '@nextui-org/pagination';
+import { Chip } from '@nextui-org/chip';
+import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/card';
+import { useParams, useRouter } from 'next/navigation';
+import { Spinner } from '@nextui-org/spinner';
 
-import { useGetUserCourse } from "@/hooks/course-user.hooks";
-import BaseInputSearch from "@/components/shared/base-input-search";
-import LayoutProfile from "@/components/shared/layout-profile";
-import { Lock, LucideBookMarked } from "lucide-react";
-import Image from "next/image";
-import BaseIcon from "@/components/shared/base-icon";
+import { useGetUserCourse } from '@/hooks/course-user.hooks';
+import BaseInputSearch from '@/components/shared/base-input-search';
+import LayoutProfile from '@/components/shared/layout-profile';
+import { Lock, LucideBookMarked } from 'lucide-react';
+import Image from 'next/image';
+import BaseIcon from '@/components/shared/base-icon';
 
 const UserCourse = () => {
   const router = useRouter();
   const [modal, setModal] = useState({ create: false, img: false });
-  const [params, setPrams] = useState({ search: "" });
+  const [params, setPrams] = useState({ search: '' });
   const { data, isFetching, refetch } = useGetUserCourse({
     page: 1,
     per_page: 10,
@@ -62,7 +62,9 @@ const UserCourse = () => {
                 isPressable
                 key={key}
                 className="py-4 cursor-pointer hover:scale-95"
-                onPress={() => router.push(`/profile/courses/${obj.id}`)}
+                onPress={() =>
+                  router.push(`/profile/courses/${obj?.course?.id}`)
+                }
               >
                 <CardHeader className="pb-0 w pt-2 px-4 flex-col items-start">
                   <Image
@@ -94,7 +96,7 @@ const UserCourse = () => {
                       <span className="ml-1">
                         {obj.course.category
                           ? obj.course?.category.name
-                          : "Category"}
+                          : 'Category'}
                       </span>
                     </Chip>
                   </div>
@@ -104,7 +106,7 @@ const UserCourse = () => {
                     <div className="flex flex-row items-center gap-2">
                       <IoGlobeOutline size={22} />
                       <p>
-                        {obj.course.is_free ? "Free course" : "Premium course"}
+                        {obj.course.is_free ? 'Free course' : 'Premium course'}
                       </p>
                     </div>
                   </div>
