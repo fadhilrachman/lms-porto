@@ -5,7 +5,7 @@ import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { chapter_id: string } }
+  { params }: { params: Promise<Promise<{ chapter_id: string }>> }
 ) {
   // if (verifyTokenAdmin(req)) {
   //   return Response.json(
@@ -18,7 +18,7 @@ export async function PUT(
   //     }
   //   );
   // }
-  const { chapter_id } = params;
+  const { chapter_id } = await params;
   const { title } = await req.json();
 
   try {
@@ -52,7 +52,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { chapter_id: string } }
+  { params }: { params: Promise<{ chapter_id: string }> }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -65,7 +65,7 @@ export async function DELETE(
       }
     );
   }
-  const { chapter_id } = params;
+  const { chapter_id } = await params;
 
   try {
     const result = await prisma.chapter.delete({
@@ -95,9 +95,9 @@ export async function DELETE(
 
 export async function GET(
   req: Request,
-  { params }: { params: { chapter_id: string } }
+  { params }: { params: Promise<{ chapter_id: string }> }
 ) {
-  const { chapter_id } = params;
+  const { chapter_id } = await params;
 
   try {
     const result = await prisma.chapter.findUnique({

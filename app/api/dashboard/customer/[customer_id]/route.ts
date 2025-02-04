@@ -5,7 +5,7 @@ import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { customer_id: string } }
+  { params }: { params: Promise<{ customer_id: string }> }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -18,7 +18,7 @@ export async function DELETE(
       }
     );
   }
-  const { customer_id } = params;
+  const { customer_id } = await params;
 
   try {
     const result = await prisma.user.delete({
