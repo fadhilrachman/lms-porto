@@ -9,6 +9,7 @@ import DndContent from "./content/dnd-content";
 import ModalCreateContent from "./content/modal-create-content";
 
 import { ContentType } from "@/types/content.type";
+import BaseDataNotFound from "@/components/shared/base-data-not-found";
 
 const ListContent = ({
   data,
@@ -49,7 +50,7 @@ const ListContent = ({
             </div>
           )}
           {data?.length == 0 ? (
-            "tidak ada data"
+            <BaseDataNotFound />
           ) : (
             <DndContent
               currentData={data}

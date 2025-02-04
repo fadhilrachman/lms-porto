@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -7,34 +7,34 @@ import {
   NavbarBrand,
   NavbarItem,
   NavbarMenuItem,
-} from '@nextui-org/navbar';
-import { Button } from '@nextui-org/button';
-import { Link } from '@nextui-org/link';
-import { link as linkStyles } from '@nextui-org/theme';
-import NextLink from 'next/link';
-import clsx from 'clsx';
-import { Avatar } from '@nextui-org/avatar';
+} from "@nextui-org/navbar";
+import { Button } from "@nextui-org/button";
+import { Link } from "@nextui-org/link";
+import { link as linkStyles } from "@nextui-org/theme";
+import NextLink from "next/link";
+import clsx from "clsx";
+import { Avatar } from "@nextui-org/avatar";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from '@nextui-org/dropdown';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+} from "@nextui-org/dropdown";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import { GithubIcon, Logo } from '@/components/shared/icons';
-import { ThemeSwitch } from '@/components/theme-switch';
-import { siteConfig } from '@/config/site';
-import { LogOut, LucideBookMarked, User } from 'lucide-react';
+import { GithubIcon, Logo } from "@/components/shared/icons";
+import { ThemeSwitch } from "@/components/theme-switch";
+import { siteConfig } from "@/config/site";
+import { LogOut, LucideBookMarked, User } from "lucide-react";
 
 export const Navbar = () => {
   const [myCookie, setMyCookie] = useState<string | undefined>(undefined);
   const router = useRouter();
   const handleLogout = () => {
     Cookies.remove(process.env.COOKIE_NAME as string);
-    router.push('/login');
+    router.push("/login");
   };
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const Navbar = () => {
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
-            <p className="font-bold text-inherit">ACME</p>
+            <p className="font-bold text-inherit">LMS</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
@@ -58,8 +58,8 @@ export const Navbar = () => {
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
-                  linkStyles({ color: 'foreground' }),
-                  'data-[active=true]:text-primary data-[active=true]:font-medium',
+                  linkStyles({ color: "foreground" }),
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color="foreground"
                 href={item.href}
@@ -79,13 +79,11 @@ export const Navbar = () => {
           <Dropdown placement="bottom-end">
             <DropdownTrigger>
               <Avatar
-                // isBordered
                 as="button"
                 className="transition-transform"
                 color="secondary"
                 name="Jason Hughes"
                 size="sm"
-                // src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
               />
             </DropdownTrigger>
 
@@ -93,7 +91,7 @@ export const Navbar = () => {
               <DropdownItem
                 key="help_and_feedback"
                 onPress={() => {
-                  router.push('/profile/profile');
+                  router.push("/profile/profile");
                 }}
               >
                 <div className="flex items-center gap-2">
@@ -104,7 +102,7 @@ export const Navbar = () => {
               <DropdownItem
                 key="my_courses"
                 onPress={() => {
-                  router.push('/profile/courses');
+                  router.push("/profile/courses");
                 }}
               >
                 <div className="flex items-center gap-2">
@@ -124,11 +122,11 @@ export const Navbar = () => {
         ) : (
           <NextLink
             className={clsx(
-              linkStyles({ color: 'foreground' }),
-              'data-[active=true]:text-primary data-[active=true]:font-medium',
+              linkStyles({ color: "foreground" }),
+              "data-[active=true]:text-primary data-[active=true]:font-medium"
             )}
             color="foreground"
-            href={'/login'}
+            href={"/login"}
           >
             <Button color="primary">Login</Button>
           </NextLink>
@@ -150,10 +148,10 @@ export const Navbar = () => {
               <Link
                 color={
                   index === 2
-                    ? 'primary'
+                    ? "primary"
                     : index === siteConfig.navMenuItems.length - 1
-                      ? 'danger'
-                      : 'foreground'
+                      ? "danger"
+                      : "foreground"
                 }
                 href="#"
                 size="lg"

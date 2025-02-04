@@ -21,10 +21,7 @@ export async function GET(req: NextRequest) {
     const result = await prisma.course.findMany({
       skip,
       take: Number(per_page),
-      where: {
-        // is_published
-        is_published: false,
-      },
+
       select: {
         id: true,
         title: true,

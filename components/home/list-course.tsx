@@ -31,7 +31,7 @@ const ListCourse = () => {
                       <BaseImg
                         src={val?.thumbnail_img}
                         alt="img"
-                        className="object-cover bg-cover w-full rounded-xl"
+                        // className="object-cover bg-cover w-full rounded-xl"
                       />
                     )}
                   </CardHeader>

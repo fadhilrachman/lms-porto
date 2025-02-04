@@ -29,9 +29,6 @@ export async function GET(
           },
           include: {
             content: {
-              where: {
-                is_published: false,
-              },
               select: {
                 id: true,
                 title: true,

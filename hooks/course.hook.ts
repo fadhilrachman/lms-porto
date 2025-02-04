@@ -61,7 +61,7 @@ export const useGetCourseAdmin = (params: {
   const query = useQuery<BaseResponseList<CourseType>>({
     queryKey: ["LIST_COURSE_ADMIN"],
     queryFn: async () => {
-      const result = await fetcher.get("/course", { params });
+      const result = await fetcher.get("/course/admin", { params });
 
       return result.data;
     },
