@@ -8,7 +8,7 @@ import {
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { content_id: string } }
+  { params }: { params: Promise<{ content_id: string }> }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -21,7 +21,7 @@ export async function PUT(
       }
     );
   }
-  const { content_id } = params;
+  const { content_id } = await params;
   const { chapter_id, content_vid, title, description } = await req.json();
 
   try {
@@ -54,7 +54,7 @@ export async function PUT(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { content_id: string } }
+  { params }: { params: Promise<{ content_id: string }> }
 ) {
   // if (verifyTokenAdmin(req)) {
   //   return Response.json(
@@ -67,7 +67,7 @@ export async function PATCH(
   //     }
   //   );
   // }
-  const { content_id } = params;
+  const { content_id } = await params;
   const { is_published } = await req.json();
 
   try {
@@ -101,7 +101,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { content_id: string } }
+  { params }: { params: Promise<{ content_id: string }> }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -114,7 +114,7 @@ export async function DELETE(
       }
     );
   }
-  const { content_id } = params;
+  const { content_id } = await params;
 
   try {
     const result = await prisma.content.delete({
@@ -144,9 +144,9 @@ export async function DELETE(
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { content_id: string } }
+  { params }: { params: Promise<{ content_id: string }> }
 ) {
-  const { content_id } = params;
+  const { content_id } = await params;
   if (verifyTokenCustomer(req)) {
     return Response.json(
       {

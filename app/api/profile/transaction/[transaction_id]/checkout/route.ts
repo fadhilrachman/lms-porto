@@ -3,9 +3,9 @@ import { NextRequest } from "next/server";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { transaction_id: string } }
+  { params }: { params: Promise<{ transaction_id: string }> }
 ) {
-  const { transaction_id } = params;
+  const { transaction_id } = await params;
   try {
     const checkData = await prisma.transaction.findUnique({
       where: {
