@@ -3,7 +3,7 @@ import { Button } from '@nextui-org/button';
 import { ArrowLeft, Check, CheckCheck, VideoIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useQueryState } from 'nuqs';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const items = [
   {
@@ -52,12 +52,15 @@ const items = [
 const ChapterSidebar = ({ chapter }: any) => {
   const [_, setContentId] = useQueryState('content');
   const router = useRouter();
+  useEffect(() => {
+    setContentId(chapter[0]?.content[0]?.id);
+  }, []);
   return (
     <div className="min-w-[350px] space-y-6 z-50 h-full fixed py-6 px-3 border-r border-neutral-800">
       <div className="flex items-center gap-3 px-3">
         <Button variant="light" onPress={() => router.back()}>
           <ArrowLeft />
-          <span className="font-semibold text-lg">My Courses</span>
+          <span className="!font-semibold text-lg">My Courses</span>
         </Button>
       </div>
       <Accordion
@@ -66,7 +69,11 @@ const ChapterSidebar = ({ chapter }: any) => {
         className="max-w-full"
       >
         {chapter?.map((item: any, i: number) => (
-          <AccordionItem key={i} aria-label={item?.title} title={item?.title}>
+          <AccordionItem
+            key={i + 1}
+            aria-label={item?.title}
+            title={<p className="font-semibold">{item?.title}</p>}
+          >
             <div className="space-y-3">
               {item?.content.map((res, i) => (
                 <div

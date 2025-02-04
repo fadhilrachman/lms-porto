@@ -50,7 +50,7 @@ export const usePatchUserCourse = (id: string) => {
       return result.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['DETAIL_COURSE'] }); // Menggunakan invalidateQueries untuk memicu ulang query
+      queryClient.invalidateQueries({ queryKey: ['USER_DETAIL_COURSE'] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
 

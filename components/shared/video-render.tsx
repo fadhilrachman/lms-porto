@@ -1,24 +1,30 @@
-import React from "react";
-import YouTube from "react-youtube";
+import React from 'react';
+import YouTube from 'react-youtube';
 
 const getVideoId = (url: string) => {
   const urlObj = new URL(url);
-  return urlObj.searchParams.get("v"); // Ambil parameter `v` dari URL
+  return urlObj.searchParams.get('v'); // Ambil parameter `v` dari URL
 };
 
-export default function VideoRender({ url }: { url: string }) {
+export default function VideoRender({
+  url,
+  onEnd,
+}: {
+  url: string;
+  onEnd?: () => void;
+}) {
   const videoId = getVideoId(url);
 
   const opts = {
-    height: "500",
-    width: "100%",
+    height: '500',
+    width: '100%',
     playerVars: {
       autoplay: 0, // Aktifkan autoplay (opsional)
     },
   };
 
   return videoId ? (
-    <YouTube opts={opts} videoId={videoId} onEnd={() => {}} />
+    <YouTube opts={opts} videoId={videoId} onEnd={onEnd} />
   ) : (
     <p>Invalid YouTube URL</p>
   );

@@ -55,10 +55,19 @@ export const useSnapMidtrans = () => {
   const snapModal = (snap_token: string, transactionId: string) => {
     if (snap) {
       snap.pay(snap_token, {
-        onSuccess: async function (result) {
+        skipOrderSummary: true,
+        onSuccess: async function () {
           const { mutateAsync } = usePatchCheckout();
-          await mutateAsync(transactionId);
-          console.log('SUCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', result);
+          const result = await mutateAsync(transactionId);
+
+          const existingCourses = JSON.parse(
+            localStorage.getItem('myCourse') || '[]',
+          );
+
+          const updatedCourses = [...existingCourses, result.course_id];
+
+          localStorage.setItem('myCourse', JSON.stringify(updatedCourses));
+
           window.location.href = '/profile/courses';
         },
         onPending: function (result) {

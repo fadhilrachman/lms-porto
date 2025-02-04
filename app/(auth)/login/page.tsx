@@ -24,6 +24,7 @@ export default function Login() {
     //   localStorage.setItem('user', {})
     // }
     Cookies.set(process.env.COOKIE_NAME as string, result?.token);
+    localStorage.setItem('is_admin', JSON.stringify(result.is_admin));
     router.push('/');
   };
 

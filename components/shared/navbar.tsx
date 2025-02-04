@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -7,34 +7,36 @@ import {
   NavbarBrand,
   NavbarItem,
   NavbarMenuItem,
-} from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
-import { link as linkStyles } from "@nextui-org/theme";
-import NextLink from "next/link";
-import clsx from "clsx";
-import { Avatar } from "@nextui-org/avatar";
+} from '@nextui-org/navbar';
+import { Button } from '@nextui-org/button';
+import { Link } from '@nextui-org/link';
+import { link as linkStyles } from '@nextui-org/theme';
+import NextLink from 'next/link';
+import clsx from 'clsx';
+import { Avatar } from '@nextui-org/avatar';
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@nextui-org/dropdown";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+} from '@nextui-org/dropdown';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-import { GithubIcon, Logo } from "@/components/shared/icons";
-import { ThemeSwitch } from "@/components/theme-switch";
-import { siteConfig } from "@/config/site";
-import { LogOut, LucideBookMarked, User } from "lucide-react";
+import { GithubIcon, Logo } from '@/components/shared/icons';
+import { ThemeSwitch } from '@/components/theme-switch';
+import { siteConfig } from '@/config/site';
+import { LayoutDashboard, LogOut, LucideBookMarked, User } from 'lucide-react';
 
 export const Navbar = () => {
   const [myCookie, setMyCookie] = useState<string | undefined>(undefined);
+  const isAdmin = JSON.parse(localStorage.getItem('is_admin')) || false;
   const router = useRouter();
   const handleLogout = () => {
     Cookies.remove(process.env.COOKIE_NAME as string);
-    router.push("/login");
+    localStorage.removeItem('is_admin');
+    router.push('/login');
   };
 
   useEffect(() => {
@@ -58,8 +60,8 @@ export const Navbar = () => {
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
+                  linkStyles({ color: 'foreground' }),
+                  'data-[active=true]:text-primary data-[active=true]:font-medium',
                 )}
                 color="foreground"
                 href={item.href}
@@ -88,29 +90,46 @@ export const Navbar = () => {
             </DropdownTrigger>
 
             <DropdownMenu aria-label="Profile Actions" variant="flat">
-              <DropdownItem
-                key="help_and_feedback"
-                onPress={() => {
-                  router.push("/profile/profile");
-                }}
-              >
-                <div className="flex items-center gap-2">
-                  <User size={20} />
-                  <span>Profile</span>
-                </div>
-              </DropdownItem>
-              <DropdownItem
-                key="my_courses"
-                onPress={() => {
-                  router.push("/profile/courses");
-                }}
-              >
-                <div className="flex items-center gap-2">
-                  <LucideBookMarked size={20} />
-                  <span>My Courses</span>
-                </div>
-              </DropdownItem>
-
+              {!isAdmin ? (
+                <>
+                  <DropdownItem
+                    key="help_and_feedback"
+                    onPress={() => {
+                      router.push('/profile/profile');
+                    }}
+                  >
+                    <div className="flex items-center gap-2 border-b border-neutral-400 py-2">
+                      <User size={20} />
+                      <span>Profile</span>
+                    </div>
+                  </DropdownItem>
+                  <DropdownItem
+                    key="my_courses"
+                    onPress={() => {
+                      router.push('/profile/courses');
+                    }}
+                  >
+                    <div className="flex items-center gap-2 border-b border-neutral-400 py-2">
+                      <LucideBookMarked size={20} />
+                      <span>My Courses</span>
+                    </div>
+                  </DropdownItem>
+                </>
+              ) : (
+                <>
+                  <DropdownItem
+                    key="help_and_feedback"
+                    onPress={() => {
+                      router.push('/dashboard/course');
+                    }}
+                  >
+                    <div className="flex items-center gap-2 border-b border-neutral-400 py-2">
+                      <LayoutDashboard size={20} />
+                      <span>Dashboard</span>
+                    </div>
+                  </DropdownItem>
+                </>
+              )}
               <DropdownItem key="logout" color="danger" onPress={handleLogout}>
                 <div className="flex items-center gap-2">
                   <LogOut size={20} />
@@ -122,11 +141,11 @@ export const Navbar = () => {
         ) : (
           <NextLink
             className={clsx(
-              linkStyles({ color: "foreground" }),
-              "data-[active=true]:text-primary data-[active=true]:font-medium"
+              linkStyles({ color: 'foreground' }),
+              'data-[active=true]:text-primary data-[active=true]:font-medium',
             )}
             color="foreground"
-            href={"/login"}
+            href={'/login'}
           >
             <Button color="primary">Login</Button>
           </NextLink>
@@ -148,10 +167,10 @@ export const Navbar = () => {
               <Link
                 color={
                   index === 2
-                    ? "primary"
+                    ? 'primary'
                     : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
+                      ? 'danger'
+                      : 'foreground'
                 }
                 href="#"
                 size="lg"

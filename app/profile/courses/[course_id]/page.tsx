@@ -13,19 +13,21 @@ const DetailCourse = () => {
   const { data, isLoading, refetch } = useGetDetailUserCourse(
     course_id as string,
   );
-  const [contentId, _] = useQueryState('content');
-  const chapterContent = data?.result?.chapter.map((res) => res.content);
-  console.log(chapterContent);
-  useEffect(() => {
-    refetch();
-  }, [contentId]);
+  const [_, setContentId] = useQueryState('content');
+
+  // useEffect(() => {
+  //   if (data?.result?.chapter.length > 0) {
+  //     setContentId(data?.result?.chapter[0].id);
+  //   }
+  // }, []);
+
   return (
     <div className="min-h-screen w-full overflow-hidden">
       <NavbarAdminUser />
       <div className="w-full pt-16 h-full flex">
         <ChapterSidebar chapter={data?.result?.chapter || []} />
         <div className="px-6 py-3 ml-[350px] w-full min-h-screen overflow-y-auto">
-          {/* <Content content={content} /> */}
+          {!isLoading ? <Content /> : null}
         </div>
       </div>
     </div>
