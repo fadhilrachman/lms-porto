@@ -19,7 +19,7 @@ function Provider({ children }: React.PropsWithChildren) {
           },
         },
       },
-    }),
+    })
   );
 
   return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
