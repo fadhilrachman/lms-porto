@@ -35,13 +35,10 @@ export const useSnapMidtrans = () => {
   const router = useRouter();
   const [snap, setSnap] = useState<any>(null);
 
-  console.log({ snap });
-
   useEffect(() => {
     const myMidtransClientKey = process.env.MIDTRANS_CLIENT_KEY;
     const script = document.createElement('script');
     script.src = `https://app.sandbox.midtrans.com/snap/snap.js`;
-
     script.setAttribute('data-client-key', myMidtransClientKey);
     script.onload = () => {
       setSnap(window.snap);

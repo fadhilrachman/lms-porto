@@ -23,6 +23,7 @@ export async function GET(req: NextRequest) {
     const total_data = await prisma.transaction.count({
       where: {
         user_id: user.id,
+        is_checkout: true,
       },
     });
     const pagination = createPagination({
@@ -35,6 +36,7 @@ export async function GET(req: NextRequest) {
       take: Number(per_page),
       where: {
         user_id: user.id,
+        is_checkout: true,
       },
       orderBy: {
         created_at: "desc",

@@ -1,5 +1,5 @@
 import { Avatar } from "@nextui-org/avatar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import BaseInputSearch from "@/components/shared/base-input-search";
 import BasePagination from "@/components/shared/base-pagination";
@@ -9,6 +9,7 @@ import { useDeleteCustomer } from "@/hooks/customer.hook";
 import { useGetTransaction } from "@/hooks/transaction.hook";
 import { CustomerType } from "@/types/customer.type";
 import { TransactionType } from "@/types/transaction.type";
+import { formatRupiah } from "@/lib/helper";
 
 const ListTransaction = () => {
   const [params, setParams] = useState({ search: "", page: 1, per_page: 10 });
@@ -17,7 +18,7 @@ const ListTransaction = () => {
     img: false,
   });
   const [selected, setSelected] = useState<CustomerType>();
-  const { data, isFetching } = useGetTransaction(params);
+  const { data, isFetching, refetch } = useGetTransaction(params);
   const { mutateAsync, status } = useDeleteCustomer(selected?.id as string);
 
   const handleDelete = async () => {
@@ -29,14 +30,14 @@ const ListTransaction = () => {
     {
       key: "id",
       label: "ID",
-      render: (_, obj) => <span>#12898</span>,
+      render: (_, obj) => <span>{obj.code}</span>,
     },
     {
       key: "user_name",
       label: "Username",
       render: (_, obj) => (
         <div className="flex items-center space-x-2">
-          <Avatar
+          {/* <Avatar
             isBordered
             as="button"
             className="transition-transform"
@@ -44,7 +45,7 @@ const ListTransaction = () => {
             name={obj.user.user_name}
             size="sm"
             // src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          />
+          /> */}
           <span>{obj.user.user_name}</span>
         </div>
       ),
@@ -75,6 +76,12 @@ const ListTransaction = () => {
       },
       //   render: (_, obj) => <span>{obj.course.title}</span>,
     },
+
+    {
+      key: "price",
+      label: "Price",
+      render: (_, obj) => <span>{formatRupiah(obj.course.price)}</span>,
+    },
     // {
     //   key: "sasd",
     //   label: "Action",
@@ -98,9 +105,9 @@ const ListTransaction = () => {
     // },
   ];
 
-  // useEffect(() => {
-  //   refetch();
-  // }, []);
+  useEffect(() => {
+    refetch();
+  }, [params]);
   return (
     <div className="space-y-4">
       <BaseInputSearch

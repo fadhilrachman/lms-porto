@@ -38,6 +38,7 @@ export const useGetCourse = (params: {
   per_page: number;
   search?: string;
   is_published?: boolean;
+  category_id?: string;
 }) => {
   const query = useQuery<BaseResponseList<CourseType>>({
     queryKey: ["LIST_COURSE"],
@@ -51,6 +52,44 @@ export const useGetCourse = (params: {
   return query;
 };
 
+export const useGetCourseAdmin = (params: {
+  page: number;
+  per_page: number;
+  search?: string;
+  is_published?: boolean;
+}) => {
+  const query = useQuery<BaseResponseList<CourseType>>({
+    queryKey: ["LIST_COURSE_ADMIN"],
+    queryFn: async () => {
+      const result = await fetcher.get("/course/admin", { params });
+
+      return result.data;
+    },
+  });
+
+  return query;
+};
+
+export const useGetDetailCourseAdmin = (
+  id: string,
+  is_published?: boolean
+  // { is_published }: { is_published?: boolean }
+) => {
+  const query = useQuery<BaseResponse<CourseDetailType>>({
+    queryKey: ["DETAIL_COURSE_ADMIN"],
+    queryFn: async () => {
+      const result = await fetcher.get(`/course/admin/${id}`, {
+        params: {
+          is_published,
+        },
+      });
+
+      return result.data;
+    },
+  });
+
+  return query;
+};
 export const useGetDetailCourse = (
   id: string,
   is_published?: boolean

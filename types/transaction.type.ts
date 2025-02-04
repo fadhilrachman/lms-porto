@@ -6,4 +6,5 @@ export interface TransactionType {
   user: CustomerType;
   course: CourseType;
   created_at: Date;
+  code: string;
 }

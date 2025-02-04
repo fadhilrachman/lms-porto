@@ -45,12 +45,12 @@ const FormGeneralCourse = ({
     form.watch("description") == description;
 
   const handleFillData = () => {
-    form.setValue("title", title);
-    form.setValue("introduction_vid", introduction_vid);
-    form.setValue("category_id", category_id);
-    form.setValue("price", price);
-    form.setValue("thumbnail_img", thumbnail_img);
-    form.setValue("description", description);
+    form.setValue("title", title || "");
+    form.setValue("introduction_vid", introduction_vid || "");
+    form.setValue("category_id", category_id || "");
+    form.setValue("price", price || "");
+    form.setValue("thumbnail_img", thumbnail_img || "");
+    form.setValue("description", description || "");
   };
 
   useEffect(() => {
@@ -58,6 +58,8 @@ const FormGeneralCourse = ({
       handleFillData();
     }
   }, [isLoading]);
+
+  console.log({ value: form.watch() });
 
   return (
     <Card title="asd">
@@ -92,9 +94,9 @@ const FormGeneralCourse = ({
               type: "file",
               placeholder: "Enter Img",
               label: "Thumbnail Image",
-              validation: {
-                required: "This field is required",
-              },
+              // validation: {
+              //   required: "This field is required",
+              // },
             },
             {
               name: "price",

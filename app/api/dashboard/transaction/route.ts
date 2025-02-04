@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
       },
       {
         status: 403,
-      },
+      }
     );
   }
   const { searchParams } = new URL(req.url);
@@ -65,6 +65,7 @@ export async function GET(req: NextRequest) {
       select: {
         id: true,
         created_at: true,
+        code: true,
         user: {
           select: {
             id: true,
