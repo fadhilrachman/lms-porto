@@ -2,9 +2,10 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import { prisma } from "@/lib/prisma";
+import { PostLoginType } from "@/types/auth.type";
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json();
+  const { email, password }: PostLoginType = await req.json();
 
   try {
     const checkCredenttial = await prisma.user.findUnique({
