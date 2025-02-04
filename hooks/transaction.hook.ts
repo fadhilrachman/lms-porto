@@ -32,15 +32,10 @@ export const useGetTransaction = (params: {
 export const useSnapMidtrans = () => {
   const [snap, setSnap] = useState<any>(null);
 
-  console.log({ snap });
-
   useEffect(() => {
     const myMidtransClientKey = process.env.MIDTRANS_CLIENT_KEY;
-    console.log({ myMidtransClientKey });
-
     const script = document.createElement("script");
     script.src = `https://app.sandbox.midtrans.com/snap/snap.js`;
-
     script.setAttribute("data-client-key", myMidtransClientKey);
     script.onload = () => {
       setSnap(window.snap);
