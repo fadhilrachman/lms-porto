@@ -1,26 +1,26 @@
-"use client";
-import { Button } from "@nextui-org/button";
-import { Card, CardBody, CardHeader } from "@nextui-org/card";
+'use client';
+import { Button } from '@nextui-org/button';
+import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import {
   Check,
   FileVideo,
   Globe,
   ScrollText,
   TableOfContents,
-} from "lucide-react";
-import React, { useState } from "react";
-import AboutCourse from "@/components/home/course/detail/about-course";
-import Footer from "@/components/home/footer";
-import Title from "@/components/home/title";
-import { Navbar } from "@/components/shared/navbar";
-import VideoRender from "@/components/shared/video-render";
-import ListChapter from "@/components/home/course/detail/list-chapter";
-import { useParams } from "next/navigation";
-import { useGetDetailCourse } from "@/hooks/course.hook";
-import moment from "moment";
-import LoadingFullpage from "@/components/shared/loading-fullpage";
-import ModalBuyCourse from "@/components/home/course/detail/buy-course";
-import { formatRupiah } from "@/lib/helper";
+} from 'lucide-react';
+import React, { useState } from 'react';
+import AboutCourse from '@/components/home/course/detail/about-course';
+import Footer from '@/components/home/footer';
+import Title from '@/components/home/title';
+import { Navbar } from '@/components/shared/navbar';
+import VideoRender from '@/components/shared/video-render';
+import ListChapter from '@/components/home/course/detail/list-chapter';
+import { useParams } from 'next/navigation';
+import { useGetDetailCourse } from '@/hooks/course.hook';
+import moment from 'moment';
+import LoadingFullpage from '@/components/shared/loading-fullpage';
+import ModalBuyCourse from '@/components/home/course/detail/buy-course';
+import { formatRupiah } from '@/lib/helper';
 
 const CourseDetail = () => {
   const { course_id } = useParams();
@@ -28,15 +28,15 @@ const CourseDetail = () => {
     buyCourse: false,
   });
   const { data, isFetching } = useGetDetailCourse(course_id as string, true);
-  const [tab, setTab] = useState("About");
+  const [tab, setTab] = useState('About');
   const listTab = [
     {
-      title: "About",
-      href: "#aboutCourse",
+      title: 'About',
+      href: '#aboutCourse',
     },
     {
-      title: "Content",
-      href: "#contentCourse",
+      title: 'Content',
+      href: '#contentCourse',
     },
   ];
 
@@ -54,9 +54,9 @@ const CourseDetail = () => {
           <div className="flex items-center mt-4 justify-center space-x-2">
             <Globe />
             <p>
-              Release Date{" "}
+              Release Date{' '}
               <span className="text-secondary font-semibold">
-                {moment(data?.result?.created_at).format("DD MMMM YYYY")}
+                {moment(data?.result?.created_at).format('DD MMMM YYYY')}
               </span>
             </p>
           </div>
@@ -70,7 +70,7 @@ const CourseDetail = () => {
                 return (
                   <Button
                     key={key}
-                    color={val.title == tab ? "secondary" : "default"}
+                    color={val.title == tab ? 'secondary' : 'default'}
                     size="lg"
                     onPress={() => {
                       setTab(val.title);
@@ -82,7 +82,7 @@ const CourseDetail = () => {
               })}
             </div>
             <div className="space-y-8">
-              {tab == "About" ? (
+              {tab == 'About' ? (
                 <AboutCourse description={data?.result?.description} />
               ) : (
                 <ListChapter chapter={data?.result?.chapter || []} />
@@ -92,7 +92,7 @@ const CourseDetail = () => {
           <div className="col-span-2 space-y-4 w-full">
             <Card className="w-full">
               <CardHeader className="pb-0">Benefits for you</CardHeader>
-              <CardBody as={"div"} className="space-y-4">
+              <CardBody as={'div'} className="space-y-4">
                 <div className="border flex justify-between items-center rounded-2xl p-3 dark:border-borderColor">
                   <div className="flex items-center space-x-2">
                     <TableOfContents />
@@ -108,7 +108,7 @@ const CourseDetail = () => {
                     <p className="text-sm">27 Video</p>
                   </div>
                   <Check className="text-green-500" />
-                </div>{" "}
+                </div>{' '}
                 <div className="border flex justify-between items-center rounded-2xl p-3 dark:border-borderColor">
                   <div className="flex items-center space-x-2">
                     <ScrollText />
