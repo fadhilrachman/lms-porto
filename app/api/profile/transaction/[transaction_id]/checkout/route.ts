@@ -37,6 +37,7 @@ export async function PATCH(
     return Response.json({
       status: 200,
       message: "Checkout Success",
+      result,
     });
   } catch (error) {
     console.log({ error });
