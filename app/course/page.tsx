@@ -18,7 +18,7 @@ import BaseIcon from "@/components/shared/base-icon";
 
 const Course = () => {
   const router = useRouter();
-  const [category, setCategory] = useQueryState("category_id");
+  // const [category, setCategory] = useQueryState("category_id");
   const [params, setParams] = useState({ search: "" });
   const { data: dataCategory } = useGetCategory({ page: 1, per_page: 100 });
 
@@ -27,17 +27,17 @@ const Course = () => {
     per_page: 20,
     is_published: true,
     ...params,
-    category_id: category,
+    // category_id: category,
   });
 
   useEffect(() => {
     refetch();
-  }, [params, category]);
+  }, [params]);
   return (
     <div className="relative space-y-12  ">
       <Navbar />
 
-      {category}
+      {/* {category} */}
       <div className="px-16 space-y-4">
         <Title
           subTitle="Course"
@@ -54,7 +54,7 @@ const Course = () => {
           <Select
             className="max-w-[200px]"
             onChange={(e) => {
-              setCategory(e.target.value);
+              // setCategory(e.target.value);
             }}
             placeholder="Category"
             aria-label="category"
