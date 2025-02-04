@@ -114,6 +114,7 @@ export async function DELETE(
       }
     );
   }
+
   const { content_id } = await params;
 
   try {
@@ -158,8 +159,15 @@ export async function GET(
       }
     );
   }
+  const user = JSON.parse(req.headers.get("user") as string);
 
   try {
+    const progress = await prisma.contentProgress.findFirst({
+      where: {
+        user_id: user.id,
+        content_id,
+      },
+    });
     const result = await prisma.content.findUnique({
       where: {
         id: content_id as string,
@@ -169,7 +177,10 @@ export async function GET(
     return Response.json({
       status: 200,
       message: "Success get content",
-      result,
+      result: {
+        ...result,
+        is_completed: !!progress,
+      },
     });
   } catch (error) {
     return Response.json(
