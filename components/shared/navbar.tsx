@@ -31,11 +31,16 @@ import { LayoutDashboard, LogOut, LucideBookMarked, User } from 'lucide-react';
 
 export const Navbar = () => {
   const [myCookie, setMyCookie] = useState<string | undefined>(undefined);
-  const isAdmin = JSON.parse(localStorage.getItem('is_admin')) || false;
+  const isAdmin =
+    JSON.parse(
+      typeof window !== 'undefined' && localStorage.getItem('is_admin'),
+    ) || false;
   const router = useRouter();
   const handleLogout = () => {
     Cookies.remove(process.env.COOKIE_NAME as string);
-    localStorage.removeItem('is_admin');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('is_admin');
+    }
     router.push('/login');
   };
 
