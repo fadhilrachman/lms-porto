@@ -13,6 +13,7 @@ declare global {
     snap: any;
   }
 }
+
 export const useGetTransaction = (params: {
   page: number;
   per_page: number;
@@ -38,8 +39,6 @@ export const useSnapMidtrans = () => {
 
   useEffect(() => {
     const myMidtransClientKey = process.env.MIDTRANS_CLIENT_KEY;
-    console.log({ myMidtransClientKey });
-
     const script = document.createElement('script');
     script.src = `https://app.sandbox.midtrans.com/snap/snap.js`;
 
@@ -56,12 +55,14 @@ export const useSnapMidtrans = () => {
     };
   }, []);
 
-  const snapModal = (snap_token: string) => {
+  const snapModal = (snap_token: string, transactionId: string) => {
     if (snap) {
       snap.pay(snap_token, {
-        onSuccess: function (result) {
-          // router.push('/profile/courses');
+        onSuccess: async function (result) {
+          const { mutateAsync } = usePatchCheckout();
+          await mutateAsync(transactionId);
           console.log('SUCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', result);
+          window.location.href = '/profile/courses';
         },
         onPending: function (result) {
           console.log('pending', result);
@@ -109,8 +110,10 @@ export const usePostTransaction = (body: { course_id: string }) => {
 
 export const usePatchCheckout = () => {
   const mutation = useMutation<any, Error, string>({
-    mutationFn: async (id) => {
-      const result = await fetcher.post(`/profile/transaction/${id}/checkout`);
+    mutationFn: async (transactionId) => {
+      const result = await fetcher.post(
+        `/profile/transaction/${transactionId}/checkout`,
+      );
 
       return result.data;
     },

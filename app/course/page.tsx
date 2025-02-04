@@ -1,41 +1,41 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import { Chip } from "@nextui-org/chip";
-import { Search, Star, User } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import Title from "@/components/home/title";
-import Footer from "@/components/home/footer";
-import { Navbar } from "@/components/shared/navbar";
-import { useGetCourse } from "@/hooks/course.hook";
-import SckeletonLoading from "@/components/home/sckeleton-loading";
-import { formatRupiah } from "@/lib/helper";
-import BaseInputSearch from "@/components/shared/base-input-search";
-import { Select, SelectItem } from "@nextui-org/select";
-import { useQueryState } from "nuqs";
-import { useGetCategory } from "@/hooks/category.hook";
-import BaseIcon from "@/components/shared/base-icon";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/card';
+import { Chip } from '@nextui-org/chip';
+import { Search, Star, User } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Title from '@/components/home/title';
+import Footer from '@/components/home/footer';
+import { Navbar } from '@/components/shared/navbar';
+import { useGetCourse } from '@/hooks/course.hook';
+import SckeletonLoading from '@/components/home/sckeleton-loading';
+import { formatRupiah } from '@/lib/helper';
+import BaseInputSearch from '@/components/shared/base-input-search';
+import { Select, SelectItem } from '@nextui-org/select';
+import { useQueryState } from 'nuqs';
+import { useGetCategory } from '@/hooks/category.hook';
+import BaseIcon from '@/components/shared/base-icon';
 
 export const animals = [
-  { key: "cat", label: "Cat" },
-  { key: "dog", label: "Dog" },
-  { key: "elephant", label: "Elephant" },
-  { key: "lion", label: "Lion" },
-  { key: "tiger", label: "Tiger" },
-  { key: "giraffe", label: "Giraffe" },
-  { key: "dolphin", label: "Dolphin" },
-  { key: "penguin", label: "Penguin" },
-  { key: "zebra", label: "Zebra" },
-  { key: "shark", label: "Shark" },
-  { key: "whale", label: "Whale" },
-  { key: "otter", label: "Otter" },
-  { key: "crocodile", label: "Crocodile" },
+  { key: 'cat', label: 'Cat' },
+  { key: 'dog', label: 'Dog' },
+  { key: 'elephant', label: 'Elephant' },
+  { key: 'lion', label: 'Lion' },
+  { key: 'tiger', label: 'Tiger' },
+  { key: 'giraffe', label: 'Giraffe' },
+  { key: 'dolphin', label: 'Dolphin' },
+  { key: 'penguin', label: 'Penguin' },
+  { key: 'zebra', label: 'Zebra' },
+  { key: 'shark', label: 'Shark' },
+  { key: 'whale', label: 'Whale' },
+  { key: 'otter', label: 'Otter' },
+  { key: 'crocodile', label: 'Crocodile' },
 ];
 
 const Course = () => {
   const router = useRouter();
-  const [category, setCategory] = useQueryState("category");
-  const [params, setParams] = useState({ search: "", page: 1, per_page: 10 });
+  const [category, setCategory] = useQueryState('category');
+  const [params, setParams] = useState({ search: '', page: 1, per_page: 10 });
   const { data: dataCategory } = useGetCategory({ page: 1, per_page: 100 });
   console.log({ dataCategory });
 
