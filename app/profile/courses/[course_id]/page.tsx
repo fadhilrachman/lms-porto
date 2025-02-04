@@ -16,8 +16,8 @@ const DetailCourse = () => {
   const [_, setContentId] = useQueryState('content');
 
   // useEffect(() => {
-  //   if (data?.result?.chapter.length > 0) {
-  //     setContentId(data?.result?.chapter[0].id);
+  //   if (data?.result?.chapter?.length > 0) {
+  //     setContentId(data?.result?.chapter[0]?.content[0]?.id);
   //   }
   // }, []);
 

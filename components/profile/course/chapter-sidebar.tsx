@@ -53,8 +53,11 @@ const ChapterSidebar = ({ chapter }: any) => {
   const [_, setContentId] = useQueryState('content');
   const router = useRouter();
   useEffect(() => {
-    setContentId(chapter[0]?.content[0]?.id);
+    if (chapter?.length > 0) {
+      setContentId(chapter[0]?.content[0]?.id);
+    }
   }, []);
+
   return (
     <div className="min-w-[350px] space-y-6 z-50 h-full fixed py-6 px-3 border-r border-neutral-800">
       <div className="flex items-center gap-3 px-3">

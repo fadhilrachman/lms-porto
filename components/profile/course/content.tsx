@@ -4,27 +4,30 @@ import { usePatchUserCourse } from '@/hooks/course-user.hooks';
 import { Button } from '@nextui-org/button';
 import { useQueryState } from 'nuqs';
 import React, { useEffect } from 'react';
-import { MdOutlineSlowMotionVideo } from 'react-icons/md';
 import { Skeleton } from '@heroui/skeleton';
+import { useRouter } from 'next/navigation';
 
 const Content = () => {
   const [contentId, _] = useQueryState('content');
+  const router = useRouter();
 
   const { data, isFetching, refetch } = useGetDetailContent(contentId);
-  const { mutate, status } = usePatchUserCourse(contentId);
+  const { mutateAsync, status } = usePatchUserCourse(contentId);
 
   console.log(data?.result, 'asdfasdfadf');
   useEffect(() => {
     refetch();
   }, [contentId]);
 
+  const handleComplated = async () => {
+    const result = await mutateAsync();
+    router.push(result?.next_content_id);
+  };
+
   return (
     <div className="w-full space-y-6 py-6">
       {!isFetching ? (
-        <VideoRender
-          url={data?.result?.content_vid}
-          // onEnd={()=>}
-        />
+        <VideoRender url={data?.result?.content_vid} onEnd={handleComplated} />
       ) : (
         <Skeleton className=" h-80 rounded-md flex justify-center items-center" />
       )}
@@ -33,7 +36,7 @@ const Content = () => {
         <Button
           color="primary"
           isLoading={status === 'pending'}
-          onPress={() => mutate()}
+          onPress={handleComplated}
         >
           Complete
         </Button>
