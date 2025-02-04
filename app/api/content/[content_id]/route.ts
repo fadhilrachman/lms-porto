@@ -1,7 +1,10 @@
 import { NextRequest } from "next/server";
 
 import { prisma } from "@/lib/prisma";
-import { verifyTokenAdmin } from "@/lib/verify-token-server";
+import {
+  verifyTokenAdmin,
+  verifyTokenCustomer,
+} from "@/lib/verify-token-server";
 
 export async function PUT(
   req: NextRequest,
@@ -140,10 +143,21 @@ export async function DELETE(
 }
 
 export async function GET(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { content_id: string } }
 ) {
   const { content_id } = params;
+  if (verifyTokenCustomer(req)) {
+    return Response.json(
+      {
+        status: 403,
+        message: "Access Denied",
+      },
+      {
+        status: 403,
+      }
+    );
+  }
 
   try {
     const result = await prisma.content.findUnique({

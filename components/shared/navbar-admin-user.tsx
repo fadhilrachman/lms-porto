@@ -1,19 +1,19 @@
-import { Avatar } from '@nextui-org/avatar';
+import { Avatar } from "@nextui-org/avatar";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from '@nextui-org/dropdown';
+} from "@nextui-org/dropdown";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-} from '@nextui-org/navbar';
-import { Link } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
+} from "@nextui-org/navbar";
+import { Link } from "lucide-react";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export const AcmeLogo = () => {
   return (
@@ -32,7 +32,7 @@ export default function NavbarAdminUser() {
   const router = useRouter();
   const handleLogout = () => {
     Cookies.remove(process.env.COOKIE_NAME as string);
-    router.push('/login');
+    router.push("/login");
   };
 
   return (
@@ -42,11 +42,11 @@ export default function NavbarAdminUser() {
     >
       <NavbarContent justify="start">
         <NavbarBrand
-          onClick={() => router.push('/')}
+          onClick={() => router.push("/")}
           className="cursor-pointer"
         >
           <AcmeLogo />
-          <p className="hidden sm:block font-bold text-inherit">ACME</p>
+          <p className="hidden sm:block font-bold text-inherit">LMS</p>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-3">
           <NavbarItem>

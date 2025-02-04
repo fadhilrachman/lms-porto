@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import { Plus } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { Spinner } from "@nextui-org/spinner";
 
@@ -9,7 +9,7 @@ import ModalCreateChapter from "./chapter/modal-create-chapter";
 
 import { ChapterType } from "@/types/chapter.type";
 import Dnd from "@/components/admin/course/chapter/dnd";
-
+import BaseDataNotFound from "@/components/shared/base-data-not-found";
 const ListChapter = ({
   data,
   isLoading,
@@ -51,7 +51,7 @@ const ListChapter = ({
             </div>
           )}
           {data?.length == 0 ? (
-            "tidak ada data"
+            <BaseDataNotFound />
           ) : (
             <Dnd currentData={data} data={data?.map((val) => val.title)} />
           )}

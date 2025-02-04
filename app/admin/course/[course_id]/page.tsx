@@ -12,7 +12,7 @@ import ModalDelete from "@/components/shared/modal-delete";
 import ModalPublish from "@/components/shared/modal-publish";
 import {
   useDeleteCourse,
-  useGetDetailCourse,
+  useGetDetailCourseAdmin,
   usePatchCourse,
 } from "@/hooks/course.hook";
 import { Alert } from "@heroui/alert";
@@ -23,7 +23,9 @@ const AdminDetailCourse = () => {
     publishContent: false,
   });
   const { course_id } = useParams();
-  const { data, isFetching, status } = useGetDetailCourse(course_id as string);
+  const { data, isFetching, status } = useGetDetailCourseAdmin(
+    course_id as string
+  );
   const router = useRouter();
   const { mutateAsync: mutateAsyncDelete, status: statusDelete } =
     useDeleteCourse(course_id as string);

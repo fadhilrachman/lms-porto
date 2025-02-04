@@ -114,7 +114,14 @@ const FreeClass = () => {
               subTitle="Join Free Classes"
               subTitle2="Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, excepturi"
             />
-            <Button color="primary">Join</Button>
+            <Button
+              color="primary"
+              onPress={() => {
+                window.open();
+              }}
+            >
+              Join
+            </Button>
           </div>
         </div>
       </CardBody>

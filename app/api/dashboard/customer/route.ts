@@ -14,9 +14,10 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 403,
-      },
+      }
     );
   }
+
   const { user_name, email, password } = await req.json();
 
   try {
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest) {
     if (checkDuplicateEmail)
       return Response.json(
         { status: 401, message: "Email already registerd" },
-        { status: 401 },
+        { status: 401 }
       );
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -52,7 +53,7 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
@@ -62,6 +63,7 @@ export async function GET(req: Request) {
   const page = Number(searchParams.get("page") || 1);
   const per_page = Number(searchParams.get("per_page") || 10);
   const skip = (page - 1) * per_page;
+  const search = searchParams.get("search") || "";
 
   try {
     const total_data = await prisma.user.count({
@@ -79,6 +81,9 @@ export async function GET(req: Request) {
       take: Number(per_page),
       where: {
         is_admin: false,
+        user_name: {
+          contains: search,
+        },
       },
 
       select: {

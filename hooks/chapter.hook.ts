@@ -17,7 +17,7 @@ export const usePostChapter = () => {
       return result.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["DETAIL_COURSE"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+      queryClient.invalidateQueries({ queryKey: ["DETAIL_COURSE_ADMIN"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
 
@@ -60,7 +60,7 @@ export const usePatchChangePosition = () => {
       return result.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["DETAIL_COURSE"] }); // Menggunakan invalidateQueries untuk memicu ulang query
+      queryClient.invalidateQueries({ queryKey: ["DETAIL_COURSE_ADMIN"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
 
@@ -139,7 +139,7 @@ export const useDeleteChapter = () => {
       const error = mutation.error as AxiosError<any>;
 
       const messageError = Object.values(
-        error.response?.data.errors?.[0] || {},
+        error.response?.data.errors?.[0] || {}
       ) as any;
       // toast({
       //   title: 'Error hapus master shifting',

@@ -55,6 +55,8 @@ export async function GET(req: NextRequest) {
   const per_page = Number(searchParams.get("per_page") || 10);
   const skip = (page - 1) * per_page;
 
+  const search = searchParams.get("search") || "";
+
   try {
     const total_data = await prisma.category.count();
     const pagination = createPagination({
@@ -65,6 +67,11 @@ export async function GET(req: NextRequest) {
     const result = await prisma.category.findMany({
       skip,
       take: Number(per_page),
+      where: {
+        name: {
+          contains: search,
+        },
+      },
       orderBy: {
         created_at: "desc",
       },

@@ -15,7 +15,15 @@ const Community = () => {
         subTitle2="BuildWithAngga provides a UI/UX learning community design & Web Development for beginners to advanced"
         title=" Our Community"
       />
-      <Button color="primary" startContent={<UsersRound className="h-4 w-4" />}>
+      <Button
+        color="primary"
+        // as={"a"}
+        onPress={() => {
+          window.open();
+        }}
+        // target="__blank"
+        startContent={<UsersRound className="h-4 w-4" />}
+      >
         Join Community
       </Button>
     </section>

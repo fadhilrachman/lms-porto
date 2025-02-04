@@ -25,7 +25,7 @@ const BaseImg = (props: ImageProps) => {
       <img
         data-testid="image"
         className={clsx(
-          "duration-700 ease-in-out",
+          "duration-700 ease-in-out w-full max-h-[220px]",
           isLoading
             ? "scale-[1.02] blur-xl grayscale"
             : "scale-100 blur-0 grayscale-0",
