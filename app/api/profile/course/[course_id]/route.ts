@@ -5,7 +5,7 @@ import { verifyTokenCustomer } from "@/lib/verify-token-server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { course_id: string } }
+  { params }: { params: Promise<{ course_id: string }> }
 ) {
   if (verifyTokenCustomer(req)) {
     return Response.json({
@@ -15,7 +15,7 @@ export async function GET(
   }
   const user = JSON.parse(req.headers.get("user") as string);
 
-  const { course_id } = params;
+  const { course_id } = await params;
 
   try {
     const result = await prisma.course.findUnique({

@@ -29,15 +29,15 @@ export async function GET(req: NextRequest) {
 
     let user = await prisma.user.findUnique({
       where: {
-        email: data?.email,
+        email: String(data?.email),
       },
     });
 
     if (!user) {
       user = await prisma.user.create({
         data: {
-          email: data?.email,
-          user_name: data?.name,
+          email: String(data?.email),
+          user_name: String(data?.name),
           is_admin: false,
           is_verified: true,
         },

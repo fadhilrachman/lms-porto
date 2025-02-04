@@ -37,7 +37,11 @@ async function sendEmail(options: EmailOptions): Promise<void> {
   }
 }
 export async function POST(req: Request) {
-  const { user_name, email, password } = await req.json();
+  const {
+    user_name,
+    email,
+    password,
+  }: { user_name: string; email: string; password: string } = await req.json();
 
   try {
     const checkDuplicateEmail = await prisma.user.findUnique({

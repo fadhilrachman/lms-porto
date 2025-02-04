@@ -4,11 +4,11 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(
   req: Request,
-  { params }: { params: { course_id: string } }
+  { params }: { params: Promise<{ course_id: string }> }
 ) {
   const { searchParams } = new URL(req.url);
 
-  const { course_id } = params;
+  const { course_id } = await params;
 
   try {
     const result = await prisma.course.findUnique({

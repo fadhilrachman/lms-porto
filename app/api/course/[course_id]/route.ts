@@ -4,9 +4,9 @@ import { prisma } from "@/lib/prisma";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { course_id: string } }
+  { params }: { params: Promise<{ course_id: string }> }
 ) {
-  const { course_id } = params;
+  const { course_id } = await params;
   const {
     title,
     price,
@@ -56,9 +56,9 @@ export async function PUT(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { course_id: string } }
+  { params }: { params: Promise<{ course_id: string }> }
 ) {
-  const { course_id } = params;
+  const { course_id } = await params;
   const { is_free, is_published } = await req.json();
 
   try {
@@ -93,9 +93,9 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { course_id: string } }
+  { params }: { params: Promise<{ course_id: string }> }
 ) {
-  const { course_id } = params;
+  const { course_id } = await params;
 
   try {
     const result = await prisma.course.delete({
@@ -125,12 +125,12 @@ export async function DELETE(
 
 export async function GET(
   req: Request,
-  { params }: { params: { course_id: string } }
+  { params }: { params: Promise<{ course_id: string }> }
 ) {
   const { searchParams } = new URL(req.url);
 
   const is_published = Boolean(searchParams.get("is_published")) || false;
-  const { course_id } = params;
+  const { course_id } = await params;
 
   try {
     const result = await prisma.course.findUnique({

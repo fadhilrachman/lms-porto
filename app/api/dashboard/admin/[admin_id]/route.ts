@@ -5,7 +5,7 @@ import { verifyTokenAdmin } from "@/lib/verify-token-server";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { admin_id: string } }
+  { params }: { params: Promise<{ admin_id: string }> }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -18,7 +18,7 @@ export async function PUT(
       }
     );
   }
-  const { admin_id } = params;
+  const { admin_id } = await params;
   const { user_name, email } = await req.json();
 
   try {
@@ -53,7 +53,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { admin_id: string } }
+  { params }: { params: Promise<{ admin_id: string }> }
 ) {
   if (verifyTokenAdmin(req)) {
     return Response.json(
@@ -66,7 +66,7 @@ export async function DELETE(
       }
     );
   }
-  const { admin_id } = params;
+  const { admin_id } = await params;
 
   try {
     const result = await prisma.user.delete({
