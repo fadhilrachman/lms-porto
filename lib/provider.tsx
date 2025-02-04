@@ -2,15 +2,7 @@
 
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-declare module "clsx" {
-  export type ClassValue =
-    | string
-    | number
-    | boolean
-    | null
-    | undefined
-    | { [key: string]: boolean };
-}
+
 function Provider({ children }: React.PropsWithChildren) {
   const [client] = React.useState(
     new QueryClient({
