@@ -93,12 +93,14 @@ const Course = () => {
                       </small>
                     </CardHeader>
                     <CardBody className="overflow-visible py-2">
-                      <img
-                        alt="Card background"
-                        className="object-cover w-full rounded-xl"
-                        src={val.thumbnail_img}
-                        width={270}
-                      />
+                      {val?.thumbnail_img && (
+                        <img
+                          alt="Card background"
+                          className="object-cover w-full rounded-xl"
+                          src={val?.thumbnail_img}
+                          width={270}
+                        />
+                      )}
                     </CardBody>
                     <CardFooter>
                       <div className="flex w-full justify-between items-center">
