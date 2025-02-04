@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Chip } from "@nextui-org/chip";
-import { Search, Star, User } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { Star, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 import Title from "@/components/home/title";
 import Footer from "@/components/home/footer";
 import { Navbar } from "@/components/shared/navbar";
