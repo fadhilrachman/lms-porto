@@ -125,7 +125,7 @@ export const Navbar = () => {
                   <DropdownItem
                     key="help_and_feedback"
                     onPress={() => {
-                      router.push('/dashboard/course');
+                      router.push('/admin/course');
                     }}
                   >
                     <div className="flex items-center gap-2 border-b border-neutral-400 py-2">
