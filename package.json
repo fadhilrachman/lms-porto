@@ -52,6 +52,7 @@
     "cookie-js": "^0.0.1",
     "cookies-js": "^1.2.3",
     "cookies-next": "^5.1.0",
+    "cors": "^2.8.5",
     "framer-motion": "11.13.1",
     "googleapis": "^144.0.0",
     "html-react-parser": "^5.2.2",
