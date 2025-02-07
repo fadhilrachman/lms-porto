@@ -19,7 +19,7 @@ const SidebarUser = () => {
     },
     {
       title: 'Transaction',
-      url: '/profile/dashboard',
+      url: '/profile/transaction',
       icon: Home,
     },
   ];
