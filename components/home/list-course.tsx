@@ -15,7 +15,7 @@ const ListCourse = () => {
 
   return (
     <section className="px-6">
-      <div className="grid grid-cols-4 gap-6 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 ">
         {isFetching
           ? [1, 4, 2, 3].map((val) => <SckeletonLoading key={val} />)
           : data?.result.map((val, key) => {

@@ -7,7 +7,7 @@ import Title from "./title";
 const Community = () => {
   return (
     <section
-      className="space-y-6 px-16 bg-backgroundColor text-white  py-12"
+      className="space-y-6 px-6 md:px-16 bg-backgroundColor text-white  py-12"
       id="community"
     >
       <Title
