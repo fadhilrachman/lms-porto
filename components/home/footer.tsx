@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bg-backgroundColor py-12 text-white px-16">
+    <div className="bg-backgroundColor py-12 text-white px-6 md:px-16">
       <p>
         Design Insipired By{" "}
         <a

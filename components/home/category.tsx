@@ -139,10 +139,10 @@ const Category = () => {
               className="w-max border shadow-none dark:border-borderColor cursor-pointer group mx-4 hover:border-blue-600 dark:hover:border-blue-600"
             >
               <CardBody className="hover:text-primary-500">
-                <div className="flex items-center space-x-4 px-8">
+                <div className="flex items-center md:space-x-4 px-3 md:px-8">
                   {/* {item.logo} */}
                   <BaseIcon iconKey={item.icon} />
-                  <span className="text-xl">{item.name}</span>
+                  <span className="md:text-xl text-xs">{item.name}</span>
                 </div>
               </CardBody>
             </Card>
@@ -167,9 +167,10 @@ const Category = () => {
               className="w-max border shadow-none dark:border-borderColor cursor-pointer group mx-4 hover:border-blue-600 dark:hover:border-blue-600"
             >
               <CardBody className="hover:text-primary-500">
-                <div className="flex items-center space-x-4 px-8">
+                <div className="flex items-center md:space-x-4 px-3 md:px-8">
+                  {/* {item.logo} */}
                   <BaseIcon iconKey={item.icon} />
-                  <span className="text-xl">{item.name}</span>
+                  <span className="md:text-xl text-xs">{item.name}</span>
                 </div>
               </CardBody>
             </Card>
