@@ -1,8 +1,9 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 
-import CreateCustoemr from "@/components/admin/customer/create-customer";
-import ListTransaction from "@/components/admin/transaction/list-transaction";
+import CreateCustoemr from '@/components/admin/customer/create-customer';
+import ListTransaction from '@/components/admin/transaction/list-transaction';
+import ListTransactionUser from '@/components/profile/transaction/list-transaction-user';
 
 const Transaction = () => {
   const [modal, setModal] = useState({ create: false });
@@ -21,7 +22,7 @@ const Transaction = () => {
           Create Transaction
         </Button> */}
       </div>
-      <ListTransaction />
+      <ListTransactionUser />
       <CreateCustoemr
         isOpen={modal.create}
         onOpenChange={() => {
