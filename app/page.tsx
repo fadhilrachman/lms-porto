@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { Button } from '@nextui-org/button';
-import { useRouter } from 'next/navigation';
-import { useGetCookie } from 'cookies-next';
-import Cookies from 'js-cookie';
+import { useEffect } from "react";
+import { Button } from "@nextui-org/button";
+import { useRouter } from "next/navigation";
+import { useGetCookie } from "cookies-next";
+import Cookies from "js-cookie";
 
-import ListCourse from '@/components/home/list-course';
-import { Navbar } from '@/components/shared/navbar';
-import Faq from '@/components/home/faq';
-import Category from '@/components/home/category';
-import Title from '@/components/home/title';
-import FreeClass from '@/components/home/free-class';
-import Community from '@/components/home/community';
-import Footer from '@/components/home/footer';
+import ListCourse from "@/components/home/list-course";
+import { Navbar } from "@/components/shared/navbar";
+import Faq from "@/components/home/faq";
+import Category from "@/components/home/category";
+import Title from "@/components/home/title";
+import FreeClass from "@/components/home/free-class";
+import Community from "@/components/home/community";
+import Footer from "@/components/home/footer";
 
 export default function Home() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function Home() {
       <Navbar />
       <main className="  pt-16  ">
         <div className="space-y-16 ">
-          <section className="flex   px-16 items-end justify-between  ">
+          <section className="flex flex-col md:flex-row  px-6  md:px-16 items-end justify-between  ">
             <Title
               subTitle="Learn New Skills According to your interests"
               title="OurRecomended"
@@ -33,7 +33,7 @@ export default function Home() {
             <Button
               color="primary"
               onPress={() => {
-                router.push('/course');
+                router.push("/course");
               }}
             >
               See All Class

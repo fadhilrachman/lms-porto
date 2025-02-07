@@ -129,14 +129,26 @@ export async function GET(req: NextRequest) {
       select: {
         id: true,
         created_at: true,
+        code: true,
+        user: {
+          select: {
+            id: true,
+            user_name: true,
+            email: true,
+          },
+        },
         course: {
           select: {
             id: true,
             title: true,
             price: true,
-            _count: {
+            is_free: true,
+            thumbnail_img: true,
+            category: {
               select: {
-                chapter: true,
+                id: true,
+                name: true,
+                icon: true,
               },
             },
           },
