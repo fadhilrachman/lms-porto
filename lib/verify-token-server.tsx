@@ -42,6 +42,8 @@ export function verifyTokenCustomer(req: NextRequest) {
 export function verifyTokenAdmin(req: NextRequest) {
   const token = req.headers.get("authorization");
 
+  console.log({ token });
+
   if (!token)
     return Response.json(
       {
@@ -57,6 +59,8 @@ export function verifyTokenAdmin(req: NextRequest) {
     : token;
 
   return jwt.verify(tokenWithoutBearer, "asdasdasd", (err, decoded: any) => {
+    console.log({ err });
+
     if (err) {
       return Response.json(
         {

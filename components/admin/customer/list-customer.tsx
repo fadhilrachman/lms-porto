@@ -2,7 +2,7 @@ import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
 import { Trash } from "lucide-react";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import BaseInputSearch from "@/components/shared/base-input-search";
 import BasePagination from "@/components/shared/base-pagination";
@@ -77,9 +77,9 @@ const ListCustomer = () => {
     },
   ];
 
-  // useEffect(() => {
-  //   refetch();
-  // }, []);
+  useEffect(() => {
+    refetch();
+  }, [params]);
   return (
     <div className="space-y-4">
       <BaseInputSearch
