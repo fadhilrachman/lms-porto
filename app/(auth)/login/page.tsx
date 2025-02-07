@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
-import { useForm } from 'react-hook-form';
-import { Button } from '@nextui-org/button';
-import Cookies from 'js-cookie';
+import React from "react";
+import { useRouter } from "next/navigation";
+import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
+import { useForm } from "react-hook-form";
+import { Button } from "@nextui-org/button";
+import Cookies from "js-cookie";
 
-import FormGenerator from '@/components/shared/form-generator';
-import { useOauthGoogle, usePostLogin } from '@/hooks/auth.hook';
-import { PostLoginType } from '@/types/auth.type';
-import { SiGoogle } from 'react-icons/si';
-import Image from 'next/image';
+import FormGenerator from "@/components/shared/form-generator";
+import { useOauthGoogle, usePostLogin } from "@/hooks/auth.hook";
+import { PostLoginType } from "@/types/auth.type";
+import { SiGoogle } from "react-icons/si";
+import Image from "next/image";
 
 export default function Login() {
   const router = useRouter();
@@ -24,10 +24,11 @@ export default function Login() {
     //   localStorage.setItem('user', {})
     // }
     Cookies.set(process.env.COOKIE_NAME as string, result?.token);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('is_admin', JSON.stringify(result.is_admin));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("is_admin", JSON.stringify(result.is_admin));
     }
-    router.push('/');
+    // router.push("/");
+    window.location.href = "/";
   };
 
   const handleOauthGoogle = async () => {
@@ -47,25 +48,25 @@ export default function Login() {
           <FormGenerator
             data={[
               {
-                name: 'email',
-                type: 'email',
-                label: 'Email',
-                placeholder: 'Enter your email',
+                name: "email",
+                type: "email",
+                label: "Email",
+                placeholder: "Enter your email",
                 validation: {
-                  required: 'This field is required',
+                  required: "This field is required",
                 },
               },
               {
-                name: 'password',
-                type: 'password',
-                label: 'Password',
-                placeholder: 'Enter your password',
+                name: "password",
+                type: "password",
+                label: "Password",
+                placeholder: "Enter your password",
                 validation: {
-                  required: 'This field is required',
+                  required: "This field is required",
                 },
               },
             ]}
-            disabled={status == 'pending'}
+            disabled={status == "pending"}
             form={form}
             id="formLogin"
             onSubmit={handleLogin}
@@ -77,13 +78,13 @@ export default function Login() {
               className="w-full"
               color="primary"
               form="formLogin"
-              isLoading={status == 'pending'}
+              isLoading={status == "pending"}
               type="submit"
             >
               Login
             </Button>
             <p className="text-sm">
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <a className="text-blue-400" href="/register">
                 Register
               </a>
@@ -96,12 +97,12 @@ export default function Login() {
           </div>
           <Button
             onPress={handleOauthGoogle}
-            isLoading={oAouthStatus === 'pending'}
+            isLoading={oAouthStatus === "pending"}
             className="bg-white font-semibold text-lg text-black px-12"
           >
-            {oAouthStatus !== 'pending' && (
+            {oAouthStatus !== "pending" && (
               <img
-                src={'/images/google-logo.png'}
+                src={"/images/google-logo.png"}
                 alt="Google Logo"
                 width={32}
                 height={32}

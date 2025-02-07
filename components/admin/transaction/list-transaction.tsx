@@ -62,14 +62,17 @@ const ListTransaction = () => {
       render: (_, obj) => {
         return (
           <div className="flex items-center space-x-2">
-            <img
-              alt=""
-              className="max-w-12 max-h-12 cursor-pointer"
-              src={obj.course.thumbnail_img}
-              onClick={() => {
-                setDialog((p) => ({ ...p, img: true }));
-              }}
-            />
+            {obj?.course?.thumbnail_img && (
+              <img
+                alt=""
+                className="max-w-12 max-h-12 cursor-pointer"
+                src={obj.course.thumbnail_img}
+                onClick={() => {
+                  setDialog((p) => ({ ...p, img: true }));
+                }}
+              />
+            )}
+
             <span>{obj.course.title}</span>
           </div>
         );

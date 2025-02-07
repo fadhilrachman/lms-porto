@@ -45,7 +45,7 @@ const AdminDetailChapter = () => {
           <ButtonBack href={`/admin/course/${course_id}/${chapter_id}`} />
           <div>
             {" "}
-            <h3 className="text-2xl">Detail Course</h3>
+            <h3 className="text-2xl">Detail Content</h3>
             <p className="text-neutral-500">
               Manage your content details and chapters with ease
             </p>
