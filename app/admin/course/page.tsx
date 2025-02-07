@@ -32,14 +32,16 @@ const AdminCategory = () => {
       render: (value, obj) => {
         return (
           <div className="flex items-center space-x-2">
-            <img
-              alt=""
-              className="max-w-12 max-h-12 cursor-pointer"
-              src={obj.thumbnail_img}
-              onClick={() => {
-                setModal((p) => ({ ...p, img: true }));
-              }}
-            />
+            {obj?.thumbnail_img && (
+              <img
+                alt=""
+                className="max-w-12 max-h-12 cursor-pointer"
+                src={obj.thumbnail_img}
+                onClick={() => {
+                  setModal((p) => ({ ...p, img: true }));
+                }}
+              />
+            )}
             <span>{value}</span>
           </div>
         );
