@@ -1,11 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { useEffect } from 'react';
-import toast from 'react-hot-toast';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
-import { CourseType, CourseDetailType } from '@/types/user/course.type';
-import { BaseResponse, BaseResponseList } from '@/types';
-import { fetcher } from '@/lib/fetcher';
+import { CourseType, CourseDetailType } from "@/types/user/course.type";
+import { BaseResponse, BaseResponseList } from "@/types";
+import { fetcher } from "@/lib/fetcher";
 
 export const useGetUserCourse = (params: {
   page: number;
@@ -13,9 +13,12 @@ export const useGetUserCourse = (params: {
   search?: string;
 }) => {
   const query = useQuery<BaseResponseList<CourseType>>({
-    queryKey: ['USER_LIST_COURSE'],
+    queryKey: ["USER_LIST_COURSE"],
     queryFn: async () => {
-      const result = await fetcher.get('/profile/course', { params });
+      const result = await fetcher.get("/profile/course", { params });
+      const idCourses = result?.data?.result?.map((val) => val.course.id);
+      console.log({ result, idCourses });
+      localStorage.setItem("myCourse", JSON.stringify(idCourses));
 
       return result.data;
     },
@@ -26,10 +29,9 @@ export const useGetUserCourse = (params: {
 
 export const useGetDetailUserCourse = (id: string) => {
   const query = useQuery<BaseResponse<CourseDetailType>>({
-    queryKey: ['USER_DETAIL_COURSE'],
+    queryKey: ["USER_DETAIL_COURSE"],
     queryFn: async () => {
       const result = await fetcher.get(`/profile/course/${id}`);
-      console.log(result);
 
       return result.data;
     },
@@ -44,24 +46,24 @@ export const usePatchUserCourse = (id: string) => {
     mutationFn: async (body) => {
       const result = await fetcher.patch(
         `/profile/course/${id}/completed`,
-        body,
+        body
       );
 
       return result.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['USER_DETAIL_COURSE'] }); // Menggunakan invalidateQueries untuk memicu ulang query
+      queryClient.invalidateQueries({ queryKey: ["USER_DETAIL_COURSE"] }); // Menggunakan invalidateQueries untuk memicu ulang query
     },
   });
 
   useEffect(() => {
     const status = mutation.status;
 
-    if (status == 'success') {
-      toast.success('Success update course');
+    if (status == "success") {
+      toast.success("Success update course");
     }
 
-    if (status == 'error') {
+    if (status == "error") {
       const error = mutation.error as AxiosError<any>;
 
       toast.error(error.response?.data.message);

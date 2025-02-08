@@ -14,16 +14,26 @@ export async function PATCH(
     });
 
     if (!checkData)
-      return Response.json({
-        status: 404,
-        message: "Transaction Not Found",
-      });
+      return Response.json(
+        {
+          status: 404,
+          message: "Transaction Not Found",
+        },
+        {
+          status: 404,
+        }
+      );
 
     if (checkData.is_checkout)
-      return Response.json({
-        status: 400,
-        message: "Transaction Already Checkout",
-      });
+      return Response.json(
+        {
+          status: 400,
+          message: "Transaction Already Checkout",
+        },
+        {
+          status: 400,
+        }
+      );
 
     const result = await prisma.transaction.update({
       where: {

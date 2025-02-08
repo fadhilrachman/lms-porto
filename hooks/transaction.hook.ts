@@ -58,8 +58,10 @@ export const useSnapMidtrans = () => {
       snap.pay(snap_token, {
         skipOrderSummary: true,
         onSuccess: async function () {
-          const result = await mutateAsync(transactionId);
-          console.log({ result });
+          console.log({ snap_token, transactionId });
+
+          await mutateAsync(transactionId);
+          // console.log({ result });
 
           // const existingCourses = JSON.parse(
           //   localStorage.getItem("myCourse") || "[]"
@@ -128,6 +130,7 @@ export const usePatchCheckout = () => {
 
     if (status == "success") {
       toast.success("Success transaction");
+      window.location.href = "/profile/courses";
     }
 
     if (status == "error") {
