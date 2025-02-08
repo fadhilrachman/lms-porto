@@ -59,16 +59,14 @@ export const useSnapMidtrans = () => {
         skipOrderSummary: true,
         onSuccess: async function () {
           const result = await mutateAsync(transactionId);
+          console.log({ result });
 
-          const existingCourses = JSON.parse(
-            localStorage.getItem("myCourse") || "[]"
-          );
-
-          const updatedCourses = [...existingCourses, result.course_id];
-
-          localStorage.setItem("myCourse", JSON.stringify(updatedCourses));
-
-          window.location.href = "/profile/courses";
+          // const existingCourses = JSON.parse(
+          //   localStorage.getItem("myCourse") || "[]"
+          // );
+          // const updatedCourses = [...existingCourses, result.course_id];
+          // localStorage.setItem("myCourse", JSON.stringify(updatedCourses));
+          // window.location.href = "/profile/courses";
         },
         onPending: function (result) {
           console.log("pending", result);
@@ -117,7 +115,7 @@ export const usePostTransaction = (body: { course_id: string }) => {
 export const usePatchCheckout = () => {
   const mutation = useMutation<any, Error, string>({
     mutationFn: async (transactionId) => {
-      const result = await fetcher.post(
+      const result = await fetcher.patch(
         `/profile/transaction/${transactionId}/checkout`
       );
 
