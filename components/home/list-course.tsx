@@ -9,9 +9,12 @@ import { formatRupiah } from "@/lib/helper";
 import SckeletonLoading from "./sckeleton-loading";
 import { useRouter } from "next/navigation";
 import BaseImg from "../shared/base-image";
+import BaseIcon from "../shared/base-icon";
 const ListCourse = () => {
   const router = useRouter();
   const { data, isFetching } = useGetCourse({ page: 1, per_page: 4 });
+  const idCourse = JSON.parse(localStorage.getItem("myCourse"));
+  console.log({ cuy: idCourse });
 
   return (
     <section className="px-6">
@@ -19,14 +22,22 @@ const ListCourse = () => {
         {isFetching
           ? [1, 4, 2, 3].map((val) => <SckeletonLoading key={val} />)
           : data?.result.map((val, key) => {
+              console.log({ check: idCourse.includes(val.id) });
+
               return (
                 <Card
                   key={key}
                   isPressable
-                  onPress={() => router.push(`/course/${val.id}`)}
-                  className="py-4 w-full"
+                  onPress={() => {
+                    if (idCourse.includes(val.id)) {
+                      router.push(`profile/courses/${val.id}`);
+                    } else {
+                      router.push(`/course/${val.id}`);
+                    }
+                  }}
+                  className="py-4 w-full relative z-10"
                 >
-                  <CardHeader className="w-full block">
+                  <CardHeader className="w-full relative block">
                     {val?.thumbnail_img && (
                       <BaseImg
                         src={val?.thumbnail_img}
@@ -34,12 +45,24 @@ const ListCourse = () => {
                         // className="object-cover bg-cover w-full rounded-xl"
                       />
                     )}
+                    {idCourse.includes(val.id) && (
+                      <div className="absolute top-0 right-2 !z-50  text-white">
+                        <Chip color="success">Purchased</Chip>
+                      </div>
+                    )}
                   </CardHeader>
-                  <CardBody className="overflow-visible py-2">
+                  <CardBody className="overflow-visible    py-2">
                     <div className="pb-0 w pt-2 px-4 flex-col items-start">
                       <div className="flex justify-between w-full items-center">
                         <p className="font-bold text-large">{val.title}</p>
-                        <Chip size="sm">Tech</Chip>
+                        <Chip
+                          size="sm"
+                          startContent={
+                            <BaseIcon iconKey={val?.category?.icon} />
+                          }
+                        >
+                          {val?.category?.name}
+                        </Chip>
                       </div>
                       <small className="text-default-500">
                         {formatRupiah(val.price)}

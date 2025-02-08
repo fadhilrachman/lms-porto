@@ -4,7 +4,10 @@ import Title from "../../title";
 
 const AboutCourse = ({ description }: { description: string }) => {
   return (
-    <section className="space-y-4" id="aboutCourse">
+    <section
+      className="space-y-4 border-b border-borderColor pb-4"
+      id="aboutCourse"
+    >
       <Title subTitle="About" />
       <div className="space-y-3">
         <p>{description}</p>

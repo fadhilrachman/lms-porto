@@ -2,10 +2,13 @@ import { ChapterType } from "@/types/user/chapter.type";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { Check, CheckCheck, Lock, VideoIcon } from "lucide-react";
 import React from "react";
+import Title from "../../title";
 
 const ListChapter = ({ chapter }: { chapter: ChapterType[] }) => {
   return (
-    <div className="min-w-[400px]">
+    <div className="md:min-w-[400px] space-y-3">
+      <Title subTitle="Content" />
+
       <Accordion
         variant="splitted"
         className="!space-y-3"
