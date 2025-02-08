@@ -1,21 +1,18 @@
 'use client';
 
+import { useGetMe } from '@/hooks/profile.hook';
 import { Avatar } from '@nextui-org/avatar';
-import Image from 'next/image';
 import React from 'react';
-import { SiGmail } from 'react-icons/si';
+// import { SiGmail } from 'react-icons/si';
 
 export default function Profile() {
+  const { data, isFetching } = useGetMe();
   return (
-    <div>
-      <div className="flex gap-6 p-6">
-        <Avatar src="/images/thought-catalog.jpg" size="lg" />
-        <div className="">
-          <p className="text-2xl font-semibold">Pepep Saepul Rohman</p>
-          <p className=" flex items-center gap-1">
-            <SiGmail size={16} /> <span>test@gmail.com</span>
-          </p>
-        </div>
+    <div className="flex items-center justify-center w-full h-full">
+      <div className="h-96 w-fit flex flex-col justify-center items-center p-6">
+        <Avatar src="/images/thought-catalog.jpg" size="lg" fallback />
+        <p className="text-2xl font-semibold mt-6">{data?.user_name}</p>
+        <p>{data?.email}</p>
       </div>
     </div>
   );
