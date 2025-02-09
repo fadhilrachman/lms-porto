@@ -58,15 +58,48 @@ export async function GET(req: NextRequest) {
             price: true,
             thumbnail_img: true,
             created_at: true,
+            chapter: {
+              take: 1,
+              select: {
+                content: {
+                  take: 1,
+                },
+              },
+            },
           },
         },
       },
+    });
+    const finallyResult = result.map((val) => {
+      const {
+        category,
+        chapter,
+        created_at,
+        id,
+        is_free,
+        price,
+        thumbnail_img,
+        title,
+      } = val.course;
+      return {
+        id: val.id,
+        course: {
+          created_at,
+          id,
+          is_free,
+          price,
+          thumbnail_img,
+          category,
+          title,
+          content_id_first: chapter?.[0]?.content?.[0]?.id,
+        },
+      };
     });
 
     return Response.json({
       status: 200,
       message: "Success get transaction",
-      result,
+      result: finallyResult,
       pagination,
     });
   } catch (error) {
