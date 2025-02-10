@@ -8,11 +8,8 @@ import { Skeleton } from '@heroui/skeleton';
 import { useParams, useRouter } from 'next/navigation';
 
 const Content = () => {
-  const params = useParams();
-  const content_id = params?.conten_id;
+  const [content_id, _] = useQueryState('content_id');
   const router = useRouter();
-
-  console.log(params);
 
   const { data, isFetching, refetch } = useGetDetailContent(
     content_id as string,

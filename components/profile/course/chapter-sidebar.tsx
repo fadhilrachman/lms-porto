@@ -50,11 +50,11 @@ const items = [
   },
 ];
 const ChapterSidebar = ({ chapter }: any) => {
-  const [_, setContentId] = useQueryState('content');
+  const [_, setContent_id] = useQueryState('content_id');
   const router = useRouter();
   useEffect(() => {
     if (chapter?.length > 0) {
-      setContentId(chapter[0]?.content[0]?.id);
+      setContent_id(chapter[0]?.content[0]?.id);
     }
   }, []);
 
@@ -82,7 +82,7 @@ const ChapterSidebar = ({ chapter }: any) => {
                 <div
                   key={i}
                   className="cursor-pointer flex justify-between rounded-xl bg-neutral-800  px-4 py-3"
-                  onClick={() => setContentId(res?.id)}
+                  onClick={() => setContent_id(res?.id)}
                 >
                   <div className="space-x-3 flex items-center">
                     <VideoIcon />
