@@ -13,6 +13,8 @@ import LayoutProfile from '@/components/shared/layout-profile';
 import { Lock, LucideBookMarked } from 'lucide-react';
 import Image from 'next/image';
 import BaseIcon from '@/components/shared/base-icon';
+import { FaRegFolderOpen } from 'react-icons/fa';
+import { useQueryState } from 'nuqs';
 
 const UserCourse = () => {
   const router = useRouter();
@@ -22,11 +24,16 @@ const UserCourse = () => {
     page: 1,
     per_page: 1000,
   });
+  const [_, setContentId] = useQueryState('content');
   const [currentPage, setCurrentPage] = React.useState(1);
 
   useEffect(() => {
     refetch();
   }, [params]);
+
+  // useEffect(() => {
+  //
+  // }, []);
 
   return (
     <LayoutProfile>
@@ -49,68 +56,76 @@ const UserCourse = () => {
           }}
         />
         <div className="grid grid-cols-3 gap-4">
-          {isFetching
-            ? [1, 4, 2, 3, 5, 6].map((val) => (
-                <Skeleton key={val} className="h-72 w-full rounded-md " />
-              ))
-            : (data?.result || []).map((obj, key) => (
-                <Card
-                  isPressable
-                  key={key}
-                  className="py-4 cursor-pointer hover:scale-95"
-                  onPress={() =>
-                    router.push(`/profile/courses/${obj?.course?.id}`)
+          {isFetching ? (
+            [1, 4, 2, 3, 5, 6].map((val) => (
+              <Skeleton key={val} className="h-72 w-full rounded-md " />
+            ))
+          ) : data.result.length < 1 ? (
+            <div className="w-full h-full text-lg col-span-3 flex flex-col py-12 justify-center items-center">
+              <FaRegFolderOpen size={46} />
+              <p>Data not found</p>
+            </div>
+          ) : (
+            data?.result?.map((obj, key) => (
+              <Card
+                isPressable
+                key={key}
+                className="py-4 cursor-pointer hover:scale-95"
+                onPress={() => {
+                  if (data?.result?.chapter?.length > 0) {
+                    setContentId(data?.result?.chapter[0]?.content[0]?.id);
                   }
-                >
-                  <CardHeader className="pb-0 w pt-2 px-4 flex-col items-start">
-                    <Image
-                      alt="Card background"
-                      className="object-cover w-full rounded-xl"
-                      src="https://nextui.org/images/hero-card-complete.jpeg"
-                      width={270}
-                      height={270}
-                    />
-                  </CardHeader>
-                  {/* //  */}
+                  router.push(`/profile/courses/${obj?.course?.id}`);
+                }}
+              >
+                <CardHeader className="pb-0 w pt-2 px-4 flex-col items-start">
+                  <Image
+                    alt="Card background"
+                    className="object-cover w-full rounded-xl"
+                    src="https://nextui.org/images/hero-card-complete.jpeg"
+                    width={270}
+                    height={270}
+                  />
+                </CardHeader>
+                {/* //  */}
 
-                  <CardBody className="overflow-visible py-2">
-                    <div className="flex justify-between w-full items-center">
-                      <h4 className="font-bold text-large">
-                        {obj?.course?.title}
-                      </h4>
-                      <Chip
-                        size="sm"
-                        variant="flat"
-                        avatar={
-                          obj?.course?.category?.icon ? (
-                            <BaseIcon iconKey={obj?.course?.category?.icon} />
-                          ) : (
-                            <Lock />
-                          )
-                        }
-                      >
-                        <span className="ml-1">
-                          {obj.course.category
-                            ? obj.course?.category.name
-                            : 'Category'}
-                        </span>
-                      </Chip>
+                <CardBody className="overflow-visible py-2">
+                  <div className="flex justify-between w-full items-center">
+                    <h4 className="font-bold text-large">
+                      {obj?.course?.title}
+                    </h4>
+                    <Chip
+                      size="sm"
+                      variant="flat"
+                      avatar={
+                        obj?.course?.category?.icon ? (
+                          <BaseIcon iconKey={obj?.course?.category?.icon} />
+                        ) : (
+                          <Lock />
+                        )
+                      }
+                    >
+                      <span className="ml-1">
+                        {obj.course.category
+                          ? obj.course?.category.name
+                          : 'Category'}
+                      </span>
+                    </Chip>
+                  </div>
+                </CardBody>
+                <CardFooter>
+                  <div className="flex w-full justify-between items-center">
+                    <div className="flex flex-row items-center gap-2">
+                      <IoGlobeOutline size={22} />
+                      <p>
+                        {obj.course.is_free ? 'Free course' : 'Premium course'}
+                      </p>
                     </div>
-                  </CardBody>
-                  <CardFooter>
-                    <div className="flex w-full justify-between items-center">
-                      <div className="flex flex-row items-center gap-2">
-                        <IoGlobeOutline size={22} />
-                        <p>
-                          {obj.course.is_free
-                            ? 'Free course'
-                            : 'Premium course'}
-                        </p>
-                      </div>
-                    </div>
-                  </CardFooter>
-                </Card>
-              ))}
+                  </div>
+                </CardFooter>
+              </Card>
+            ))
+          )}
         </div>
         {/* {!isFetching && data?.result?.length !== 0 && (
           <div className="flex justify-between items-center">
