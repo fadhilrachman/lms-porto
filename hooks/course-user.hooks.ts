@@ -17,7 +17,9 @@ export const useGetUserCourse = (params: {
     queryFn: async () => {
       const result = await fetcher.get("/profile/course", { params });
       const idCourses = result?.data?.result?.map((val) => val.course.id);
-      localStorage.setItem("myCourse", JSON.stringify(idCourses));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("myCourse", JSON.stringify(idCourses));
+      }
 
       return result.data;
     },

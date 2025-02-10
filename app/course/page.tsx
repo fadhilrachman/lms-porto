@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Chip } from "@nextui-org/chip";
@@ -57,7 +58,7 @@ const Course = () => {
             onChange={(e) => {
               setCategory(e.target.value);
             }}
-            value={category}
+            // value={category}
             placeholder="Category"
             aria-label="category"
             size="lg"

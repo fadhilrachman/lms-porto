@@ -62,6 +62,9 @@ export async function GET(req: NextRequest) {
               take: 1,
               select: {
                 content: {
+                  where: {
+                    is_published: true,
+                  },
                   take: 1,
                 },
               },
@@ -91,7 +94,7 @@ export async function GET(req: NextRequest) {
           thumbnail_img,
           category,
           title,
-          content_id_first: chapter?.[0]?.content?.[0]?.id,
+          content_id_first: chapter?.[0]?.content?.[0]?.id || null,
         },
       };
     });
