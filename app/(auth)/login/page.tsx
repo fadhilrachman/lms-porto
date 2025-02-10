@@ -10,8 +10,6 @@ import Cookies from "js-cookie";
 import FormGenerator from "@/components/shared/form-generator";
 import { useOauthGoogle, usePostLogin } from "@/hooks/auth.hook";
 import { PostLoginType } from "@/types/auth.type";
-import { SiGoogle } from "react-icons/si";
-import Image from "next/image";
 
 export default function Login() {
   const router = useRouter();

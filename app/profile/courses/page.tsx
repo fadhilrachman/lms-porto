@@ -23,15 +23,10 @@ const UserCourse = () => {
     page: 1,
     per_page: 1000,
   });
-  const [currentPage, setCurrentPage] = React.useState(1);
 
   useEffect(() => {
     refetch();
   }, [params]);
-
-  // useEffect(() => {
-  //
-  // }, []);
 
   return (
     <LayoutProfile>
