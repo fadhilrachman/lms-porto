@@ -1,29 +1,29 @@
-import { NextRequest } from 'next/server';
+import { NextRequest } from "next/server";
 
-import { createPagination } from '@/lib/pagination-server';
-import { prisma } from '@/lib/prisma';
-import { verifyTokenCustomer } from '@/lib/verify-token-server';
+import { createPagination } from "@/lib/pagination-server";
+import { prisma } from "@/lib/prisma";
+import { verifyTokenCustomer } from "@/lib/verify-token-server";
 
 export async function GET(req: NextRequest) {
   // req.body
   if (verifyTokenCustomer(req)) {
     return Response.json({
       status: 403,
-      message: 'Access Denied. No token provided.',
+      message: "Access Denied. No token provided.",
     });
   }
-  const user = JSON.parse(req.headers.get('user') as string);
+  const user = JSON.parse(req.headers.get("user") as string);
 
   const { searchParams } = new URL(req.url);
-  const page = Number(searchParams.get('page') || 1);
-  const per_page = Number(searchParams.get('per_page') || 10);
+  const page = Number(searchParams.get("page") || 1);
+  const per_page = Number(searchParams.get("per_page") || 10);
   const skip = (page - 1) * per_page;
 
   try {
     const total_data = await prisma.transaction.count({
       where: {
         user_id: user.id,
-        is_checkout: false,
+        is_checkout: true,
       },
     });
     const pagination = createPagination({
@@ -36,10 +36,10 @@ export async function GET(req: NextRequest) {
       take: Number(per_page),
       where: {
         user_id: user.id,
-        is_checkout: false,
+        is_checkout: true,
       },
       orderBy: {
-        created_at: 'desc',
+        created_at: "desc",
       },
       select: {
         id: true,
@@ -65,7 +65,7 @@ export async function GET(req: NextRequest) {
 
     return Response.json({
       status: 200,
-      message: 'Success get transaction',
+      message: "Success get transaction",
       result,
       pagination,
     });
@@ -74,7 +74,7 @@ export async function GET(req: NextRequest) {
 
     return Response.json({
       status: 500,
-      message: 'Internal server error',
+      message: "Internal server error",
     });
   }
 }
