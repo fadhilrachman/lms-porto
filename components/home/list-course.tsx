@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Chip } from "@nextui-org/chip";
 import { Star, User } from "lucide-react";
@@ -13,7 +13,13 @@ import BaseIcon from "../shared/base-icon";
 const ListCourse = () => {
   const router = useRouter();
   const { data, isFetching } = useGetCourse({ page: 1, per_page: 4 });
-  const idCourse = JSON.parse(localStorage.getItem("myCourse")) || [];
+  const [idCourse, setIdCourse] = useState<any>();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIdCourse(JSON.parse(localStorage.getItem("myCourse")) || []);
+    }
+  }, []);
 
   return (
     <section className="px-6">
