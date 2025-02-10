@@ -72,9 +72,6 @@ const UserCourse = () => {
                 key={key}
                 className="py-4 cursor-pointer hover:scale-95"
                 onPress={() => {
-                  if (data?.result?.chapter?.length > 0) {
-                    setContentId(data?.result?.chapter[0]?.content[0]?.id);
-                  }
                   router.push(`/profile/courses/${obj?.course?.id}`);
                 }}
               >
