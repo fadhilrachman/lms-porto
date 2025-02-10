@@ -13,8 +13,7 @@ import BaseIcon from "../shared/base-icon";
 const ListCourse = () => {
   const router = useRouter();
   const { data, isFetching } = useGetCourse({ page: 1, per_page: 4 });
-  const idCourse = JSON.parse(localStorage.getItem("myCourse"));
-  console.log({ cuy: idCourse });
+  const idCourse = JSON.parse(localStorage.getItem("myCourse")) || [];
 
   return (
     <section className="px-6">
@@ -22,14 +21,12 @@ const ListCourse = () => {
         {isFetching
           ? [1, 4, 2, 3].map((val) => <SckeletonLoading key={val} />)
           : data?.result.map((val, key) => {
-              console.log({ check: idCourse.includes(val.id) });
-
               return (
                 <Card
                   key={key}
                   isPressable
                   onPress={() => {
-                    if (idCourse.includes(val.id)) {
+                    if (idCourse?.includes(val.id)) {
                       router.push(`profile/courses/${val.id}`);
                     } else {
                       router.push(`/course/${val.id}`);
