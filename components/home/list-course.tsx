@@ -14,7 +14,6 @@ const ListCourse = () => {
   const router = useRouter();
   const { data, isFetching } = useGetCourse({ page: 1, per_page: 4 });
   const idCourse = JSON.parse(localStorage.getItem("myCourse"));
-  console.log({ cuy: idCourse });
 
   return (
     <section className="px-6">
