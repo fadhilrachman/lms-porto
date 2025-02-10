@@ -14,7 +14,6 @@ import { Lock, LucideBookMarked } from 'lucide-react';
 import Image from 'next/image';
 import BaseIcon from '@/components/shared/base-icon';
 import { FaRegFolderOpen } from 'react-icons/fa';
-import { useQueryState } from 'nuqs';
 
 const UserCourse = () => {
   const router = useRouter();
@@ -24,7 +23,6 @@ const UserCourse = () => {
     page: 1,
     per_page: 1000,
   });
-  const [_, setContentId] = useQueryState('content');
   const [currentPage, setCurrentPage] = React.useState(1);
 
   useEffect(() => {
@@ -72,7 +70,9 @@ const UserCourse = () => {
                 key={key}
                 className="py-4 cursor-pointer hover:scale-95"
                 onPress={() => {
-                  router.push(`/profile/courses/${obj?.course?.id}`);
+                  router.push(
+                    `/profile/courses/${obj?.course?.id}?content_id=${obj?.course?.content_id_first}`,
+                  );
                 }}
               >
                 <CardHeader className="pb-0 w pt-2 px-4 flex-col items-start">

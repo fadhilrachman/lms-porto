@@ -5,19 +5,24 @@ import { Button } from '@nextui-org/button';
 import { useQueryState } from 'nuqs';
 import React, { useEffect } from 'react';
 import { Skeleton } from '@heroui/skeleton';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 const Content = () => {
-  const [contentId, _] = useQueryState('content');
+  const params = useParams();
+  const content_id = params?.conten_id;
   const router = useRouter();
 
-  const { data, isFetching, refetch } = useGetDetailContent(contentId);
-  const { mutateAsync, status } = usePatchUserCourse(contentId);
+  console.log(params);
+
+  const { data, isFetching, refetch } = useGetDetailContent(
+    content_id as string,
+  );
+  const { mutateAsync, status } = usePatchUserCourse(content_id as string);
 
   console.log(data?.result, 'asdfasdfadf');
   useEffect(() => {
     refetch();
-  }, [contentId]);
+  }, [content_id]);
 
   const handleComplated = async () => {
     const result = await mutateAsync();
