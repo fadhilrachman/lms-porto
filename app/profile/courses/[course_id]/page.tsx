@@ -12,12 +12,6 @@ const DetailCourse = () => {
     course_id as string,
   );
 
-  // useEffect(() => {
-  //   if (data?.result?.chapter?.length > 0) {
-  //     setContentId(data?.result?.chapter[0]?.content[0]?.id);
-  //   }
-  // }, []);
-
   return (
     <div className="min-h-screen w-full overflow-hidden">
       <NavbarAdminUser />
