@@ -53,7 +53,7 @@ const Course = () => {
               setParams((p) => ({ ...p, search: e }));
             }}
           />
-          <Select
+          {/* <Select
             className="max-w-[200px]"
             onChange={(e) => {
               // setCategory(e.target.value);
@@ -66,7 +66,7 @@ const Course = () => {
             {dataCategory?.result?.map((val) => (
               <SelectItem key={val.id}>{val.name}</SelectItem>
             ))}
-          </Select>
+          </Select> */}
         </div>
         <div className="grid grid-cols-4 gap-6 ">
           {isFetching ? (
