@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
       expiresIn: "28d",
     });
     (await cookies()).set(process.env.COOKIE_NAME, token);
-    return Response.redirect("http://localhost:3000/");
+    return Response.redirect("https://lms-porto.vercel.app");
   } catch (error) {
     console.log({ error });
 
