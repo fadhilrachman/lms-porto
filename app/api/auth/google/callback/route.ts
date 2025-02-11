@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
   const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
-    "http://localhost:3000/api/auth/google/callback"
+    "https://lms-porto.vercel.app/api/auth/google/callback"
   );
   const scopes = [
     "https://www.googleapis.com/auth/userinfo.email",
