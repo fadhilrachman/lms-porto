@@ -105,11 +105,11 @@ export default function NavbarAdminUser() {
         </Dropdown>
       </NavbarContent>
       <NavbarMenu className="justify-between py-6">
-        <NavbarMenuItem>
+        <NavbarMenuItem className="space-y-3">
           {menuItems.map((item, index) => (
             <Link
               key={`${item}-${index}`}
-              className="w-full space-x-3 space-y-3"
+              className="w-full flex items-center gap-3"
               color={'foreground'}
               href={item.url}
               size="lg"
