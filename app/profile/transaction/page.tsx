@@ -21,12 +21,12 @@ const Transaction = () => {
           <p className="max-w-96">Manage your transaction</p>
         </div>
         <ListTransactionUser />
-        <CreateCustoemr
+        {/* <CreateCustoemr
           isOpen={modal.create}
           onOpenChange={() => {
             setModal((p) => ({ ...p, create: false }));
           }}
-        />
+        /> */}
       </div>
     </LayoutProfile>
   );

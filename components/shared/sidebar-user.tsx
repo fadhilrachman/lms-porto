@@ -25,7 +25,7 @@ const SidebarUser = () => {
   ];
 
   return (
-    <div className="border-r fixed min-w-[300px] min-h-full px-6 py-3 border-neutral-800 space-y-3">
+    <div className="hidden sm:block border-r fixed w-24 lg:min-w-[300px] min-h-full px-6 py-3 border-neutral-800 space-y-3">
       {listSidebar.map((val, key) => {
         return (
           <div
@@ -36,7 +36,7 @@ const SidebarUser = () => {
             }}
           >
             {<val.icon className="h-5 w-5" />}
-            <span>{val.title}</span>
+            <span className="hidden lg:inline-block">{val.title}</span>
           </div>
         );
       })}

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useQueryState } from 'nuqs';
 import React, { useEffect } from 'react';
 
-const items = [
+export const contentNav = [
   {
     key: 1,
     title: 'content 1',
@@ -59,7 +59,7 @@ const ChapterSidebar = ({ chapter }: any) => {
   }, []);
 
   return (
-    <div className="min-w-[350px] space-y-6 z-50 h-full fixed py-6 px-3 border-r border-neutral-800">
+    <div className="hidden lg:block min-w-[350px] space-y-6 z-50 h-full fixed py-6 px-3 border-r border-neutral-800">
       <div className="flex items-center gap-3 px-3">
         <Button variant="light" onPress={() => router.back()}>
           <ArrowLeft />

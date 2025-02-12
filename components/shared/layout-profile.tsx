@@ -11,7 +11,7 @@ const LayoutProfile = ({ children }: { children: React.ReactNode }) => {
       <NavbarAdminUser />
       <div className="w-full pt-16 h-full flex">
         <SidebarUser />
-        <div className="px-6 py-3 ml-[300px] w-full min-h-screen overflow-y-auto">
+        <div className="p-6 sm:ml-24 lg:ml-[300px] w-full min-h-screen overflow-y-auto">
           {children}
         </div>
       </div>

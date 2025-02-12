@@ -48,7 +48,7 @@ const UserCourse = () => {
             setPrams((p) => ({ ...p, search: e }));
           }}
         />
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {isFetching ? (
             [1, 4, 2, 3, 5, 6].map((val) => (
               <Skeleton key={val} className="h-72 w-full rounded-md " />
@@ -63,14 +63,14 @@ const UserCourse = () => {
               <Card
                 isPressable
                 key={key}
-                className="py-4 cursor-pointer hover:scale-95"
+                className=" cursor-pointer hover:scale-95"
                 onPress={() => {
                   router.push(
                     `/profile/courses/${obj?.course?.id}?content_id=${obj?.course?.content_id_first}`,
                   );
                 }}
               >
-                <CardHeader className="pb-0 w pt-2 px-4 flex-col items-start">
+                <CardHeader className="pb-0 w pt-4 px-4 flex-col items-start">
                   <Image
                     alt="Card background"
                     className="object-cover w-full rounded-xl"
@@ -81,9 +81,9 @@ const UserCourse = () => {
                 </CardHeader>
                 {/* //  */}
 
-                <CardBody className="overflow-visible py-2">
+                <CardBody className="overflow-visible py-4">
                   <div className="flex justify-between w-full items-center">
-                    <h4 className="font-bold text-large">
+                    <h4 className="font-bold text-large line-clamp-1">
                       {obj?.course?.title}
                     </h4>
                     <Chip

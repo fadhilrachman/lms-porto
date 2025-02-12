@@ -1,19 +1,26 @@
-import { Avatar } from "@nextui-org/avatar";
+'use client';
+
+import { Avatar } from '@nextui-org/avatar';
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@nextui-org/dropdown";
+} from '@nextui-org/dropdown';
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-} from "@nextui-org/navbar";
-import { Link } from "lucide-react";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+} from '@nextui-org/navbar';
+import { Home, LogOut, LucideBookMarked, User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { useState } from 'react';
+import { Link } from '@nextui-org/link';
 
 export const AcmeLogo = () => {
   return (
@@ -29,45 +36,55 @@ export const AcmeLogo = () => {
 };
 
 export default function NavbarAdminUser() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const handleLogout = () => {
     Cookies.remove(process.env.COOKIE_NAME as string);
-    router.push("/login");
+    router.push('/login');
   };
+
+  const menuItems = [
+    {
+      title: 'Profile',
+      url: '/profile/profile',
+      icon: User,
+    },
+    {
+      title: 'My Courses',
+      url: '/profile/courses',
+      icon: LucideBookMarked,
+    },
+    {
+      title: 'Transaction',
+      url: '/profile/transaction',
+      icon: Home,
+    },
+  ];
 
   return (
     <Navbar
       className="border-b border-neutral-800 fixed top-0 left-0 right-0"
       maxWidth="full"
+      onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent justify="start">
         <NavbarBrand
-          onClick={() => router.push("/")}
+          onClick={() => router.push('/')}
           className="cursor-pointer"
         >
           <AcmeLogo />
           <p className="hidden sm:block font-bold text-inherit">LMS</p>
         </NavbarBrand>
-        <NavbarContent className="hidden sm:flex gap-3">
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              Features
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive>
-            <Link aria-current="page" color="secondary" href="#">
-              Customers
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              Integrations
-            </Link>
-          </NavbarItem>
-        </NavbarContent>
       </NavbarContent>
 
-      <NavbarContent as="div" className="items-center" justify="end">
+      <NavbarMenuToggle
+        aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+        className="sm:hidden h-10"
+      />
+      <NavbarContent
+        as="div"
+        className="items-center hidden sm:flex !justify-end"
+      >
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <Avatar
@@ -87,6 +104,31 @@ export default function NavbarAdminUser() {
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
+      <NavbarMenu className="justify-between py-6">
+        <NavbarMenuItem>
+          {menuItems.map((item, index) => (
+            <Link
+              key={`${item}-${index}`}
+              className="w-full space-x-3 space-y-3"
+              color={'foreground'}
+              href={item.url}
+              size="lg"
+            >
+              {<item.icon className="h-5 w-5" />}
+              <span className="">{item.title}</span>
+            </Link>
+          ))}
+        </NavbarMenuItem>
+        <Link
+          key="logout"
+          color="danger"
+          onPress={handleLogout}
+          className="space-x-3"
+        >
+          <LogOut size={20} />
+          <span>Log Out</span>
+        </Link>
+      </NavbarMenu>
     </Navbar>
   );
 }
