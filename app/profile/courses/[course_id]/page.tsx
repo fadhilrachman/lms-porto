@@ -51,7 +51,7 @@ const DetailCourse = () => {
 
           <NavbarMenuToggle
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-            className="sm:hidden h-10"
+            className="h-10"
           />
           <NavbarMenu className="justify-between py-6">
             <NavbarMenuItem>
