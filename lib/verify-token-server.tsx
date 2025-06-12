@@ -42,8 +42,6 @@ export function verifyTokenCustomer(req: NextRequest) {
 export function verifyTokenAdmin(req: NextRequest) {
   const token = req.headers.get("authorization");
 
-  console.log({ token });
-
   if (!token)
     return Response.json(
       {

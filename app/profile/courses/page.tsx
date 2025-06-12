@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import { IoGlobeOutline } from 'react-icons/io5';
-import React, { useEffect, useState } from 'react';
-import { Chip } from '@nextui-org/chip';
-import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/card';
-import { useRouter } from 'next/navigation';
-import { Skeleton } from '@heroui/skeleton';
+import { IoGlobeOutline } from "react-icons/io5";
+import React, { useEffect, useState } from "react";
+import { Chip } from "@nextui-org/chip";
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { useRouter } from "next/navigation";
+import { Skeleton } from "@heroui/skeleton";
 
-import { useGetUserCourse } from '@/hooks/course-user.hooks';
-import BaseInputSearch from '@/components/shared/base-input-search';
-import LayoutProfile from '@/components/shared/layout-profile';
-import { Lock, LucideBookMarked } from 'lucide-react';
-import Image from 'next/image';
-import BaseIcon from '@/components/shared/base-icon';
-import { FaRegFolderOpen } from 'react-icons/fa';
+import { useGetUserCourse } from "@/hooks/course-user.hooks";
+import BaseInputSearch from "@/components/shared/base-input-search";
+import LayoutProfile from "@/components/shared/layout-profile";
+import { Lock, LucideBookMarked } from "lucide-react";
+import Image from "next/image";
+import BaseIcon from "@/components/shared/base-icon";
+import { FaRegFolderOpen } from "react-icons/fa";
 
 const UserCourse = () => {
   const router = useRouter();
   const [modal, setModal] = useState({ create: false, img: false });
-  const [params, setPrams] = useState({ search: '' });
+  const [params, setPrams] = useState({ search: "" });
   const { data, isFetching, refetch } = useGetUserCourse({
     page: 1,
     per_page: 1000,
@@ -31,15 +31,11 @@ const UserCourse = () => {
   return (
     <LayoutProfile>
       <div className="space-y-6">
-        <div className=" border-b border-neutral-400 space-y-3">
+        <div className=" space-y-3">
           <div className="flex items-center gap-3">
             <LucideBookMarked />
             <h3 className="text-2xl font-bold">My Course</h3>
           </div>
-          <p className="max-w-96">
-            Upgrades continue to knowledge and experience the latest you in the
-            field of technology
-          </p>
         </div>
 
         <BaseInputSearch
@@ -66,7 +62,7 @@ const UserCourse = () => {
                 className=" cursor-pointer hover:scale-95"
                 onPress={() => {
                   router.push(
-                    `/profile/courses/${obj?.course?.id}?content_id=${obj?.course?.content_id_first}`,
+                    `/profile/courses/${obj?.course?.id}?content_id=${obj?.course?.content_id_first}`
                   );
                 }}
               >
@@ -74,7 +70,10 @@ const UserCourse = () => {
                   <Image
                     alt="Card background"
                     className="object-cover w-full rounded-xl"
-                    src="https://nextui.org/images/hero-card-complete.jpeg"
+                    src={
+                      obj.course.thumbnail_img ||
+                      "https://nextui.org/images/hero-card-complete.jpeg"
+                    }
                     width={270}
                     height={270}
                   />
@@ -100,7 +99,7 @@ const UserCourse = () => {
                       <span className="ml-1">
                         {obj.course.category
                           ? obj.course?.category.name
-                          : 'Category'}
+                          : "Category"}
                       </span>
                     </Chip>
                   </div>
@@ -110,7 +109,7 @@ const UserCourse = () => {
                     <div className="flex flex-row items-center gap-2">
                       <IoGlobeOutline size={22} />
                       <p>
-                        {obj.course.is_free ? 'Free course' : 'Premium course'}
+                        {obj.course.is_free ? "Free course" : "Premium course"}
                       </p>
                     </div>
                   </div>

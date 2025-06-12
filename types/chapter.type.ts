@@ -5,4 +5,7 @@ export interface ChapterType {
   title: string;
   position: number;
   content: ContentType[];
+  _count: {
+    content: number;
+  };
 }

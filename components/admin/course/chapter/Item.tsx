@@ -21,6 +21,7 @@ export const Item = ({ item, currentData, handleChangePosition }: Props) => {
   const boxShadow = useRaisedShadow(y);
   const router = useRouter();
   const obj = currentData.find((val) => val.title == item);
+  console.log({ currentData });
 
   return (
     <Reorder.Item
@@ -45,7 +46,8 @@ export const Item = ({ item, currentData, handleChangePosition }: Props) => {
       <div className="space-x-1">
         {/* <Chip size="sm">{countContentUnPublished} Unpublished</Chip> */}
         <Chip color="primary" size="sm">
-          {obj?.content?.length || 0} Content Published
+          {obj?.content?.filter((val) => val.is_published == true).length || 0}{" "}
+          Content Published
         </Chip>
       </div>
     </Reorder.Item>

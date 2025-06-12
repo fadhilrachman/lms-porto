@@ -106,6 +106,9 @@ export async function GET(
       },
       include: {
         content: {
+          // where: {
+          //   is_published: true,
+          // },
           orderBy: {
             position: "asc",
           },
