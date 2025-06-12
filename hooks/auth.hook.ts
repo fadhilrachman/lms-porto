@@ -1,21 +1,17 @@
 // import { ChapterType } from "@/types/chapter.type";
 
-import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { useEffect } from 'react';
-import toast from 'react-hot-toast';
-
-import { PostLoginType, PostRegisterType } from '@/types/auth.type';
-import { fetcher } from '@/lib/fetcher';
-import { useRouter } from 'next/navigation';
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { PostLoginType, PostRegisterType } from "@/types/auth.type";
+import { fetcher } from "@/lib/fetcher";
+import { useRouter } from "next/navigation";
 
 export const usePostLogin = () => {
   const mutation = useMutation<any, Error, PostLoginType>({
     mutationFn: async (body) => {
-      const result = await fetcher.post('/auth/login', body);
-
-      console.log({ result });
-
+      const result = await fetcher.post("/auth/login", body);
       return result.data;
     },
   });
@@ -23,13 +19,11 @@ export const usePostLogin = () => {
   useEffect(() => {
     const status = mutation.status;
 
-    if (status == 'success') {
-      toast.success('Success login');
+    if (status == "success") {
+      toast.success("Success login");
     }
-    if (status == 'error') {
+    if (status == "error") {
       const error = mutation.error as AxiosError<any>;
-
-      console.log({ error });
 
       toast.error(error.response?.data?.message);
     }
@@ -47,8 +41,8 @@ export const usePostVerifyOtp = () => {
         otp: parseInt(body.otp),
       };
       const result = await fetcher.post(
-        '/auth/verification-otp',
-        finalyPayload,
+        "/auth/verification-otp",
+        finalyPayload
       );
 
       return result?.data;
@@ -59,12 +53,12 @@ export const usePostVerifyOtp = () => {
     const status = mutation?.status;
     console.log({ status });
 
-    if (status == 'success') {
-      toast.success('Success verified email');
-      router.push('/login');
+    if (status == "success") {
+      toast.success("Success verified email");
+      router.push("/login");
     }
 
-    if (status == 'error') {
+    if (status == "error") {
       const error = mutation?.error as AxiosError<any>;
       console.log({ error });
 
@@ -78,7 +72,7 @@ export const usePostVerifyOtp = () => {
 export const usePostResentOtp = () => {
   const mutation = useMutation<any, Error, { email: string }>({
     mutationFn: async (body) => {
-      const result = await fetcher.post('/auth/resend-otp', body);
+      const result = await fetcher.post("/auth/resend-otp", body);
 
       return result?.data;
     },
@@ -88,11 +82,11 @@ export const usePostResentOtp = () => {
     const status = mutation?.status;
     console.log({ status });
 
-    if (status == 'success') {
-      toast.success('Success verified email');
+    if (status == "success") {
+      toast.success("Success verified email");
     }
 
-    if (status == 'error') {
+    if (status == "error") {
       const error = mutation?.error as AxiosError<any>;
       console.log({ error });
 
@@ -106,7 +100,7 @@ export const usePostResentOtp = () => {
 export const usePostRegister = () => {
   const mutation = useMutation<any, Error, PostRegisterType>({
     mutationFn: async (body) => {
-      const result = await fetcher.post('/auth/register', body);
+      const result = await fetcher.post("/auth/register", body);
 
       console.log({ result });
 
@@ -117,13 +111,11 @@ export const usePostRegister = () => {
   useEffect(() => {
     const status = mutation?.status;
 
-    console.log({ status });
-
-    if (status == 'success') {
-      toast.success('Success register');
+    if (status == "success") {
+      toast.success("Success register");
     }
 
-    if (status == 'error') {
+    if (status == "error") {
       const error = mutation?.error as AxiosError<any>;
 
       console.log({ error });
@@ -138,7 +130,7 @@ export const usePostRegister = () => {
 export const useOauthGoogle = () => {
   const mutation = useMutation<any, Error>({
     mutationFn: async (body) => {
-      const result = await fetcher.post('/auth/google');
+      const result = await fetcher.post("/auth/google");
       return result.data;
     },
   });

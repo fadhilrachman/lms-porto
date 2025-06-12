@@ -27,11 +27,11 @@ const SidebarAdmin = () => {
       url: "/admin/customer",
       icon: User2,
     },
-    {
-      title: "Transaction",
-      url: "/admin/transaction",
-      icon: Coins,
-    },
+    // {
+    //   title: "Transaction",
+    //   url: "/admin/transaction",
+    //   icon: Coins,
+    // },
   ];
 
   return (

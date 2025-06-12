@@ -43,7 +43,7 @@ export const useGetDetailUserCourse = (id: string) => {
 
 export const usePatchUserCourse = (id: string) => {
   const queryClient = useQueryClient();
-  const mutation = useMutation<any, any, Error>({
+  const mutation = useMutation<any, Error, any>({
     mutationFn: async (body: any) => {
       const result = await fetcher.patch(
         `/profile/course/${id}/completed`,
