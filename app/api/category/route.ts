@@ -49,7 +49,6 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   const cuy = req.cookies.get("cookie");
 
-  console.log({ cuy });
   const { searchParams } = new URL(req.url);
   const page = Number(searchParams.get("page") || 1);
   const per_page = Number(searchParams.get("per_page") || 10);
