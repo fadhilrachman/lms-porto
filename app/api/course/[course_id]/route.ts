@@ -96,6 +96,7 @@ export async function DELETE(
   { params }: { params: Promise<{ course_id: string }> }
 ) {
   const { course_id } = await params;
+  console.log({ course_id });
 
   try {
     const result = await prisma.course.delete({
@@ -110,6 +111,8 @@ export async function DELETE(
       result,
     });
   } catch (error) {
+    console.log({ error });
+
     return Response.json(
       {
         status: 500,
@@ -145,11 +148,22 @@ export async function GET(
             icon: true,
           },
         },
+
         chapter: {
           orderBy: {
             position: "asc",
           },
+
           include: {
+            _count: {
+              select: {
+                content: {
+                  where: {
+                    is_published: true,
+                  },
+                },
+              },
+            },
             content: {
               where: {
                 is_published: true,

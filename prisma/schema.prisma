@@ -63,7 +63,7 @@ model Chapter {
   title String
   position Int
 
-  course Course @relation(fields: [course_id], references: [id])
+  course Course @relation(fields: [course_id], references: [id], onDelete:Cascade)
   course_id String 
 
   created_at DateTime @default(now())
@@ -81,7 +81,7 @@ model Content{
   position Int  
   is_published Boolean @default(false)
 
-  chapter Chapter @relation(fields: [chapter_id], references: [id])
+  chapter Chapter @relation(fields: [chapter_id], references: [id],onDelete: Cascade)
   chapter_id String 
 
   created_at DateTime @default(now())
@@ -95,7 +95,7 @@ model Transaction {
   code String? @unique  
   token_snap String? 
   is_checkout Boolean @default(false)
-  course Course @relation(fields: [course_id], references: [id])
+  course Course @relation(fields: [course_id], references: [id],onDelete:Cascade)
   course_id String 
 
   user User @relation(fields: [user_id], references: [id])

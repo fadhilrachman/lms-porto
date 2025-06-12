@@ -39,6 +39,11 @@ const CourseDetail = () => {
       href: "#contentCourse",
     },
   ];
+  let countVideo: number = 0;
+
+  data?.result?.chapter.map((val) => {
+    countVideo += val._count.content;
+  });
 
   return (
     <div className=" space-y-12  ">
@@ -63,7 +68,12 @@ const CourseDetail = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
           <div className="col-span-4 space-y-4 ">
-            <VideoRender url="https://www.youtube.com/watch?v=8NCyvC9OTOA" />
+            <VideoRender
+              url={
+                data?.result?.introduction_vid ||
+                "https://www.youtube.com/watch?v=8NCyvC9OTOA"
+              }
+            />
 
             {/* <div className="space-x-4 border-b pb-3 dark:border-borderColor">
               {listTab.map((val, key) => {
@@ -106,7 +116,7 @@ const CourseDetail = () => {
                 <div className="border flex justify-between items-center rounded-2xl p-3 dark:border-borderColor">
                   <div className="flex items-center space-x-2">
                     <FileVideo />
-                    <p className="text-sm">27 Video</p>
+                    <p className="text-sm">{countVideo} Video</p>
                   </div>
                   <Check className="text-green-500" />
                 </div>{" "}

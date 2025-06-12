@@ -1,56 +1,56 @@
-import { Accordion, AccordionItem } from '@nextui-org/accordion';
-import { Button } from '@nextui-org/button';
-import { ArrowLeft, Check, CheckCheck, VideoIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useQueryState } from 'nuqs';
-import React, { useEffect } from 'react';
+import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { Button } from "@nextui-org/button";
+import { ArrowLeft, Check, CheckCheck, VideoIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useQueryState } from "nuqs";
+import React, { useEffect } from "react";
 
 export const contentNav = [
   {
     key: 1,
-    title: 'content 1',
+    title: "content 1",
     content: [
       {
-        sub_title: 'content 1',
+        sub_title: "content 1",
         isChecked: true,
       },
       {
-        sub_title: 'content 2',
+        sub_title: "content 2",
         isChecked: false,
       },
     ],
   },
   {
     key: 2,
-    title: 'content 1',
+    title: "content 1",
     content: [
       {
-        sub_title: 'content 1',
+        sub_title: "content 1",
         isChecked: true,
       },
       {
-        sub_title: 'content 2',
+        sub_title: "content 2",
         isChecked: false,
       },
     ],
   },
   {
     key: 3,
-    title: 'content 1',
+    title: "content 1",
     content: [
       {
-        sub_title: 'content 1',
+        sub_title: "content 1",
         isChecked: true,
       },
       {
-        sub_title: 'content 2',
+        sub_title: "content 2",
         isChecked: false,
       },
     ],
   },
 ];
 const ChapterSidebar = ({ chapter }: any) => {
-  const [_, setContent_id] = useQueryState('content_id');
+  const [content_id, setContent_id] = useQueryState("content_id");
   const router = useRouter();
   useEffect(() => {
     if (chapter?.length > 0) {
@@ -68,7 +68,7 @@ const ChapterSidebar = ({ chapter }: any) => {
       </div>
       <Accordion
         variant="splitted"
-        defaultExpandedKeys={'1'}
+        defaultExpandedKeys={"1"}
         className="max-w-full"
       >
         {chapter?.map((item: any, i: number) => (
@@ -81,7 +81,7 @@ const ChapterSidebar = ({ chapter }: any) => {
               {item?.content.map((res, i) => (
                 <div
                   key={i}
-                  className="cursor-pointer flex justify-between rounded-xl bg-neutral-800  px-4 py-3"
+                  className={`cursor-pointer flex justify-between rounded-xl ${content_id == res.id ? "bg-neutral-600" : "bg-neutral-800"}  px-4 py-3`}
                   onClick={() => setContent_id(res?.id)}
                 >
                   <div className="space-x-3 flex items-center">

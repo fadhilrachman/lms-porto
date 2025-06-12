@@ -1,34 +1,34 @@
-'use client';
+"use client";
 import ChapterSidebar, {
   contentNav,
-} from '@/components/profile/course/chapter-sidebar';
-import Content from '@/components/profile/course/content';
-import NavbarAdminUser from '@/components/shared/navbar-admin-user';
-import { useGetDetailUserCourse } from '@/hooks/course-user.hooks';
-import useIsMobile from '@/hooks/useIsMobile';
-import { Accordion, AccordionItem } from '@nextui-org/accordion';
-import { Button } from '@nextui-org/button';
-import { Link } from '@nextui-org/link';
+} from "@/components/profile/course/chapter-sidebar";
+import Content from "@/components/profile/course/content";
+import NavbarAdminUser from "@/components/shared/navbar-admin-user";
+import { useGetDetailUserCourse } from "@/hooks/course-user.hooks";
+import useIsMobile from "@/hooks/useIsMobile";
+import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { Button } from "@nextui-org/button";
+import { Link } from "@nextui-org/link";
 import {
   Navbar,
   NavbarContent,
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
-} from '@nextui-org/navbar';
-import { ArrowLeft, CheckCheck, VideoIcon } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
-import { useQueryState } from 'nuqs';
-import React, { useState } from 'react';
+} from "@nextui-org/navbar";
+import { ArrowLeft, CheckCheck, VideoIcon } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useQueryState } from "nuqs";
+import React, { useState } from "react";
 
 const DetailCourse = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   const { course_id } = useParams();
-  const [_, setContent_id] = useQueryState('content_id');
+  const [content_id, setContent_id] = useQueryState("content_id");
   const { data, isLoading, refetch } = useGetDetailUserCourse(
-    course_id as string,
+    course_id as string
   );
 
   return (
@@ -50,14 +50,14 @@ const DetailCourse = () => {
           </NavbarContent>
 
           <NavbarMenuToggle
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             className="h-10"
           />
           <NavbarMenu className="justify-between py-6">
             <NavbarMenuItem>
               <Accordion
                 variant="splitted"
-                defaultExpandedKeys={'1'}
+                defaultExpandedKeys={"1"}
                 className="max-w-full"
               >
                 {data?.result?.chapter?.map((item: any, i: number) => (
@@ -73,7 +73,7 @@ const DetailCourse = () => {
                       {item?.content.map((res, i) => (
                         <div
                           key={i}
-                          className="cursor-pointer flex justify-between rounded-xl bg-neutral-800  px-4 py-3"
+                          className={`cursor-pointer flex justify-between rounded-xl ${content_id == res.id ? "bg-neutral-600" : "bg-neutral-800"}   px-4 py-3`}
                           onClick={() => setContent_id(res?.id)}
                         >
                           <div className="space-x-3 flex items-center">

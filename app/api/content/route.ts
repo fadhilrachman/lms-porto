@@ -28,6 +28,7 @@ export async function POST(req: NextRequest) {
         content_vid,
         title,
         description,
+        is_published: true,
       },
     });
 
