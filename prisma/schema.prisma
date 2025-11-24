@@ -10,111 +10,107 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
-model User{
-  id String @id @default(uuid())
-  user_name String
-  email String @unique
-  password String?
-  is_verified Boolean @default(false)
-  is_admin Boolean @default(false)
-  created_at DateTime @default(now())
-  update_at DateTime @updatedAt 
-  otp Int?
+model User {
+  id               String            @id @default(uuid())
+  user_name        String
+  email            String            @unique
+  password         String?
+  is_verified      Boolean           @default(false)
+  is_admin         Boolean           @default(false)
+  created_at       DateTime          @default(now())
+  update_at        DateTime          @updatedAt
+  otp              Int?
   content_progress ContentProgress[]
-  transaction Transaction[]
+  transaction      Transaction[]
 }
 
-model Category{
-  id String @id @default(uuid())
-  name String
-  icon String
+model Category {
+  id         String   @id @default(uuid())
+  name       String
+  icon       String
   created_at DateTime @default(now())
-  update_at DateTime @updatedAt 
+  update_at  DateTime @updatedAt
 
   course Course[]
 }
 
 model Course {
-  id String @id @default(uuid())
-  title String
-  price Int?
-  is_free Boolean @default(false)
-  is_published Boolean @default(false)
-  description String?
+  id               String    @id @default(uuid())
+  title            String
+  price            Int?
+  is_free          Boolean   @default(false)
+  is_published     Boolean   @default(false)
+  description      String?
   introduction_vid String?
-  thumbnail_img String?
-  resource String?
-  is_finish Boolean @default(false)
-  category Category? @relation(fields: [category_id], references: [id])
-  category_id String? 
-  created_at DateTime @default(now())
-  update_at DateTime @updatedAt 
+  thumbnail_img    String?
+  resource         String?
+  is_finish        Boolean   @default(false)
+  category         Category? @relation(fields: [category_id], references: [id])
+  category_id      String?
+  created_at       DateTime  @default(now())
+  update_at        DateTime  @updatedAt
 
-  chapter Chapter[]
+  chapter          Chapter[]
   content_progress ContentProgress[]
-  transaction Transaction[]
+  transaction      Transaction[]
 }
 
 model Chapter {
-  id String @id @default(uuid())
-  title String
+  id       String @id @default(uuid())
+  title    String
   position Int
 
-  course Course @relation(fields: [course_id], references: [id], onDelete:Cascade)
-  course_id String 
+  course    Course @relation(fields: [course_id], references: [id], onDelete: Cascade)
+  course_id String
 
   created_at DateTime @default(now())
-  update_at DateTime @updatedAt 
+  update_at  DateTime @updatedAt
 
   content Content[]
 }
 
-
-model Content{
-  id String @id @default(uuid())
-  title String
-  description String?
-  content_vid String
-  position Int  
+model Content {
+  id           String  @id @default(uuid())
+  title        String
+  description  String?
+  content_vid  String
+  position     Int
   is_published Boolean @default(false)
 
-  chapter Chapter @relation(fields: [chapter_id], references: [id],onDelete: Cascade)
-  chapter_id String 
+  chapter    Chapter @relation(fields: [chapter_id], references: [id], onDelete: Cascade)
+  chapter_id String
 
-  created_at DateTime @default(now())
-  update_at DateTime @updatedAt 
+  created_at       DateTime          @default(now())
+  update_at        DateTime          @updatedAt
   content_progress ContentProgress[]
 }
 
 model Transaction {
   id String @id @default(uuid())
 
-  code String? @unique  
-  token_snap String? 
+  code        String? @unique
+  token_snap  String?
   is_checkout Boolean @default(false)
-  course Course @relation(fields: [course_id], references: [id],onDelete:Cascade)
-  course_id String 
+  course      Course  @relation(fields: [course_id], references: [id], onDelete: Cascade)
+  course_id   String
 
-  user User @relation(fields: [user_id], references: [id])
-  user_id String 
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
 
   created_at DateTime @default(now())
-  update_at DateTime @updatedAt 
+  update_at  DateTime @updatedAt
 }
 
-
 model ContentProgress {
-  id String @id @default(uuid())
-  course Course @relation(fields: [course_id], references: [id])
-  course_id String 
+  id        String @id @default(uuid())
+  course    Course @relation(fields: [course_id], references: [id])
+  course_id String
 
-  user User @relation(fields: [user_id], references: [id])
-  user_id String 
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
 
-  content Content @relation(fields: [content_id], references: [id])
-  content_id String 
-  
+  content    Content @relation(fields: [content_id], references: [id])
+  content_id String
 }

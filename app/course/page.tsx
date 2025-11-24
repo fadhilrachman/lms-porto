@@ -21,14 +21,17 @@ import BaseDataNotFound from "@/components/shared/base-data-not-found";
 const Course = () => {
   const router = useRouter();
   // const [category, setCategory] = useQueryState("category_id");
-  const [params, setParams] = useState({ search: "" });
+  const [params, setParams] = useState<{ search?: string; page: number }>({
+    search: "",
+    page: 1,
+  });
   const { data: dataCategory } = useGetCategory({ page: 1, per_page: 100 });
 
   const { data, isFetching, refetch } = useGetCourse({
-    page: 1,
+    page: params.page,
     per_page: 20,
     is_published: true,
-    ...params,
+    search: params.search,
     // category_id: category,
   });
 
